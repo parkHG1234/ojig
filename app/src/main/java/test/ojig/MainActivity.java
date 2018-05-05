@@ -1,14 +1,14 @@
 package test.ojig;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import test.ojig.Buy.Buy;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     RelativeLayout layout_buy, layout_sell;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +31,13 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+//            case R.id.layout_video:
+//                startActivity(new Intent(MainActivity.this, VideoActivity.class));
+        }
     }
 }

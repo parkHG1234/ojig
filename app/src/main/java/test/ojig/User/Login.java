@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import test.ojig.MainActivity;
 import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 
@@ -17,7 +18,7 @@ import test.ojig.Uitility.HttpClient;
  * Created by 박효근 on 2018-04-29.
  */
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity implements View.OnClickListener{
     LinearLayout Layout_Join;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,15 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.img_login:
+                startActivity(new Intent(Login.this, MainActivity.class));
+        }
+    }
+
     public class Async extends AsyncTask<String, Void, String> {
         ProgressDialog asyncDialog = new ProgressDialog(Login.this);
 

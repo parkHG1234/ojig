@@ -9,40 +9,66 @@ import android.support.v7.app.AppCompatActivity;
 
 public class Buy_Model {
     private Activity Activity;
-    private String Pk;
+    private String Buy_Pk;
+    private String Category;
     private String User_Pk;
+    private String Name;
     private String Title;
-    private String Memo;
     private String Address;
-    private String Count;
-    private String GameName;
-    private String Status;
-    public Buy_Model(Activity activity, String pk, String user_Pk, String title, String memo, String address, String count, String gamename, String status){
+    private String Amount;
+    private String Memo;
+    private String status;
+
+    public Buy_Model(Activity activity, String buy_Pk, String category, String user_Pk, String name, String title, String address, String amount, String memo, String status) {
         this.Activity = activity;
-        this.Pk = pk;
+        this.Buy_Pk = buy_Pk;
+        this.Category = category;
         this.User_Pk = user_Pk;
+        this.Name = name;
         this.Title = title;
-        this.Memo = memo;
         this.Address = address;
-        this.Count = count;
-        this.GameName = gamename;
-        this.Status = status;
+        this.Amount = amount;
+        this.Memo = memo;
+        this.status = status;
     }
-    public Activity getActivity() {
+
+    public android.app.Activity getActivity() {
         return Activity;
     }
-    public String getPk() {
-        return Pk;
+
+    public String getBuy_Pk() {
+        return Buy_Pk;
     }
+
+    public String getCategory() {
+        return Category;
+    }
+
     public String getUser_Pk() {
         return User_Pk;
     }
-    public String getTitle(){return Title;}
-    public String getMemo(){
+
+    public String getName() {
+        return Name;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public String getAmount() {
+        return Amount;
+    }
+
+    public String getMemo() {
         return Memo;
     }
-    public String getAddress(){return Address;}
-    public String getCount(){return Count;}
-    public String getGameName(){return GameName;}
-    public String getStatus(){return Status;}
+
+    public String getStatus() {
+        return status;
+    }
 }
