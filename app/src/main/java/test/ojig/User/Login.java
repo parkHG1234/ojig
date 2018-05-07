@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import test.ojig.MainActivity;
@@ -18,8 +19,9 @@ import test.ojig.Uitility.HttpClient;
  * Created by 박효근 on 2018-04-29.
  */
 
-public class Login extends AppCompatActivity implements View.OnClickListener{
+public class Login extends AppCompatActivity {
     LinearLayout Layout_Join;
+    RelativeLayout Layout_Login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +40,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
             }
         });
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.img_login:
-                startActivity(new Intent(Login.this, MainActivity.class));
-        }
+        Layout_Login = (RelativeLayout)findViewById(R.id.layout_login);
+        Layout_Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+            }
+        });
     }
 
     public class Async extends AsyncTask<String, Void, String> {

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">오직</string>
     <string name="http_error">잠시 후 다시 이용바랍니다.</string>
+
+    <string name="login_join_certi_recerti"><u>인증번호 다시받기!</u></string>
+    <string name="login_join_certi_succed"><u>인증완료!</u></string>
 </resources>

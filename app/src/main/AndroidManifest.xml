@@ -33,7 +33,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".User.Join"></activity>
-
+        <activity android:name=".promotion.Promotion"></activity>
+        <activity android:name=".promotion.Promotion_Focus"></activity>
     </application>
     <uses-permission  android:name="android.permission.INTERNET" />
 </manifest>

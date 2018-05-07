@@ -27,7 +27,7 @@ public class HttpClient {
         String result = "";
         try {
             org.apache.http.client.HttpClient client = new DefaultHttpClient();
-            String postURL = "http://13.124.32.32:8080/"+Web+"/"+Jsp;
+            String postURL = "http://13.209.35.228:8080/"+Web+"/"+Jsp;
             HttpPost post = new HttpPost(postURL);
             List<NameValuePair> params1 = new ArrayList<NameValuePair>();
             for(int i=0;i<params.length;i++){

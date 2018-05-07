@@ -1,69 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="test.ojig.MainActivity">
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:background="@color/black">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="20dp"
+        android:layout_weight="1">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_marginBottom="6dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
             <RelativeLayout
                 android:id="@+id/layout_buy"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginRight="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/buy"/>
+                android:background="#314672">
+
+                <ImageView
+                    android:id="@+id/img_buy"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/main_buy" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_buy"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="게임기 구매"
+                    android:textColor="#8d98a6"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/main_buy_icon" />
+            </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/layout_sell"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/sell"/>
+                android:background="#2b4965">
+                <ImageView
+                    android:id="@+id/img_sell"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/main_sell" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_sell"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="게임기 판매"
+                    android:textColor="#8d98a6"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/main_sell_icon" />
+            </RelativeLayout>
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_marginBottom="6dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
             <RelativeLayout
-                android:id="@+id/layout_district"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginRight="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/district"/>
+                android:background="#333a4a">
+
+                <ImageView
+                    android:id="@+id/img_local"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/main_local" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/main_local_icon" />
+            </RelativeLayout>
+
             <RelativeLayout
-                android:id="@+id/layout_video"
+                android:id="@+id/layout_promotion"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/video"
-                android:onClick="onClick"
-                />
+                android:background="#333a4a">
+
+                <ImageView
+                    android:id="@+id/img_pro"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/main_pro" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/main_pro_icon" />
+            </RelativeLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-            <RelativeLayout
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/machine"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/store"/>
+                android:layout_weight="1"></LinearLayout>
+
         </LinearLayout>
+
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#be9b62"></LinearLayout>
+</LinearLayout>
