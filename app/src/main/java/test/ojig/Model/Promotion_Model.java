@@ -7,7 +7,7 @@ import android.app.Activity;
  */
 
 public class Promotion_Model {
-    private android.app.Activity Activity;
+    private Activity Activity;
     private String Pk;
     private String GameName;
     private String CompanyName;

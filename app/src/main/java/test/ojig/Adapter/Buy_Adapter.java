@@ -1,15 +1,19 @@
 package test.ojig.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import test.ojig.Buy.Buy_Focus;
 import test.ojig.Model.Buy_Model;
 import test.ojig.R;
 
@@ -42,7 +46,7 @@ public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Buy_Model items = arrData.get(position);
-        holder.Txt_GameName.setText(items.getCategory());
+        holder.Txt_GameName.setText(items.getName());
         holder.Txt_title.setText(items.getTitle());
         holder.Txt_Memo.setText(items.getMemo());
         holder.Txt_Address.setText(items.getAddress());
@@ -56,14 +60,14 @@ public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
             holder.Img_deal.setImageResource(R.drawable.deal_finish);
         }
 
-//        holder.Img_video.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, CPI_Focus.class);
-//                intent.putExtra("Goods_Pk", items.getPk());
-//                context.startActivity(intent);
-//            }
-//        });
+        holder.Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, Buy_Focus.class);
+                intent.putExtra("Buy_Pk", items.getBuy_Pk());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -75,11 +79,13 @@ public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout Layout;
         TextView Txt_GameName, Txt_title, Txt_Address, Txt_GameCount, Txt_Memo;
         ImageView Img_deal;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            Layout = (LinearLayout)itemView.findViewById(R.id.layout);
             Txt_GameName = (TextView) itemView.findViewById(R.id.txt_gamename);
             Txt_title = (TextView) itemView.findViewById(R.id.txt_title);
             Txt_Memo = (TextView) itemView.findViewById(R.id.txt_memo);

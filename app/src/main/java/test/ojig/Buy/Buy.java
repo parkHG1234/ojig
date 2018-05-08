@@ -37,13 +37,17 @@ public class Buy extends AppCompatActivity implements View.OnClickListener {
     private List<Buy_Model> buy_list;
     private ArrayList<Buy_Model> buy_models;
     private Buy_Adapter buy_adapter;
+    private String User_Pk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
 
+        User_Pk = getIntent().getStringExtra("User_Pk");
+
         init();
+
 
         Async async = new Async();
         async.execute();
@@ -80,7 +84,9 @@ public class Buy extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_write:
-                startActivity(new Intent(Buy.this, Buy_Write.class));
+                Intent intent = new Intent(Buy.this, Buy_Write.class);
+                intent.putExtra("User_Pk",User_Pk);
+                startActivity(intent);
                 break;
         }
     }
@@ -105,20 +111,13 @@ public class Buy extends AppCompatActivity implements View.OnClickListener {
             try {
                 //베스트 다운로드 데이터 셋팅
                 HttpClient http = new HttpClient();
-                String result = http.HttpClient("Web_ojig2", "buy_select.jsp", params);
+                String result = http.HttpClient("Web_Ojig2", "buy_select.jsp", params);
                 parseredData = jsonParserList(result);
 
                 buy_list = new ArrayList<Buy_Model>();
-//                for (int i = 0; i < parseredData.length; i++) {
-//                    buy_models.add(new Buy_Model(Buy.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6], parseredData[i][7], parseredData[i][8]));
-//                }
-                buy_list.add(new Buy_Model(Buy.this, "1", "1", "aaaaaaa222.\n두줄가지 가능합니다.", "aaaaaaa111", "서울", "경기", "황금성게임기", "wait", "possible"));
-                buy_list.add(new Buy_Model(Buy.this, "1", "1", "aaaaaaa222.\n두줄가지 가능합니다.", "bbbbbbb111", "서울", "서울", "황금성게임기", "wait", "ing"));
-                buy_list.add(new Buy_Model(Buy.this, "1", "1", "bbbbbbb222.\n한줄가지 가능합니다.", "aaaaaaa111", "서울", "인천", "황금성게임기", "wait", "finish"));
-                buy_list.add(new Buy_Model(Buy.this, "1", "1", "bbbbbcb222.\n한줄가지 가능합니다.", "bbbbbbb111", "서울", "경기", "황금성게임기", "wait", "finish"));
-                buy_list.add(new Buy_Model(Buy.this, "1", "1", "cccccb2222.\n세줄가지 가능합니다.", "ccccccc111", "서울", "서울", "황금성게임기", "wait", "possible"));
-                buy_list.add(new Buy_Model(Buy.this, "1", "1", "cccccbc222.\n세줄가지 가능합니다.", "ccccccd111", "서울", "서울", "황금성게임기", "wait", "ing"));
-
+                for (int i = 0; i < parseredData.length; i++) {
+                    buy_list.add(new Buy_Model(Buy.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6], parseredData[i][7], parseredData[i][8]));
+                }
                 buy_models = new ArrayList<Buy_Model>();
                 buy_models.addAll(buy_list);
 

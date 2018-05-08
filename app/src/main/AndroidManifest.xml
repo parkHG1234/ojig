@@ -3,6 +3,7 @@
     package="test.ojig">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -16,15 +17,13 @@
         <activity android:name=".Flash">
         </activity>
 
-        <activity android:name=".Activity.VideoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Activity.VideoDetailActivity"
-            android:screenOrientation="portrait"/>
+
         <activity android:name=".Buy.Buy"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".Buy.Buy_Write"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Buy.Buy_Focus"></activity>
         <activity android:name=".User.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

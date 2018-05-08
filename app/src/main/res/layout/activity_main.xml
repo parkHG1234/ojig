@@ -29,7 +29,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
-                android:background="#314672">
+                android:background="#314672"
+                android:onClick="onClick">
 
                 <ImageView
                     android:id="@+id/img_buy"
@@ -70,7 +71,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="3dp"
                 android:layout_weight="1"
-                android:background="#2b4965">
+                android:background="#2b4965"
+                android:onClick="onClick">
                 <ImageView
                     android:id="@+id/img_sell"
                     android:layout_width="120dp"
@@ -143,7 +145,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="3dp"
                 android:layout_weight="1"
-                android:background="#333a4a">
+                android:background="#333a4a"
+                android:onClick="onClick">
 
                 <ImageView
                     android:id="@+id/img_pro"
