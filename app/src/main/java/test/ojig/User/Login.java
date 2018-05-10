@@ -20,7 +20,7 @@ import test.ojig.Uitility.HttpClient;
  */
 
 public class Login extends AppCompatActivity {
-    LinearLayout Layout_Join;
+    LinearLayout Layout_Join, Layout_Find;
     RelativeLayout Layout_Login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,15 @@ public class Login extends AppCompatActivity {
         Layout_Join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(Login.this, Join.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+            }
+        });
+        Layout_Find = (LinearLayout)findViewById(R.id.layout_find);
+        Layout_Find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = new Intent(Login.this, Join.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);

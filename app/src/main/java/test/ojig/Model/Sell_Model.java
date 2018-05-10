@@ -2,28 +2,34 @@ package test.ojig.Model;
 
 import android.app.Activity;
 
-public class Buy_Model {
+public class Sell_Model {
     private Activity Activity;
-    private String Buy_Pk;
+    private String Sell_Pk;
     private String Category;
     private String User_Pk;
     private String Name;
     private String Title;
+    private String Price;
     private String Address;
     private String Amount;
     private String Memo;
+    private String Img;
+    private String Video;
     private String status;
 
-    public Buy_Model(Activity activity, String buy_Pk, String category, String user_Pk, String name, String title, String address, String amount, String memo, String status) {
-        this.Activity = activity;
-        this.Buy_Pk = buy_Pk;
-        this.Category = category;
-        this.User_Pk = user_Pk;
-        this.Name = name;
-        this.Title = title;
-        this.Address = address;
-        this.Amount = amount;
-        this.Memo = memo;
+    public Sell_Model(android.app.Activity activity, String sell_Pk, String category, String user_Pk, String name, String title, String price, String address, String amount, String memo, String img, String video, String status) {
+        Activity = activity;
+        Sell_Pk = sell_Pk;
+        Category = category;
+        User_Pk = user_Pk;
+        Name = name;
+        Title = title;
+        Price = price;
+        Address = address;
+        Amount = amount;
+        Memo = memo;
+        Img = img;
+        Video = video;
         this.status = status;
     }
 
@@ -31,8 +37,8 @@ public class Buy_Model {
         return Activity;
     }
 
-    public String getBuy_Pk() {
-        return Buy_Pk;
+    public String getSell_Pk() {
+        return Sell_Pk;
     }
 
     public String getCategory() {
@@ -51,6 +57,10 @@ public class Buy_Model {
         return Title;
     }
 
+    public String getPrice() {
+        return Price;
+    }
+
     public String getAddress() {
         return Address;
     }
@@ -61,6 +71,14 @@ public class Buy_Model {
 
     public String getMemo() {
         return Memo;
+    }
+
+    public String getImg() {
+        return Img;
+    }
+
+    public String getVideo() {
+        return Video;
     }
 
     public String getStatus() {

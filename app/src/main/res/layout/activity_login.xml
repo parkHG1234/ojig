@@ -120,6 +120,7 @@
             //비밀번호 찾기
 
             <LinearLayout
+                android:id="@+id/layout_find"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginBottom="7dp"

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import test.ojig.Buy.Buy;
+import test.ojig.Sell.Sell;
 import test.ojig.promotion.Promotion;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("User_Pk","1");
                 break;
             case R.id.layout_sell:
+                intent = new Intent(MainActivity.this, Sell.class);
+                intent.putExtra("User_Pk","1");
                 break;
             case R.id.layout_promotion:
                 intent = new Intent(MainActivity.this, Promotion.class);

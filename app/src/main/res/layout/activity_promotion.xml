@@ -20,7 +20,7 @@
             android:layout_height="20dp"
             android:background="@color/back">
 
-            <com.matthewtamlin.sliding_intro_screen_library.DotIndicator
+            <com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator
                 android:id="@+id/indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

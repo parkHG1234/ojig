@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="상세히 입력해주세요"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_gray"
+                        android:textSize="30dp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/notosanscjkkr_demilight_cus"
+                    android:gravity="center"
+                    android:hint="글제목"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/text_gray"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="구입희망 게임기명"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_bg"
+                        android:text="지역선택"
+                        android:textColorHint="@color/text_gray" />
+
+                    <EditText
+                        android:id="@+id/edt_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_bg"
+                        android:hint="구매희망 갯수"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="* 안심거래는 15일 내에 거래 안될 시 자동 삭제됩니다."
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edt_memo"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="메모 작성"
+                    android:textColor="@color/text_gray" />
+
+
+                <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:background="@color/main_back1" />-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="사진은 한장이상 올려주세요"
+                    android:textColor="@color/text_gray"
+                    android:textSize="26dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="최대 6장까지 가능합니다."
+                    android:textColor="@color/text_gray"
+                    android:textSize="16dp" />
+
+
+                    <LinearLayout
+                        android:id="@+id/img_layout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/img_write1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/img_add"
+                            android:layout_margin="5dp"
+                            android:onClick="onClick"/>
+
+                        <ImageView
+                            android:id="@+id/img_write2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/img_add"
+                            android:layout_margin="5dp"
+                            android:onClick="onClick"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/img_layout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/img_write3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/img_add"
+                            android:layout_margin="5dp"
+                            android:visibility="gone"
+                            android:onClick="onClick"/>
+
+                        <ImageView
+                            android:id="@+id/img_write4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/img_add"
+                            android:layout_margin="5dp"
+                            android:visibility="gone"
+                            android:onClick="onClick"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/img_layout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/img_write5"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/img_add"
+                            android:layout_margin="5dp"
+                            android:visibility="gone"
+                            android:onClick="onClick"/>
+
+                        <ImageView
+                            android:id="@+id/img_write6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/img_add"
+                            android:layout_margin="5dp"
+                            android:visibility="gone"
+                            android:onClick="onClick" />
+                    </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:text="판매자 정보"
+                    android:textColor="@color/text_gray"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/edt_company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="오직 게임장"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/edt_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="010-0000-0000"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/edt_company_focus"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/edittext_bg"
+                    android:hint="구매자 주소"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="수정하려면 해당하는 곳을 터치하세요"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/btn_write"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/sell_write"
+                    android:gravity="center|bottom"
+                    android:onClick="onClick" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

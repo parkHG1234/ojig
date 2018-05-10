@@ -16,7 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.matthewtamlin.sliding_intro_screen_library.DotIndicator;
+
+import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;

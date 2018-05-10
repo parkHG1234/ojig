@@ -3,7 +3,6 @@ package test.ojig.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,6 @@ import java.util.ArrayList;
 import test.ojig.Buy.Buy_Focus;
 import test.ojig.Model.Buy_Model;
 import test.ojig.R;
-
-/**
- * Created by 박효근 on 2018-04-22.
- */
 
 public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
     private Context context;
@@ -46,11 +41,11 @@ public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Buy_Model items = arrData.get(position);
-        holder.Txt_GameName.setText(items.getName());
-        holder.Txt_title.setText(items.getTitle());
-        holder.Txt_Memo.setText(items.getMemo());
-        holder.Txt_Address.setText(items.getAddress());
-        holder.Txt_GameCount.setText(items.getAmount() + "대 희망");
+        holder.tv_GameName.setText(items.getName());
+        holder.tv_title.setText(items.getTitle());
+        holder.tv_Memo.setText(items.getMemo());
+        holder.tv_Address.setText(items.getAddress());
+        holder.tv_GameCount.setText(items.getAmount() + "대 희망");
 
         if (items.getStatus().equals("possible")) {
             holder.Img_deal.setImageResource(R.drawable.deal_possible);
@@ -80,17 +75,17 @@ public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout Layout;
-        TextView Txt_GameName, Txt_title, Txt_Address, Txt_GameCount, Txt_Memo;
+        TextView tv_GameName, tv_title, tv_Address, tv_GameCount, tv_Memo;
         ImageView Img_deal;
 
         public ViewHolder(View itemView) {
             super(itemView);
             Layout = (LinearLayout)itemView.findViewById(R.id.layout);
-            Txt_GameName = (TextView) itemView.findViewById(R.id.txt_gamename);
-            Txt_title = (TextView) itemView.findViewById(R.id.txt_title);
-            Txt_Memo = (TextView) itemView.findViewById(R.id.txt_memo);
-            Txt_Address = (TextView) itemView.findViewById(R.id.txt_address);
-            Txt_GameCount = (TextView) itemView.findViewById(R.id.txt_gamecount);
+            tv_GameName = (TextView) itemView.findViewById(R.id.tv_gamename);
+            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
+            tv_Memo = (TextView) itemView.findViewById(R.id.tv_memo);
+            tv_Address = (TextView) itemView.findViewById(R.id.tv_address);
+            tv_GameCount = (TextView) itemView.findViewById(R.id.tv_gamecount);
             Img_deal = (ImageView) itemView.findViewById(R.id.img_deal);
         }
 
