@@ -132,13 +132,33 @@
                         android:layout_weight="1">
 
                         <ImageView
+                            android:id="@+id/img_write0"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/img_add"
+                            android:layout_margin="5dp"
+                            android:scaleType="centerCrop"
+                            android:onClick="onClick"/>
+
+                        <ImageView
                             android:id="@+id/img_write1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/img_add"
                             android:layout_margin="5dp"
-                            android:onClick="onClick"/>
+                            android:onClick="onClick"
+                            android:scaleType="centerCrop"
+                            android:visibility="invisible"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/img_layout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/img_write2"
@@ -147,16 +167,9 @@
                             android:layout_weight="1"
                             android:src="@drawable/img_add"
                             android:layout_margin="5dp"
+                            android:visibility="invisible"
+                            android:scaleType="centerCrop"
                             android:onClick="onClick"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/img_layout2"
-                        android:layout_width="match_parent"
-                        android:layout_height="170dp"
-                        android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/img_write3"
@@ -165,17 +178,8 @@
                             android:layout_weight="1"
                             android:src="@drawable/img_add"
                             android:layout_margin="5dp"
-                            android:visibility="gone"
-                            android:onClick="onClick"/>
-
-                        <ImageView
-                            android:id="@+id/img_write4"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:src="@drawable/img_add"
-                            android:layout_margin="5dp"
-                            android:visibility="gone"
+                            android:visibility="invisible"
+                            android:scaleType="centerCrop"
                             android:onClick="onClick"/>
                     </LinearLayout>
 
@@ -184,8 +188,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
                         android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:visibility="gone">
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/img_write4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/img_add"
+                            android:layout_margin="5dp"
+                            android:scaleType="centerCrop"
+                            android:visibility="invisible"
+                            android:onClick="onClick"/>
 
                         <ImageView
                             android:id="@+id/img_write5"
@@ -194,17 +208,8 @@
                             android:layout_weight="1"
                             android:src="@drawable/img_add"
                             android:layout_margin="5dp"
-                            android:visibility="gone"
-                            android:onClick="onClick"/>
-
-                        <ImageView
-                            android:id="@+id/img_write6"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:src="@drawable/img_add"
-                            android:layout_margin="5dp"
-                            android:visibility="gone"
+                            android:visibility="invisible"
+                            android:scaleType="centerCrop"
                             android:onClick="onClick" />
                     </LinearLayout>
 
