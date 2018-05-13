@@ -30,7 +30,8 @@
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -144,7 +145,8 @@
                             android:gravity="bottom"
                             android:letterSpacing="0.2"
                             android:textColor="@color/black"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            android:inputType="phone"/>
 
                         <ImageView
                             android:id="@+id/img_phonecheck"
@@ -222,7 +224,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="bottom"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:textColor="@color/black"
                             android:textSize="20sp"
                             android:fontFamily="@font/chemrea_cus"/>
@@ -260,6 +262,244 @@
                 android:gravity="right"
                 android:text="인증번호 다시받기"
                 android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/layout_pass"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginRight="20dp"
+                    android:text="비밀번호 4자리"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom|right"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edit_pass"
+                        style="@style/CustomTextView_Join"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/notosanscjkkr_medium_cus"
+                        android:gravity="bottom"
+                        android:inputType="number"
+                        android:letterSpacing="0.2"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:maxLength="4"/>
+
+                    <ImageView
+                        android:id="@+id/img_passcheck"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="5dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/line_pass"
+                android:layout_width="match_parent"
+                android:layout_height="3px"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/line_gray" />
+
+            <LinearLayout
+                android:id="@+id/layout_passcheck"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginRight="20dp"
+                    android:text="비밀번호 확인"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom|right"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edit_passcheck"
+                        style="@style/CustomTextView_Join"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/notosanscjkkr_medium_cus"
+                        android:gravity="bottom"
+                        android:letterSpacing="0.2"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:inputType="number"
+                        android:maxLength="4"/>
+
+                    <ImageView
+                        android:id="@+id/img_passcheckcheck"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="5dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/line_passcheck"
+                android:layout_width="match_parent"
+                android:layout_height="3px"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/line_gray" />
+
+
+            <LinearLayout
+                android:id="@+id/layout_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginRight="20dp"
+                        android:text="영업장 위치"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="bottom|right"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/edit_address1"
+                            style="@style/CustomTextView_Join"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:fontFamily="@font/notosanscjkkr_medium_cus"
+                            android:gravity="bottom"
+                            android:inputType="number"
+                            android:letterSpacing="0.2"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <RelativeLayout
+                            android:id="@+id/layout_addressinput"
+                            android:layout_width="70dp"
+                            android:layout_height="30dp"
+                            android:background="@color/point_gold">
+
+                            <ImageView
+                                android:id="@+id/img_address1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="5dp"
+                                android:src="@drawable/search" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/line_address1"
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/line_gray" />
+
+                <EditText
+                    android:id="@+id/edit_address2"
+                    style="@style/CustomTextView_Join"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:fontFamily="@font/notosanscjkkr_medium_cus"
+                    android:gravity="bottom|center_horizontal"
+                    android:hint="주소"
+                    android:letterSpacing="0.2"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/line_address2"
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/line_gray" />
+
+                <EditText
+                    android:id="@+id/edit_address3"
+                    style="@style/CustomTextView_Join"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/notosanscjkkr_medium_cus"
+                    android:gravity="bottom|center_horizontal"
+                    android:hint="세부주소"
+                    android:letterSpacing="0.2"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/line_address3"
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/line_gray" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/layout_join"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/line_gray"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:text="약관에 동의하면서 완료!"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/next_white" />
+    </LinearLayout>
 </LinearLayout>

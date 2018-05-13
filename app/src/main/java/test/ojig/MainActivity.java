@@ -2,6 +2,7 @@ package test.ojig;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,13 +19,19 @@ import test.ojig.Sell.Sell;
 import test.ojig.promotion.Promotion;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    SharedPreferences preferences; //캐쉬 데이터 생성
+
     public static final String User_Bundle = "User_Bundle";
     RelativeLayout layout_buy, layout_sell, layout_promotion;
 
+    String User_Pk = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        preferences = getSharedPreferences("blahblah", MODE_PRIVATE);
+        User_Pk = preferences.getString("Pk", ".");
 
         checkPermission();
     }

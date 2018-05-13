@@ -28,6 +28,7 @@ import java.util.TimerTask;
 
 import me.drakeet.materialdialog.MaterialDialog;
 import test.ojig.Uitility.HttpClient;
+import test.ojig.User.Login;
 
 /**
  * Created by 박효근 on 2018-02-26.
@@ -53,7 +54,7 @@ public class Flash extends AppCompatActivity {
 
         preferences = getSharedPreferences("blahblah", MODE_PRIVATE);
         User_Pk = preferences.getString("Pk", ".");
-        Guide = preferences.getBoolean("Guide", true);
+        //Guide = preferences.getBoolean("Guide", true);
 
         currentTime();
 
@@ -76,7 +77,7 @@ public class Flash extends AppCompatActivity {
     }
     public void Check_Setting(){
         HttpClient http_setting = new HttpClient();
-        String result = http_setting.HttpClient("Web_Blah","Setting.jsp");
+        String result = http_setting.HttpClient("Web_Ojig","Setting.jsp");
         ParsedData_Setting = jsonParserList_Setting(result);
         if(!Project_version.equals(ParsedData_Setting[0][0])){
             LayoutInflater inflater = (LayoutInflater)Flash.this.getSystemService(Flash.LAYOUT_INFLATER_SERVICE);
@@ -98,7 +99,7 @@ public class Flash extends AppCompatActivity {
         }
         else{
             myTask = new TimerTask() {
-                int i = 1;
+                int i = 3;
 
                 public void run() {
                     runOnUiThread(new Runnable() {
@@ -110,19 +111,16 @@ public class Flash extends AppCompatActivity {
                                 http_count.HttpClient("Web_Blah","Today_Counting.jsp", strCurToday);
                                 timer.cancel();
 
-//                                if(User_Pk.equals(".")){
-//                                    Intent intent = new Intent(Flash.this, Login.class);
-//                                    startActivity(intent);
-//                                    overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
-//                                }
-//                                else{
-//                                    Intent intent = new Intent(Flash.this, MainActivity.class);
-//                                    startActivity(intent);
-//                                    overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
-//                                }
-                                Intent intent = new Intent(Flash.this, MainActivity.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
+                                if(User_Pk.equals(".")){
+                                    Intent intent = new Intent(Flash.this, Login.class);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
+                                }
+                                else{
+                                    Intent intent = new Intent(Flash.this, MainActivity.class);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
+                                }
                                 finish();
                             }
                         }

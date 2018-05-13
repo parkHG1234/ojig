@@ -43,7 +43,6 @@ public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
         final Buy_Model items = arrData.get(position);
         holder.tv_GameName.setText(items.getName());
         holder.tv_title.setText(items.getTitle());
-        holder.tv_Memo.setText(items.getMemo());
         holder.tv_Address.setText(items.getAddress());
         holder.tv_GameCount.setText(items.getAmount() + "대 희망");
 
@@ -75,7 +74,7 @@ public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout Layout;
-        TextView tv_GameName, tv_title, tv_Address, tv_GameCount, tv_Memo;
+        TextView tv_GameName, tv_title, tv_Address, tv_GameCount;
         ImageView Img_deal;
 
         public ViewHolder(View itemView) {
@@ -83,7 +82,6 @@ public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
             Layout = (LinearLayout)itemView.findViewById(R.id.layout);
             tv_GameName = (TextView) itemView.findViewById(R.id.tv_gamename);
             tv_title = (TextView) itemView.findViewById(R.id.tv_title);
-            tv_Memo = (TextView) itemView.findViewById(R.id.tv_memo);
             tv_Address = (TextView) itemView.findViewById(R.id.tv_address);
             tv_GameCount = (TextView) itemView.findViewById(R.id.tv_gamecount);
             Img_deal = (ImageView) itemView.findViewById(R.id.img_deal);

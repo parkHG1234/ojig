@@ -1,5 +1,6 @@
 package test.ojig.User;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -22,6 +23,7 @@ import test.ojig.Uitility.HttpClient;
 public class Login extends AppCompatActivity {
     LinearLayout Layout_Join, Layout_Find;
     RelativeLayout Layout_Login;
+    static Activity act_Login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,7 @@ public class Login extends AppCompatActivity {
 
     }
     public void init(){
+        act_Login = this;
         Layout_Join = (LinearLayout)findViewById(R.id.layout_join);
         Layout_Join.setOnClickListener(new View.OnClickListener() {
             @Override

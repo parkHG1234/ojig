@@ -1,6 +1,8 @@
 package test.ojig.User;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +12,12 @@ import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,14 +34,20 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import test.ojig.MainActivity;
 import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
+
+import static test.ojig.User.Login.act_Login;
 
 /**
  * Created by 박효근 on 2018-04-29.
  */
 
 public class Join extends AppCompatActivity {
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     EditText Edit_Name;TextView Line_Name;ImageView Img_NameCheck;
 
     EditText edit_phone;
@@ -51,8 +61,19 @@ public class Join extends AppCompatActivity {
     TextView txt_cetritime;
     TextView line_certi, txt_certi_succed;
 
-    String str_name = "", str_phone;
-    Boolean flag_name= false, flag_phone= false;
+    LinearLayout Layout_Pass, Layout_PassCheck;
+    TextView Line_Pass, Line_PassCheck;
+    EditText Edit_Pass, Edit_PassCheck;
+    ImageView Img_PassCheck, Img_PassCheckCheck;
+
+    LinearLayout Layout_Address;
+    RelativeLayout Layout_AddressInput;
+    EditText Edit_Address1, Edit_Address2, Edit_Address3;
+
+    LinearLayout Layout_Join;
+
+    String str_name = "", str_phone = "", str_pass = "", str_address_num = "", str_address_txt = "", str_address_focus = "";
+    Boolean flag_name = false, flag_phone = false, flag_pass = false, flag_address = false;
 
     TimerTask myTask;
     Timer timer;
@@ -66,6 +87,13 @@ public class Join extends AppCompatActivity {
         setEdit_NameEvent();
         setEdit_PhoneEvent();
         setBtn_Sms();
+        setResms_Event();
+        setEdit_PassEvent();
+        setEdit_PassCheckEvent();
+        setAddressInput_Event();
+        setEdit_Address3();
+
+        setJoin_Event();
     }
     public void init(){
         Edit_Name = (EditText)findViewById(R.id.edit_name);
@@ -84,8 +112,32 @@ public class Join extends AppCompatActivity {
         layout_certi = (LinearLayout)findViewById(R.id.layout_certi);
         edit_certi = (EditText)findViewById(R.id.edit_certi);
         line_certi = (TextView)findViewById(R.id.line_certi);
+        img_cetricheck = (ImageView)findViewById(R.id.img_cetricheck);
         txt_certi_succed = (TextView)findViewById(R.id.txt_certi_succed);
+        txt_certi_succed.setVisibility(View.GONE);
         txt_cetritime = (TextView)findViewById(R.id.txt_cetritime);
+
+        Layout_Pass = (LinearLayout)findViewById(R.id.layout_pass);
+        Layout_Pass.setVisibility(View.GONE);
+        Layout_PassCheck = (LinearLayout)findViewById(R.id.layout_passcheck);
+        Layout_PassCheck.setVisibility(View.GONE);
+        Line_Pass = (TextView)findViewById(R.id.line_pass);
+        Line_Pass.setVisibility(View.GONE);
+        Line_PassCheck = (TextView)findViewById(R.id.line_passcheck);
+        Line_PassCheck.setVisibility(View.GONE);
+        Edit_Pass = (EditText)findViewById(R.id.edit_pass);
+        Edit_PassCheck = (EditText)findViewById(R.id.edit_passcheck);
+        Img_PassCheck = (ImageView)findViewById(R.id.img_passcheck);
+        Img_PassCheckCheck = (ImageView)findViewById(R.id.img_passcheckcheck);
+
+        //영업장 위치 레이아웃 셋팅
+        Layout_Address = (LinearLayout)findViewById(R.id.layout_address);
+        Layout_AddressInput = (RelativeLayout)findViewById(R.id.layout_addressinput);
+        Edit_Address1 = (EditText)findViewById(R.id.edit_address1);
+        Edit_Address2 = (EditText)findViewById(R.id.edit_address2);
+        Edit_Address3 = (EditText)findViewById(R.id.edit_address3);
+
+        Layout_Join = (LinearLayout)findViewById(R.id.layout_join);
     }
     public void setEdit_NameEvent() {
         Edit_Name.addTextChangedListener(new TextWatcher() {
@@ -108,6 +160,7 @@ public class Join extends AppCompatActivity {
                     Img_NameCheck.setVisibility(View.VISIBLE);
                     GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(Img_NameCheck, 1);
                     Glide.with(Join.this).load(R.drawable.join_check).into(gifImage);
+                    All_Flag();
                 }
 
             }
@@ -120,6 +173,7 @@ public class Join extends AppCompatActivity {
     }
 
     public void setEdit_PhoneEvent() {
+
         edit_phone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -128,6 +182,7 @@ public class Join extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Line_Name.setBackgroundColor(getResources().getColor(R.color.line_gray));
                 line_phone.setBackgroundColor(getResources().getColor(R.color.point));
                 str_phone = edit_phone.getText().toString().replaceAll("-", "");
                 //번호에 - 추가 셋팅
@@ -200,6 +255,7 @@ public class Join extends AppCompatActivity {
                         line_phone.setBackgroundColor(getResources().getColor(R.color.line_gray));
                         //인증번호 포커스 이벤트
                         flag_phone = true;
+
                     } else {
                         flag_phone = false;
                         Toast.makeText(Join.this, "이미 가입된 번호가 있습니다.", Toast.LENGTH_SHORT).show();
@@ -213,6 +269,7 @@ public class Join extends AppCompatActivity {
             }
         });
     }
+
     public void setLayout_Certi() {
         layout_certi.setVisibility(View.VISIBLE);
         layout_smsline1.setVisibility(View.GONE);
@@ -227,6 +284,19 @@ public class Join extends AppCompatActivity {
         txt_certi_succed.setTextColor(getResources().getColor(R.color.black));
         setEdit_CertiEvent();
     }
+
+    public void setResms_Event(){
+        txt_certi_succed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edit_phone.setEnabled(true);
+                layout_certi.setVisibility(View.GONE);
+                layout_smsline1.setVisibility(View.VISIBLE);
+                timer.cancel();
+            }
+        });
+    }
+
     public void setEdit_CertiEvent() {
         edit_certi.addTextChangedListener(new TextWatcher() {
             @Override
@@ -249,13 +319,12 @@ public class Join extends AppCompatActivity {
                     txt_certi_succed.setText(getResources().getString(R.string.login_join_certi_succed));
                     txt_certi_succed.setTextColor(getResources().getColor(R.color.point));
 
+                    //비밀번호 입력 창 활성화 이벤트
+                    Layout_Pass.setVisibility(View.VISIBLE);
+                    Layout_PassCheck.setVisibility(View.VISIBLE);
+                    Line_Pass.setVisibility(View.VISIBLE);
+                    Line_PassCheck.setVisibility(View.VISIBLE);
 
-//                    layout_pass.setVisibility(View.VISIBLE);
-//                    layout_pass.requestFocus();
-//                    line_pass.setBackgroundColor(getResources().getColor(R.color.point));
-//                    line_passcheck.setBackgroundColor(getResources().getColor(R.color.line_gray));
-//
-//                    layout_passCheck.setVisibility(View.VISIBLE);
                     timer.cancel();
                 }
             }
@@ -265,6 +334,142 @@ public class Join extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void setEdit_PassEvent(){
+        Edit_Pass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(Edit_Pass.length() == 4){
+                    str_pass = Edit_Pass.getText().toString();
+                    Img_PassCheck.setVisibility(View.VISIBLE);
+                    //인증번호 완료 시 이벤트
+                    GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(Img_PassCheck, 1);
+                    Glide.with(Join.this).load(R.drawable.join_check).into(gifImage);
+                    All_Flag();
+                }
+                else{
+                    Img_PassCheck.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    public void setEdit_PassCheckEvent(){
+        Edit_PassCheck.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(Edit_PassCheck.getText().toString().equals(Edit_Pass.getText().toString())){
+                    flag_pass = true;
+                    //비밀번호 체크시 이벤트
+                    Img_PassCheckCheck.setVisibility(View.VISIBLE);
+                    GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(Img_PassCheckCheck, 1);
+                    Glide.with(Join.this).load(R.drawable.join_check).into(gifImage);
+                    All_Flag();
+                    Layout_Address.setVisibility(View.VISIBLE);
+                    Layout_Join.setVisibility(View.VISIBLE);
+                }
+                else{
+                    Img_PassCheckCheck.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    public void setAddressInput_Event(){
+        Layout_AddressInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Join.this, Join_Address.class);
+                startActivityForResult(intent, 1);
+                overridePendingTransition(R.anim.anim_slide_out_left, R.anim.anim_slide_in_right);
+            }
+        });
+    }
+    public void setEdit_Address3(){
+        Edit_Address3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(Edit_Address3.getText().toString().equals("")){
+                    Address_Flag();
+                    All_Flag();
+                }
+                else{
+                    str_address_focus = Edit_Address3.getText().toString();
+                    Address_Flag();
+                    All_Flag();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+    public void Address_Flag(){
+        if(!Edit_Address1.getText().toString().equals("") && !Edit_Address2.getText().toString().equals("") && !Edit_Address3.getText().toString().equals("")){
+            flag_address = true;
+        }
+        else{
+            flag_address = false;
+        }
+    }
+    public void setJoin_Event(){
+        Layout_Join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Async async = new Async();
+                async.execute(str_phone, str_pass, str_name, str_address_num, str_address_txt, str_address_focus);
+            }
+        });
+    }
+    public void All_Flag(){
+        if(flag_name == true && flag_phone == true && flag_pass == true && flag_address == true){
+            Layout_Join.setEnabled(true);
+            Layout_Join.setBackgroundColor(getResources().getColor(R.color.point_gold));
+        }else{
+            Layout_Join.setEnabled(false);
+            Layout_Join.setBackgroundColor(getResources().getColor(R.color.line_gray));
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1) {
+            str_address_num = data.getStringExtra("Address_Num");
+            str_address_txt = data.getStringExtra("Address_Txt");
+            Edit_Address1.setText(str_address_num);
+            Edit_Address2.setText(str_address_txt);
+            Address_Flag();
+            All_Flag();
+        }
     }
     public String[][] jsonParserList_Phone_Confirm(String pRecvServerPage) {
         Log.i("서버에서 받은 전체 내용", pRecvServerPage);
@@ -288,7 +493,7 @@ public class Join extends AppCompatActivity {
     public class Async extends AsyncTask<String, Void, String> {
         ProgressDialog asyncDialog = new ProgressDialog(Join.this);
 
-        String[][] parseredData;
+        String result= "";
 
         @Override
         protected void onPreExecute() {
@@ -303,8 +508,16 @@ public class Join extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
+                Log.i("test123",str_phone);
+                Log.i("test123",str_pass);
+                Log.i("test123",str_name);
+                Log.i("test123",str_address_num);
+                Log.i("test123",str_address_txt);
+                Log.i("test123",str_address_focus);
+
                 //베스트 다운로드 데이터 셋팅
                 HttpClient http = new HttpClient();
+                result = http.HttpClient("Web_Ojig", "Join.jsp", params);
 
                 return "succed";
             } catch (Exception e) {
@@ -317,8 +530,14 @@ public class Join extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            preferences = getSharedPreferences("blahblah", MODE_PRIVATE);
+            editor = preferences.edit();
+            editor.putString("Pk", result);
+            editor.commit();
 
-
+            startActivity(new Intent(Join.this, MainActivity.class));
+            act_Login.finish();
+            finish();
             asyncDialog.dismiss();
         }
 

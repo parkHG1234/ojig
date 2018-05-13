@@ -8,8 +8,11 @@
     <color name="main_back1">#eaebf0</color>
 
     <color name="point">#182641</color>
-    <color name="point_blue">#182641</color>
+    <color name="point_blue">#31459b</color>
+    <color name="point_skyblue">#19b7a0</color>
+    <color name="point_gold">#be9b61</color>
     <color name="line_gray">#eaebf0</color>
+    <color name="line_gray_bold">#d6d7dc</color>
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

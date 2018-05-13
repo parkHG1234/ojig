@@ -117,8 +117,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:fontFamily="@font/notosanscjkkr_demilight_cus"
-                    android:gravity="center"
                     android:includeFontPadding="false"
+                    android:gravity="center"
                     android:text="서울시 영등포구 여의도동 222번지"
                     android:textColor="@color/text_gray"
                     android:textSize="14sp" />
