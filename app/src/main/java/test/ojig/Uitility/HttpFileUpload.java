@@ -18,11 +18,15 @@ public class HttpFileUpload {
     private String filename="";
 
 
-    public HttpFileUpload(String urlString, String params, String fileName) {
+    public HttpFileUpload(String urlString, String params, String filePath) {
         // fileName=TeamName;
         try {
+            filename = params;
+
             //선택한 파일의 절대 경로를 이용해서 파일 입력 스트림 객체를 얻어온다.
-            FileInputStream mFileInputStream = new FileInputStream(fileName);
+            FileInputStream mFileInputStream = new FileInputStream(filePath);
+            Log.i("aaaa222",mFileInputStream.toString());
+            Log.i("aaaa222",filePath);
             //파일을 업로드할 서버의 url 주소를이용해서 URL 객체 생성하기.
             URL connectUrl = new URL(urlString);
             //Connection 객체 얻어오기.
