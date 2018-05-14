@@ -46,6 +46,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edit_phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -81,6 +82,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edit_pass"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -91,7 +93,8 @@
                     android:includeFontPadding="false"
                     android:textColor="@color/white"
                     android:textColorHint="#445272"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:inputType="textPassword"/>
             </LinearLayout>
 
             //로그인 버튼

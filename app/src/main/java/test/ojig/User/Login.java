@@ -3,14 +3,20 @@ package test.ojig.User;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import test.ojig.MainActivity;
 import test.ojig.R;
@@ -21,8 +27,12 @@ import test.ojig.Uitility.HttpClient;
  */
 
 public class Login extends AppCompatActivity {
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     LinearLayout Layout_Join, Layout_Find;
     RelativeLayout Layout_Login;
+    EditText Edit_Phone, Edit_Pass;
     static Activity act_Login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,8 @@ public class Login extends AppCompatActivity {
     public void init(){
         act_Login = this;
         Layout_Join = (LinearLayout)findViewById(R.id.layout_join);
+        Edit_Phone = (EditText)findViewById(R.id.edit_phone);
+        Edit_Pass = (EditText)findViewById(R.id.edit_pass);
         Layout_Join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,50 +68,41 @@ public class Login extends AppCompatActivity {
         Layout_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                HttpClient http_login = new HttpClient();
+                String result = http_login.HttpClient("Web_Ojig", "Login.jsp", Edit_Phone.getText().toString(), Edit_Pass.getText().toString());
+                String[][] parseredData_login = jsonParserList_login(result);
+                if (parseredData_login[0][0].equals("failed")) {
+                    Toast.makeText(Login.this, "정보를 확인해주세요", Toast.LENGTH_SHORT).show();
+                } else {
+                    preferences = getSharedPreferences("blahblah", MODE_PRIVATE);
+                    editor = preferences.edit();
+                    editor.putString("Pk", parseredData_login[0][0]);
+                    editor.commit();
+
+                    startActivity(new Intent(Login.this, MainActivity.class));
+                    finish();
+                }
             }
         });
     }
-
-    public class Async extends AsyncTask<String, Void, String> {
-        ProgressDialog asyncDialog = new ProgressDialog(Login.this);
-
-        String[][] parseredData;
-
-        @Override
-        protected void onPreExecute() {
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("wait...");
-            // show dialog
-            asyncDialog.show();
-
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                //베스트 다운로드 데이터 셋팅
-                HttpClient http = new HttpClient();
-
-                return "succed";
-            } catch (Exception e) {
-                Toast.makeText(Login.this, getString(R.string.http_error), Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-                return "failed";
+    public String[][] jsonParserList_login(String pRecvServerPage) {
+        Log.i("서버에서 받은 전체 내용", pRecvServerPage);
+        try {
+            JSONObject json = new JSONObject(pRecvServerPage);
+            JSONArray jArr = json.getJSONArray("List");
+            String[] jsonName = {"msg1"};
+            String[][] parseredData = new String[jArr.length()][jsonName.length];
+            for (int i = 0; i < jArr.length(); i++) {
+                json = jArr.getJSONObject(i);
+                for (int j = 0; j < jsonName.length; j++) {
+                    parseredData[i][j] = json.getString(jsonName[j]);
+                }
             }
+            return parseredData;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-
-            asyncDialog.dismiss();
-        }
-
     }
 }
 
