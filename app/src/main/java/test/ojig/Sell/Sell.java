@@ -21,10 +21,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import test.ojig.Adapter.Buy_Adapter;
 import test.ojig.Adapter.Sell_Adapter;
-import test.ojig.Buy.Buy_Write;
-import test.ojig.Model.Buy_Model;
 import test.ojig.Model.Sell_Model;
 import test.ojig.R;
 import test.ojig.Uitility.HttpClient;

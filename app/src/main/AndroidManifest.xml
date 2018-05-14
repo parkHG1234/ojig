@@ -45,6 +45,12 @@
         <activity
             android:name=".Sell.Sell_Focus"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Local.Local"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Local.Local_Focus"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".User.Login">
 

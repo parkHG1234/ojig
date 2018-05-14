@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import test.ojig.Buy.Buy;
+import test.ojig.Local.Local;
 import test.ojig.Sell.Sell;
 import test.ojig.promotion.Promotion;
 
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.layout_sell:
                 intent = new Intent(MainActivity.this, Sell.class);
                 intent.putExtra("User_Pk","1");
+                break;
+            case R.id.layout_local:
+                intent = new Intent(MainActivity.this, Local.class);
                 break;
             case R.id.layout_promotion:
                 intent = new Intent(MainActivity.this, Promotion.class);

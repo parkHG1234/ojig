@@ -113,11 +113,13 @@
             android:orientation="horizontal">
 
             <RelativeLayout
+                android:id="@+id/layout_local"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
-                android:background="#333a4a">
+                android:background="#333a4a"
+                android:onClick="onClick">
 
                 <ImageView
                     android:id="@+id/img_local"
