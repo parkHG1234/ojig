@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +21,9 @@ import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 
 public class Buy_Focus  extends AppCompatActivity {
-    ImageView Img, img_call;
+    ImageView Img_Back;
+    ImageView Img;
+    Button img_call;
     TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_buy_name, txt_user, txt_memo;
 
     private String buy_pk = "";
@@ -52,6 +55,14 @@ public class Buy_Focus  extends AppCompatActivity {
         async.execute(buy_pk);
     }
     public void init(){
+        Img_Back = (ImageView)findViewById(R.id.img_back);
+        Img_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+            }
+        });
         Img = (ImageView) findViewById(R.id.img);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_title = (TextView) findViewById(R.id.txt_title);
@@ -62,7 +73,7 @@ public class Buy_Focus  extends AppCompatActivity {
         txt_buy_name = (TextView) findViewById(R.id.txt_buy_name);
         txt_user = (TextView) findViewById(R.id.txt_user);
         txt_memo = (TextView) findViewById(R.id.txt_memo);
-        img_call = (ImageView) findViewById(R.id.img_call);
+        img_call = (Button) findViewById(R.id.img_call);
 
     }
 

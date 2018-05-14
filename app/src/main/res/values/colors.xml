@@ -9,8 +9,10 @@
 
     <color name="point">#182641</color>
     <color name="point_blue">#31459b</color>
+    <color name="point_navy">#334475</color>
     <color name="point_skyblue">#19b7a0</color>
     <color name="point_gold">#be9b61</color>
+    <color name="point_red">#ff696b</color>
     <color name="line_gray">#eaebf0</color>
     <color name="line_gray_bold">#d6d7dc</color>
 
@@ -20,4 +22,5 @@
     <color name="red">#ff000d</color>
 
     <color name="text_gray">#5c5c5c</color>
+    <color name="text_hint">#8e8c8c</color>
 </resources>

@@ -2,163 +2,311 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/back" />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/notosanscjkkr_demilight_cus"
+                android:includeFontPadding="false"
+                android:text="상세히 입력해주세요"
+                android:textColor="@color/text_gray"
+                android:textSize="30sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="상세히 입력해주세요"
-                        android:textSize="30dp"
-                        android:textAlignment="center"
-                        android:textColor="@color/text_gray"/>
-                </LinearLayout>
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/box">
 
                 <EditText
                     android:id="@+id/edt_title"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:textColor="@color/text_gray"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:background="@null"
+                    android:fontFamily="@font/notosanscjkkr_medium_cus"
+                    android:gravity="center_vertical"
                     android:hint="글제목"
-                    android:fontFamily="@font/notosanscjkkr_demilight_cus"
-                    android:gravity="center"
                     android:includeFontPadding="false"
-                    android:textSize="14sp"
-                    android:layout_margin="5dp"/>
-
-                <EditText
-                    android:id="@+id/edt_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="구입희망 게임기명"
-                    android:textColor="@color/text_gray"
-                    android:textAlignment="center"
-                    android:background="@drawable/edittext_bg"
-                    android:layout_margin="5dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_area"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:text="지역선택"
-                        android:textColorHint="@color/text_gray"
-                        android:background="@drawable/edittext_bg"
-                        android:layout_margin="5dp" />
-
-                    <EditText
-                        android:id="@+id/edt_amount"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:hint="구매희망 갯수"
-                        android:background="@drawable/edittext_bg"
-                        android:textAlignment="center"
-                        android:layout_margin="5dp"  />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:text="* 안심거래는 15일 내에 거래 안될 시 자동 삭제됩니다."
-                    android:textAlignment="center"
-                    android:textColor="@color/red"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/edt_memo"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:hint="메모 작성"
-                    android:textColor="@color/text_gray"
-                    android:background="@drawable/edittext_bg"
-                    android:layout_margin="5dp"/>
-
-                <!--<TextView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1dp"-->
-                    <!--android:background="@color/main_back1" />-->
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/box">
 
-                <TextView
+                <EditText
+                    android:id="@+id/edt_name"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="구매자 정보"
-                    android:textColor="@color/text_gray"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:background="@null"
+                    android:fontFamily="@font/notosanscjkkr_medium_cus"
                     android:gravity="center"
-                    android:textSize="30sp" />
+                    android:hint="구입희망 게임기명"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/box">
+
+                    <Button
+                        android:id="@+id/btn_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@null"
+                        android:fontFamily="@font/notosanscjkkr_medium_cus"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="지역선택"
+                        android:textColor="@color/text_hint"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/box">
+
+                    <EditText
+                        android:id="@+id/edt_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:fontFamily="@font/notosanscjkkr_medium_cus"
+                        android:includeFontPadding="false"
+                        android:gravity="center"
+                        android:hint="구매희망 갯수"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/text_hint"
+                        android:textSize="18sp"
+                        android:inputType="number"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="*안심거래는 15일내에 거래 안될시 자동삭제됩니다."
+                android:textColor="@color/point_red"
+                android:textSize="16sp"
+                android:fontFamily="@font/notosanscjkkr_medium_cus"
+                android:includeFontPadding="false"/>
+
+            //메모 작성
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/box3">
+
+                <EditText
+                    android:id="@+id/edt_memo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:fontFamily="@font/notosanscjkkr_medium_cus"
+                    android:gravity="top"
+                    android:hint="메모 작성"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            //구매자 정보
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/notosanscjkkr_demilight_cus"
+                android:includeFontPadding="false"
+                android:text="구매자 정보"
+                android:textColor="@color/text_gray"
+                android:textSize="30sp" />
+
+            //구매자 회사
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/box">
 
                 <EditText
                     android:id="@+id/edt_company_name"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="오직 게임장"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:fontFamily="@font/notosanscjkkr_medium_cus"
+                    android:includeFontPadding="false"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:background="@drawable/edittext_bg"
-                    android:layout_margin="5dp"/>
+                    android:textColorHint="@color/text_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            //구매자 핸드폰
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/box">
 
                 <EditText
                     android:id="@+id/edt_phone"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="010-0000-0000"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:fontFamily="@font/notosanscjkkr_medium_cus"
+                    android:includeFontPadding="false"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:background="@drawable/edittext_bg"
-                    android:layout_margin="5dp" />
+                    android:textColorHint="@color/text_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            //구매자 주소
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/box">
 
                 <EditText
                     android:id="@+id/edt_company_focus"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="구매자 주소"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:fontFamily="@font/notosanscjkkr_medium_cus"
+                    android:includeFontPadding="false"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:background="@drawable/edittext_bg"
-                    android:layout_margin="5dp"/>
+                    android:textColorHint="@color/text_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            //워닝
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textAlignment="center"
-                    android:text="수정하려면 해당하는 곳을 터치하세요" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanscjkkr_medium_cus"
+                    android:includeFontPadding="false"
+                    android:text="수정하려면 해당하는 곳을 "
+                    android:textColor="@color/text_gray"
+                    android:textSize="16sp" />
 
-                <Button
-                    android:id="@+id/btn_write"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center|bottom"
-                    android:background="@drawable/buy_write"
-                    android:onClick="onClick"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+                    android:includeFontPadding="false"
+                    android:text="터치"
+                    android:textColor="@color/point_red"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanscjkkr_medium_cus"
+                    android:includeFontPadding="false"
+                    android:text="하세요"
+                    android:textColor="@color/text_gray"
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/btn_write"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/point_blue"
+        android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+        android:includeFontPadding="false"
+        android:onClick="onClick"
+        android:text="삽니다 글등록"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 </LinearLayout>

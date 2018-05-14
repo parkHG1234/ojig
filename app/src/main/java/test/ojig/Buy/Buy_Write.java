@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -27,7 +28,7 @@ import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 
 public class Buy_Write extends AppCompatActivity implements View.OnClickListener {
-
+    private ImageView Img_Back;
     private String area = "";
     private Button btn_area;
     private AlertDialog dialog;
@@ -51,7 +52,14 @@ public class Buy_Write extends AppCompatActivity implements View.OnClickListener
     }
 
     private void init() {
-
+        Img_Back = (ImageView)findViewById(R.id.img_back);
+        Img_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+            }
+        });
         User_Pk = getIntent().getStringExtra("User_Pk");
         btn_area = (Button) findViewById(R.id.btn_area);
         btn_area.setOnClickListener(this);
@@ -220,5 +228,12 @@ public class Buy_Write extends AppCompatActivity implements View.OnClickListener
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
 }
