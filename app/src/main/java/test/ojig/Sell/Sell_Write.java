@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -49,11 +50,12 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
     private String User_Pk;
     private ArrayList<User_Model> user_models;
     private String[][] parseredData;
-    private EditText edt_title, edt_name, edt_amount, edt_memo, edt_company_name, edt_phone, edt_company_focus;
+    private EditText edt_title, edt_name, edt_price, edt_amount, edt_memo, edt_company_name, edt_phone, edt_company_focus;
     private ImageView img_write0, img_write1, img_write2, img_write3, img_write4, img_write5;
     private ArrayList<String> img_path;
+    LinearLayout Img_Layout1, Img_Layout2, Img_Layout3;
     private ArrayList<ImageView> img_obj;
-
+    int img_count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,6 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
 
     private void init() {
 
-
         img_write0 = (ImageView) findViewById(R.id.img_write0);
         img_write1 = (ImageView) findViewById(R.id.img_write1);
         img_write2 = (ImageView) findViewById(R.id.img_write2);
@@ -79,33 +80,39 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
         img_write4 = (ImageView) findViewById(R.id.img_write4);
         img_write5 = (ImageView) findViewById(R.id.img_write5);
 
+        Img_Layout1 = (LinearLayout)findViewById(R.id.img_layout1);
+        Img_Layout2 = (LinearLayout)findViewById(R.id.img_layout2);
+        Img_Layout3 = (LinearLayout)findViewById(R.id.img_layout3);
+
+
         img_path = new ArrayList<String>();
         img_obj = new ArrayList<ImageView>(Arrays.asList(img_write0, img_write1, img_write2, img_write3, img_write4, img_write5));
 
         User_Pk = getIntent().getStringExtra("User_Pk");
-//        btn_area = (Button) findViewById(R.id.btn_area);
-//        btn_area.setOnClickListener(this);
-//        edt_title = (EditText) findViewById(R.id.edt_title);
-//        edt_name = (EditText) findViewById(R.id.edt_name);
-//        edt_amount = (EditText) findViewById(R.id.edt_amount);
-//        edt_memo = (EditText) findViewById(R.id.edt_memo);
-//        edt_company_name = (EditText) findViewById(R.id.edt_company_name);
-//        edt_phone = (EditText) findViewById(R.id.edt_phone);
-//        edt_company_focus = (EditText) findViewById(R.id.edt_company_focus);
-//
-//        HttpClient http = new HttpClient();
-//        String result = http.HttpClient("Web_Ojig2", "user_select.jsp", User_Pk);
-//        parseredData = jsonParserList(result);
-//
-//
-//        user_models = new ArrayList<User_Model>();
-//        for (int i = 0; i < parseredData.length; i++) {
-//            user_models.add(new User_Model(Sell_Write.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6]));
-//        }
-//
-//        edt_company_name.setText(user_models.get(0).getCompany_Name());
-//        edt_phone.setText(user_models.get(0).getPhone());
-//        edt_company_focus.setText(user_models.get(0).getCompany_Focus());
+        btn_area = (Button) findViewById(R.id.btn_area);
+        btn_area.setOnClickListener(this);
+        edt_title = (EditText) findViewById(R.id.edt_title);
+        edt_name = (EditText) findViewById(R.id.edt_name);
+        edt_price = (EditText)findViewById(R.id.edt_price);
+        edt_amount = (EditText) findViewById(R.id.edt_amount);
+        edt_memo = (EditText) findViewById(R.id.edt_memo);
+        edt_company_name = (EditText) findViewById(R.id.edt_company_name);
+        edt_phone = (EditText) findViewById(R.id.edt_phone);
+        edt_company_focus = (EditText) findViewById(R.id.edt_company_focus);
+
+        HttpClient http = new HttpClient();
+        String result = http.HttpClient("Web_Ojig2", "user_select.jsp", User_Pk);
+        parseredData = jsonParserList(result);
+
+
+        user_models = new ArrayList<User_Model>();
+        for (int i = 0; i < parseredData.length; i++) {
+            user_models.add(new User_Model(Sell_Write.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6]));
+        }
+
+        edt_company_name.setText(user_models.get(0).getCompany_Name());
+        edt_phone.setText(user_models.get(0).getPhone());
+        edt_company_focus.setText(user_models.get(0).getCompany_Focus());
     }
 
     @Override
@@ -155,12 +162,14 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.img_write1:
                 Album(1);
+                Img_Layout2.setVisibility(View.VISIBLE);
                 break;
             case R.id.img_write2:
                 Album(2);
                 break;
             case R.id.img_write3:
                 Album(3);
+                Img_Layout3.setVisibility(View.VISIBLE);
                 break;
             case R.id.img_write4:
                 Album(4);
@@ -170,7 +179,6 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
                 break;
         }
     }
-
 
     public void Album(int i) {
         Uri uri = Uri.parse("content://media/external/images/media");
@@ -183,7 +191,6 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
         //결과값을 받아오는 액티비티를 실행한다.
         startActivityForResult(intent, i);
     }
-
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         try {
@@ -206,6 +213,7 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
                 } else {
                     img_path.add(requestCode, absolutePath);
                     if (requestCode < 5) {
+                        img_count++;
                         img_obj.get(requestCode + 1).setVisibility(View.VISIBLE);
                     } else {
                         Snackbar.make(getCurrentFocus(), "6장이 최대입니다.", Snackbar.LENGTH_SHORT).show();
@@ -244,13 +252,15 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
                                 if (edt_phone.getText().length() != 0) {
                                     if (edt_company_focus.getText().length() != 0) {
                                         HttpClient http = new HttpClient();
-                                        String result = http.HttpClient("Web_Ojig2", "sell_write.jsp", User_Pk, edt_title.getText().toString(), edt_name.getText().toString(), area, edt_amount.getText().toString(),
-                                                edt_memo.getText().toString(), edt_company_name.getText().toString(), edt_phone.getText().toString(), edt_company_focus.getText().toString(),String.valueOf(img_path.size()));
+                                        String result = http.HttpClient("Web_Ojig", "Sell_Write.jsp", User_Pk, edt_title.getText().toString(), edt_name.getText().toString(), edt_price.getText().toString(), area, edt_amount.getText().toString(),
+                                                edt_memo.getText().toString(), edt_company_name.getText().toString(), edt_phone.getText().toString());
                                         Log.i("result", result);
                                         try {
                                             JSONObject jsonObject = new JSONObject(result);
                                             if (jsonObject.getString("msg1").equals("succed")) {
-
+                                                for(int i = 0 ; i < img_count; i++){
+                                                    http.HttpClient("Web_Ojig", "Sell_Img.jsp", "1", Integer.toString(i+1));
+                                                }
                                                 fileUpload();
                                                 finish();
                                             } else {
@@ -343,4 +353,24 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
         btn_area.setText(area);
         dialog.dismiss();
     }
+    public String[][] jsonParserList(String pRecvServerPage) {
+        Log.i("서버에서 받은 전체 내용", pRecvServerPage);
+        try {
+            JSONObject json = new JSONObject(pRecvServerPage);
+            JSONArray jArr = json.getJSONArray("List");
+            String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7"};
+            String[][] parseredData = new String[jArr.length()][jsonName.length];
+            for (int i = 0; i < jArr.length(); i++) {
+                json = jArr.getJSONObject(i);
+                for (int j = 0; j < jsonName.length; j++) {
+                    parseredData[i][j] = json.getString(jsonName[j]);
+                }
+            }
+            return parseredData;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

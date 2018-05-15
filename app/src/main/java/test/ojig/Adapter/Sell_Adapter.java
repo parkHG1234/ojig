@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -74,8 +75,8 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout Layout;
         private TextView tv_title, tv_name, tv_price, tv_address, tv_gamecount;
-        private ImageView img_deal, img_sell, img_call;
-
+        private ImageView img_deal, img_sell ;
+        private Button img_call;
         public ViewHolder(View itemView) {
             super(itemView);
             Layout = (LinearLayout)itemView.findViewById(R.id.layout);
@@ -86,7 +87,7 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
             tv_gamecount = (TextView)itemView.findViewById(R.id.tv_gamecount);
             img_deal = (ImageView)itemView.findViewById(R.id.img_deal);
             img_sell = (ImageView)itemView.findViewById(R.id.img_sell);
-            img_call = (ImageView)itemView.findViewById(R.id.img_call);
+            img_call = (Button)itemView.findViewById(R.id.img_call);
 
         }
 
