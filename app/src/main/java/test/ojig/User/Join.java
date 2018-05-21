@@ -568,9 +568,9 @@ public class Join extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            preferences = getSharedPreferences("blahblah", MODE_PRIVATE);
+            preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
             editor = preferences.edit();
-            editor.putString("Pk", result);
+            editor.putString("User_Pk", result);
             editor.commit();
 
             startActivity(new Intent(Join.this, MainActivity.class));

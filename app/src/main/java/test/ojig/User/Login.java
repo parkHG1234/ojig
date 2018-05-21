@@ -74,9 +74,9 @@ public class Login extends AppCompatActivity {
                 if (parseredData_login[0][0].equals("failed")) {
                     Toast.makeText(Login.this, "정보를 확인해주세요", Toast.LENGTH_SHORT).show();
                 } else {
-                    preferences = getSharedPreferences("blahblah", MODE_PRIVATE);
+                    preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
                     editor = preferences.edit();
-                    editor.putString("Pk", parseredData_login[0][0]);
+                    editor.putString("User_Pk", parseredData_login[0][0]);
                     editor.commit();
 
                     startActivity(new Intent(Login.this, MainActivity.class));

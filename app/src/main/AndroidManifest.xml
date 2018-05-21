@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".Flash">
+        <activity android:name=".User.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,9 +53,9 @@
             android:name=".Local.Local_Focus"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".User.Login">
-
-        </activity>
+        <activity
+            android:name=".Store.Store"
+            android:screenOrientation="portrait" />
         <activity android:name=".User.Join"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".User.Join_Address"

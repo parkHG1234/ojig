@@ -21,10 +21,12 @@ import com.bumptech.glide.Glide;
 import test.ojig.Buy.Buy;
 import test.ojig.Local.Local;
 import test.ojig.Sell.Sell;
+import test.ojig.Store.Store;
 import test.ojig.promotion.Promotion;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    SharedPreferences preferences; //캐쉬 데이터 생성
+    public SharedPreferences preferences = null; //캐쉬 데이터 생성
+
 
     public static final String User_Bundle = "User_Bundle";
     RelativeLayout layout_buy, layout_sell, layout_promotion;
@@ -36,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        preferences = getSharedPreferences("blahblah", MODE_PRIVATE);
-        User_Pk = preferences.getString("Pk", ".");
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
 
         checkPermission();
 
@@ -57,17 +59,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.layout_buy:
                 intent = new Intent(MainActivity.this, Buy.class);
-                intent.putExtra("User_Pk","1");
+                intent.putExtra("User_Pk",User_Pk);
                 break;
             case R.id.layout_sell:
                 intent = new Intent(MainActivity.this, Sell.class);
-                intent.putExtra("User_Pk","1");
+                intent.putExtra("User_Pk",User_Pk);
                 break;
             case R.id.layout_local:
                 intent = new Intent(MainActivity.this, Local.class);
                 break;
             case R.id.layout_promotion:
                 intent = new Intent(MainActivity.this, Promotion.class);
+                break;
+            case R.id.layout_store:
+                intent = new Intent(MainActivity.this, Store.class);
                 break;
 
         }

@@ -92,13 +92,18 @@ public class Buy extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Log.i("aaaaa",String.valueOf(v.getId()));
+
         switch (v.getId()) {
             case R.id.btn_write:
                 Intent intent = new Intent(Buy.this, Buy_Write.class);
                 intent.putExtra("User_Pk",User_Pk);
                 startActivity(intent);
                 break;
-
+            case R.id.img_back:
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                break;
         }
     }
 

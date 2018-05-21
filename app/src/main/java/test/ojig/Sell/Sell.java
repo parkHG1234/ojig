@@ -2,6 +2,7 @@ package test.ojig.Sell;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import test.ojig.Uitility.HttpClient;
  */
 
 public class Sell extends AppCompatActivity implements View.OnClickListener {
+    SharedPreferences preferences = null; //캐쉬 데이터 생성
     private EditText Edt_search;
     private RecyclerView List_Sell;
 
@@ -44,7 +46,9 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
 
-        User_Pk = getIntent().getStringExtra("User_Pk");
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
+
 
         init();
 
@@ -85,7 +89,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_write:
                 Intent intent = new Intent(Sell.this, Sell_Write.class);
-                intent.putExtra("User_Pk",User_Pk);
+                intent.putExtra("User_Pk", User_Pk);
                 startActivity(intent);
                 break;
         }
@@ -110,6 +114,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         protected String doInBackground(String... params) {
             try {
                 //베스트 다운로드 데이터 셋팅
+
                 HttpClient http = new HttpClient();
                 String result = http.HttpClient("Web_Ojig2", "sell_select.jsp", params);
                 parseredData = jsonParserList(result);
