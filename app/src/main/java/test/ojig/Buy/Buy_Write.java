@@ -3,6 +3,7 @@ package test.ojig.Buy;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -147,6 +148,7 @@ public class Buy_Write extends AppCompatActivity implements View.OnClickListener
                                         try {
                                             JSONObject jsonObject = new JSONObject(result);
                                             if (jsonObject.getString("msg1").equals("succed")) {
+                                                Snackbar.make(getCurrentFocus(),"글이 등록되었습니다.",Snackbar.LENGTH_SHORT).show();
                                                 finish();
                                             } else {
                                                 Toast.makeText(getApplicationContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_LONG).show();

@@ -1,41 +1,46 @@
 package test.ojig.Uitility;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 public class FileUpload extends AsyncTask<String, Void, String> {
     private ProgressDialog asyncDialog = null;
     private ArrayList<String> img_path;
-    private String User_Pk;
+    private String Sell_Pk;
+    private Context context;
 
-    public FileUpload(Context context, ArrayList<String> img_path, String User_Pk) {
+    public FileUpload(Context context, ArrayList<String> img_path, String Sell_Pk) {
+        this.context = context;
         asyncDialog = new ProgressDialog(context);
         this.img_path = img_path;
-        this.User_Pk = User_Pk;
+        this.Sell_Pk = Sell_Pk;
     }
 
     @Override
     protected void onPreExecute() {
+        super.onPreExecute();
         asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         asyncDialog.setMessage("게시 중입니다..");
         // show dialog
         asyncDialog.show();
-        super.onPreExecute();
     }
 
     @Override
     protected String doInBackground(String... params) {
         try {
 
-            String urlString = "http://13.209.35.228:8080/Web_Ojig2/ImageUpload.jsp";
+            String urlString = "http://13.209.35.228:8080/Web_Ojig2/sell_image_upload.jsp";
+            HttpClient http = new HttpClient();
             //파일 업로드 시작!
-            for (int i = 0; i < img_path.size(); i++) {
-                if (!img_path.isEmpty()) {
-                    new HttpFileUpload(urlString, User_Pk+"_"+i, img_path.get(i));
+            if (!img_path.isEmpty()) {
+                for (int i = 0; i < img_path.size(); i++) {
+                    new HttpFileUpload(urlString, Sell_Pk + "_" + i, img_path.get(i));
+                    http.HttpClient("Web_Ojig2", "sell_image_write.jsp", Sell_Pk, String.valueOf(i));
+
                 }
             }
             return "succed";
@@ -48,7 +53,12 @@ public class FileUpload extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 
+
         asyncDialog.dismiss();
+        ((Activity)context).finish();
         super.onPostExecute(result);
     }
+
+
+
 }

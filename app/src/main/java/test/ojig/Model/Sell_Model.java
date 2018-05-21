@@ -13,11 +13,9 @@ public class Sell_Model {
     private String Address;
     private String Amount;
     private String Memo;
-    private String Img;
-    private String Video;
     private String status;
 
-    public Sell_Model(android.app.Activity activity, String sell_Pk, String category, String user_Pk, String name, String title, String price, String address, String amount, String memo, String img, String video, String status) {
+    public Sell_Model(android.app.Activity activity, String sell_Pk, String category, String user_Pk, String name, String title, String price, String address, String amount, String memo, String status) {
         Activity = activity;
         Sell_Pk = sell_Pk;
         Category = category;
@@ -28,8 +26,6 @@ public class Sell_Model {
         Address = address;
         Amount = amount;
         Memo = memo;
-        Img = img;
-        Video = video;
         this.status = status;
     }
 
@@ -73,13 +69,6 @@ public class Sell_Model {
         return Memo;
     }
 
-    public String getImg() {
-        return Img;
-    }
-
-    public String getVideo() {
-        return Video;
-    }
 
     public String getStatus() {
         return status;

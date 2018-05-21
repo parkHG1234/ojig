@@ -138,8 +138,8 @@ public class Buy_Focus  extends AppCompatActivity {
             pass = parseredData[0][2];
             company_name = parseredData[0][3];
             company_num = parseredData[0][4];
-            company_txt = parseredData[0][5];
-            company_focus = parseredData[0][6];
+            company_focus = parseredData[0][5];
+            company_txt = parseredData[0][6];
 
             txt_name.setText(name);
             txt_title.setText(title);

@@ -52,8 +52,8 @@ public class Flash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flash);
 
-        preferences = getSharedPreferences("blahblah", MODE_PRIVATE);
-        User_Pk = preferences.getString("Pk", ".");
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
         //Guide = preferences.getBoolean("Guide", true);
 
         currentTime();

@@ -43,7 +43,6 @@
                 android:layout_marginBottom="20dp">
 
                 <ImageView
-                    android:id="@+id/img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -89,57 +88,59 @@
                     android:textSize="26sp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_amount"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/notosanscjkkr_medium_cus"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:text="서울"
+                        android:textColor="@color/text_gray"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/txt_amount"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textAlignment="center"
-                            android:layout_weight="1"/>
-
-                        <TextView
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/text_gray" />
-                        <TextView
-                            android:id="@+id/txt_address"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textAlignment="center"
-                            android:layout_weight="1"/>
-
-                        <TextView
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/text_gray" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp"
-                            android:text="안심거래"
-                            android:textAlignment="center"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1"/>
+                        android:layout_marginRight="10dp"
+                        android:background="@color/text_gray" />
+
+                    <TextView
+                        android:id="@+id/txt_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/notosanscjkkr_medium_cus"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:text="서울"
+                        android:textColor="@color/text_gray"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/text_gray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:text="안심거래"
+                        android:textColor="@color/point_skyblue"
+                        android:textSize="16sp" />
                 </LinearLayout>
-
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
@@ -200,37 +201,154 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:background="@color/line_gray"/>
-                <ImageView
+                    android:background="@color/line_gray_bold"/>
+
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/sample"/>
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@color/point_gold"
+                    android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingLeft="10dp"
+                    android:text="게임기 정보"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+
                 <LinearLayout
-                    android:layout_width="240dp"
+                    android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center">
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/area"
-                        android:layout_gravity="center"/>
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/amount"
-                        android:layout_gravity="center"/>
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/deal"
-                        android:layout_gravity="center"/>
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center">
 
+                    <LinearLayout
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:orientation="vertical">
 
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/circle_black" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+                                android:includeFontPadding="false"
+                                android:text="서울"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="지역"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:layout_width="70dp"
+                                    android:layout_height="wrap_content"
+                                    android:adjustViewBounds="true"
+                                    android:src="@drawable/circle_black" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+                                    android:includeFontPadding="false"
+                                    android:text="12"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="희망 구매갯수"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/circle_skyblue" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+                                android:includeFontPadding="false"
+                                android:text="OK"
+                                android:textColor="@color/point_skyblue"
+                                android:textSize="30sp" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="안심거래"
+                            android:textColor="@color/point_skyblue"
+                            android:textSize="16sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/txt_buy_name"
+                    android:id="@+id/txt_sell_name"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:textColor="@color/text_gray"

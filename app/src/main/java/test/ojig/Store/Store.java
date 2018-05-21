@@ -21,6 +21,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import test.ojig.Adapter.Store_Adapter;
+import test.ojig.Model.Store_Model;
 import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 
@@ -30,11 +32,11 @@ import test.ojig.Uitility.HttpClient;
 
 public class Store extends AppCompatActivity implements View.OnClickListener {
 //    private EditText Edt_search;
-//    private RecyclerView List_Store;
+    private RecyclerView List_Store;
 //
-//    private List<Store_Model> store_list;
-//    private ArrayList<Store_Model> store_models;
-//    private Store_Adapter store_adapter;
+    private List<Store_Model> store_list;
+    private ArrayList<Store_Model> store_models;
+    private Store_Adapter store_adapter;
 //    private String User_Pk;
 //
     @Override
@@ -47,13 +49,14 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
 //        init();
 //
 //
-//        Async async = new Async();
-//        async.execute();
+
+        List_Store = (RecyclerView) findViewById(R.id.list_store);
+        Async async = new Async();
+        async.execute();
     }
 //
 //    public void init() {
 //        Edt_search = (EditText) findViewById(R.id.et_search);
-//        List_Store = (RecyclerView) findViewById(R.id.list_store);
 //
 //        Edt_search.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -89,25 +92,25 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
 //        }
     }
 //
-//    public class Async extends AsyncTask<String, Void, String> {
-//        ProgressDialog asyncDialog = new ProgressDialog(Store.this);
-//
-//        String[][] parseredData;
-//
-//        @Override
-//        protected void onPreExecute() {
-//            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//            asyncDialog.setMessage("wait...");
-//            // show dialog
-//            asyncDialog.show();
-//
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//            try {
-//                //베스트 다운로드 데이터 셋팅
+    public class Async extends AsyncTask<String, Void, String> {
+        ProgressDialog asyncDialog = new ProgressDialog(Store.this);
+
+        String[][] parseredData;
+
+        @Override
+        protected void onPreExecute() {
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("wait...");
+            // show dialog
+            asyncDialog.show();
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                //베스트 다운로드 데이터 셋팅
 //                HttpClient http = new HttpClient();
 //                String result = http.HttpClient("Web_Ojig2", "store_select.jsp", params);
 //                parseredData = jsonParserList(result);
@@ -118,73 +121,73 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
 //                }
 //                store_models = new ArrayList<Store_Model>();
 //                store_models.addAll(store_list);
-//
-//                return "succed";
-//            } catch (Exception e) {
-//                Toast.makeText(Store.this, getString(R.string.http_error), Toast.LENGTH_SHORT).show();
-//                e.printStackTrace();
-//                return "failed";
-//            }
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            super.onPostExecute(result);
-//
-//            LinearLayoutManager layoutManager1 = new LinearLayoutManager(Store.this);
-//            layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
-//            layoutManager1.scrollToPosition(0);
-//
-//            //어댑터 셋팅
-//            store_adapter = new Store_Adapter(Store.this, (ArrayList<Store_Model>) store_list, 2);
-//            List_Store.setLayoutManager(layoutManager1);
-//            List_Store.setAdapter(store_adapter);
-//
-//            asyncDialog.dismiss();
-//        }
-//
-//        public String[][] jsonParserList(String pRecvServerPage) {
-//            Log.i("서버에서 받은 전체 내용", pRecvServerPage);
-//            try {
-//                JSONObject json = new JSONObject(pRecvServerPage);
-//                JSONArray jArr = json.getJSONArray("List");
-//                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12"};
-//                String[][] parseredData = new String[jArr.length()][jsonName.length];
-//                for (int i = 0; i < jArr.length(); i++) {
-//                    json = jArr.getJSONObject(i);
-//                    for (int j = 0; j < jsonName.length; j++) {
-//                        parseredData[i][j] = json.getString(jsonName[j]);
-//                    }
-//                }
-//                return parseredData;
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//    }
-//
-//    public void search(String charText) {
-//
-//        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
-//        store_list.clear();
-//
-//        // 문자 입력이 없을때는 모든 데이터를 보여준다.
-//        if (charText.length() == 0) {
-//            store_list.addAll(store_models);
-//        }
-//        // 문자 입력을 할때..
-//        else {
-//            // 리스트의 모든 데이터를 검색한다.
-//            for (int i = 0; i < store_models.size(); i++) {
-//                // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
-//                if (store_models.get(i).getTitle().toLowerCase().contains(charText)) {
-//                    // 검색된 데이터를 리스트에 추가한다.
-//                    store_list.add(store_models.get(i));
-//                }
-//            }
-//        }
-//        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-//        store_models.notifyDataSetChanged();
-//    }
+
+                return "succed";
+            } catch (Exception e) {
+                Toast.makeText(Store.this, getString(R.string.http_error), Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                return "failed";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            LinearLayoutManager layoutManager1 = new LinearLayoutManager(Store.this);
+            layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
+            layoutManager1.scrollToPosition(0);
+
+            //어댑터 셋팅
+            store_adapter = new Store_Adapter(Store.this, (ArrayList<Store_Model>) store_list, 2);
+            List_Store.setLayoutManager(layoutManager1);
+            List_Store.setAdapter(store_adapter);
+
+            asyncDialog.dismiss();
+        }
+
+        public String[][] jsonParserList(String pRecvServerPage) {
+            Log.i("서버에서 받은 전체 내용", pRecvServerPage);
+            try {
+                JSONObject json = new JSONObject(pRecvServerPage);
+                JSONArray jArr = json.getJSONArray("List");
+                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12"};
+                String[][] parseredData = new String[jArr.length()][jsonName.length];
+                for (int i = 0; i < jArr.length(); i++) {
+                    json = jArr.getJSONObject(i);
+                    for (int j = 0; j < jsonName.length; j++) {
+                        parseredData[i][j] = json.getString(jsonName[j]);
+                    }
+                }
+                return parseredData;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
+
+    public void search(String charText) {
+
+        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
+        store_list.clear();
+
+        // 문자 입력이 없을때는 모든 데이터를 보여준다.
+        if (charText.length() == 0) {
+            store_list.addAll(store_models);
+        }
+        // 문자 입력을 할때..
+        else {
+            // 리스트의 모든 데이터를 검색한다.
+            for (int i = 0; i < store_models.size(); i++) {
+                // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
+                if (store_models.get(i).getTitle().toLowerCase().contains(charText)) {
+                    // 검색된 데이터를 리스트에 추가한다.
+                    store_list.add(store_models.get(i));
+                }
+            }
+        }
+        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
+        store_adapter.notifyDataSetChanged();
+    }
 }

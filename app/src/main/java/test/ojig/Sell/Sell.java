@@ -2,6 +2,7 @@ package test.ojig.Sell;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import test.ojig.Uitility.HttpClient;
  */
 
 public class Sell extends AppCompatActivity implements View.OnClickListener {
+    SharedPreferences preferences = null; //캐쉬 데이터 생성
     private EditText Edt_search;
     private RecyclerView List_Sell;
 
@@ -44,7 +46,9 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
 
-        User_Pk = getIntent().getStringExtra("User_Pk");
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
+
 
         init();
 
@@ -85,7 +89,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_write:
                 Intent intent = new Intent(Sell.this, Sell_Write.class);
-                intent.putExtra("User_Pk",User_Pk);
+                intent.putExtra("User_Pk", User_Pk);
                 startActivity(intent);
                 break;
         }
@@ -110,13 +114,14 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         protected String doInBackground(String... params) {
             try {
                 //베스트 다운로드 데이터 셋팅
+
                 HttpClient http = new HttpClient();
                 String result = http.HttpClient("Web_Ojig2", "sell_select.jsp", params);
                 parseredData = jsonParserList(result);
 
                 sell_list = new ArrayList<Sell_Model>();
                 for (int i = 0; i < parseredData.length; i++) {
-                    sell_list.add(new Sell_Model(Sell.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6], parseredData[i][7], parseredData[i][8], parseredData[i][9], parseredData[i][10], parseredData[i][11]));
+                    sell_list.add(new Sell_Model(Sell.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6], parseredData[i][7], parseredData[i][8], parseredData[i][9]));
                 }
                 sell_models = new ArrayList<Sell_Model>();
                 sell_models.addAll(sell_list);
@@ -150,7 +155,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");
-                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12"};
+                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10"};
                 String[][] parseredData = new String[jArr.length()][jsonName.length];
                 for (int i = 0; i < jArr.length(); i++) {
                     json = jArr.getJSONObject(i);
