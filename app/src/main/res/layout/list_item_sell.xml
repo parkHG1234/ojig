@@ -34,6 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/notosanscjkkr_medium_cus"
                     android:includeFontPadding="false"
@@ -49,8 +50,9 @@
                         android:id="@+id/img_sell"
                         android:layout_width="match_parent"
                         android:layout_height="130dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
                         android:src="@drawable/banner1" />
@@ -59,7 +61,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -96,36 +97,36 @@
                                 android:id="@+id/tv_address"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginRight="5dp"
                                 android:fontFamily="@font/notosanscjkkr_medium_cus"
                                 android:gravity="center_vertical"
                                 android:includeFontPadding="false"
                                 android:text="서울"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:layout_width="1dp"
                                 android:layout_height="match_parent"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginRight="5dp"
                                 android:background="@color/black" />
 
                             <TextView
                                 android:id="@+id/tv_gamecount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginRight="5dp"
                                 android:fontFamily="@font/notosanscjkkr_medium_cus"
                                 android:gravity="center_vertical"
                                 android:includeFontPadding="false"
                                 android:text="서울"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:layout_width="1dp"
                                 android:layout_height="match_parent"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginRight="5dp"
                                 android:background="@color/black" />
 
                             <TextView
@@ -137,7 +138,7 @@
                                 android:includeFontPadding="false"
                                 android:text="안심거래"
                                 android:textColor="@color/point_skyblue"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <Button
@@ -145,6 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_marginBottom="15dp"
+                            android:layout_marginRight="5dp"
                             android:background="@color/point"
                             android:fontFamily="@font/notosansmonocjkkr_bold_cus"
                             android:includeFontPadding="false"

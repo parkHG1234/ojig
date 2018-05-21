@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 
 public class Sell_Focus extends AppCompatActivity {
-    private ImageView Img, img_call;
+    private Button img_call;
     private TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_buy_name, txt_user, txt_memo;
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -129,7 +130,6 @@ public class Sell_Focus extends AppCompatActivity {
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        Img = (ImageView) findViewById(R.id.img);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_title = (TextView) findViewById(R.id.txt_title);
         txt_amount = (TextView) findViewById(R.id.txt_amount);
@@ -139,7 +139,7 @@ public class Sell_Focus extends AppCompatActivity {
         txt_buy_name = (TextView) findViewById(R.id.txt_buy_name);
         txt_user = (TextView) findViewById(R.id.txt_user);
         txt_memo = (TextView) findViewById(R.id.txt_memo);
-        img_call = (ImageView) findViewById(R.id.img_call);
+        img_call = (Button) findViewById(R.id.img_call);
 
     }
 
@@ -188,9 +188,7 @@ public class Sell_Focus extends AppCompatActivity {
             address = parseredData[0][6];
             amount = parseredData[0][7];
             memo = parseredData[0][8];
-            img = parseredData[0][9];
-            video = parseredData[0][10];
-            status = parseredData[0][11];
+            status = parseredData[0][9];
 
 
 
@@ -243,7 +241,7 @@ public class Sell_Focus extends AppCompatActivity {
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");
-                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12"};
+                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10"};
                 String[][] parseredData = new String[jArr.length()][jsonName.length];
                 for (int i = 0; i < jArr.length(); i++) {
                     json = jArr.getJSONObject(i);

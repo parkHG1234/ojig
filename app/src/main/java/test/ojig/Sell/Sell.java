@@ -116,7 +116,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
 
                 sell_list = new ArrayList<Sell_Model>();
                 for (int i = 0; i < parseredData.length; i++) {
-                    sell_list.add(new Sell_Model(Sell.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6], parseredData[i][7], parseredData[i][8], parseredData[i][9], parseredData[i][10], parseredData[i][11]));
+                    sell_list.add(new Sell_Model(Sell.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6], parseredData[i][7], parseredData[i][8], parseredData[i][9]));
                 }
                 sell_models = new ArrayList<Sell_Model>();
                 sell_models.addAll(sell_list);
@@ -150,7 +150,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");
-                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12"};
+                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10"};
                 String[][] parseredData = new String[jArr.length()][jsonName.length];
                 for (int i = 0; i < jArr.length(); i++) {
                     json = jArr.getJSONObject(i);

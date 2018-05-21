@@ -111,16 +111,10 @@ public class Flash extends AppCompatActivity {
                                 http_count.HttpClient("Web_Blah","Today_Counting.jsp", strCurToday);
                                 timer.cancel();
 
-                                if(User_Pk.equals(".")){
-                                    Intent intent = new Intent(Flash.this, Login.class);
-                                    startActivity(intent);
-                                    overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
-                                }
-                                else{
-                                    Intent intent = new Intent(Flash.this, MainActivity.class);
-                                    startActivity(intent);
-                                    overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
-                                }
+                                Intent intent = new Intent(Flash.this, Start.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
+
                                 finish();
                             }
                         }

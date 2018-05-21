@@ -11,8 +11,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import com.bumptech.glide.Glide;
 
 import test.ojig.Buy.Buy;
 import test.ojig.Local.Local;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RelativeLayout layout_buy, layout_sell, layout_promotion;
 
     String User_Pk = "";
+    ImageView Img_Add;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +40,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         User_Pk = preferences.getString("Pk", ".");
 
         checkPermission();
+
+        init();
+        setImage_Add();
     }
-
-
+    public void init(){
+        Img_Add = (ImageView)findViewById(R.id.img_add);
+    }
+    public void setImage_Add(){
+        Glide.with(this).load("http://13.209.35.228:8080/Img_Add/main_adult.jpg")
+                .into(Img_Add);
+    }
     @Override
     public void onClick(View v) {
         Intent intent = null;
@@ -63,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out);
         }
     }
-
-
 
     public int checkPermission() {
 

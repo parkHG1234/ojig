@@ -7,12 +7,12 @@
     <LinearLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:paddingBottom="15dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="15dp">
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp">
         //프리뷰 이미지
 
         <RelativeLayout
@@ -55,7 +55,7 @@
                 android:includeFontPadding="false"
                 android:text="회사명"
                 android:textColor="@color/text_gray"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txt_title"
@@ -65,7 +65,7 @@
                 android:includeFontPadding="false"
                 android:text="글쓴이 게임소개 글제목입니다."
                 android:textColor="@color/text_gray"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txt_gamename"
@@ -75,7 +75,7 @@
                 android:includeFontPadding="false"
                 android:text="게임기명"
                 android:textColor="@color/text_gray"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_date"

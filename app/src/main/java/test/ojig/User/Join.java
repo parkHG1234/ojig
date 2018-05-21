@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
@@ -29,12 +31,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import test.ojig.Adapter.Join_MyGame_Adapter;
 import test.ojig.MainActivity;
+import test.ojig.Model.Join_MyGame_Model;
 import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 
@@ -70,6 +75,11 @@ public class Join extends AppCompatActivity {
     RelativeLayout Layout_AddressInput;
     EditText Edit_Address1, Edit_Address2, Edit_Address3;
 
+    RecyclerView List_MyGame;
+    LinearLayout Layout_Add;
+    ArrayList<Join_MyGame_Model> join_models;
+    Join_MyGame_Adapter join_adapter;
+
     LinearLayout Layout_Join;
 
     String str_name = "", str_phone = "", str_pass = "", str_address_num = "", str_address_txt = "", str_address_focus = "";
@@ -93,6 +103,8 @@ public class Join extends AppCompatActivity {
         setAddressInput_Event();
         setEdit_Address3();
 
+        setList_MyGame();
+        setList_Add();
         setJoin_Event();
     }
     public void init(){
@@ -136,6 +148,9 @@ public class Join extends AppCompatActivity {
         Edit_Address1 = (EditText)findViewById(R.id.edit_address1);
         Edit_Address2 = (EditText)findViewById(R.id.edit_address2);
         Edit_Address3 = (EditText)findViewById(R.id.edit_address3);
+
+        List_MyGame = (RecyclerView)findViewById(R.id.list_mygame);
+        Layout_Add = (LinearLayout)findViewById(R.id.layout_add);
 
         Layout_Join = (LinearLayout)findViewById(R.id.layout_join);
     }
@@ -433,6 +448,29 @@ public class Join extends AppCompatActivity {
             }
         });
     }
+    public void setList_MyGame(){
+        join_models = new ArrayList<Join_MyGame_Model>();
+        join_models.add(new Join_MyGame_Model(Join.this, "", ""));
+
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(Join.this);
+        layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager1.scrollToPosition(0);
+
+        //베스트 무료체험 어댑터 셋팅
+        join_adapter = new Join_MyGame_Adapter(Join.this, join_models, 1);
+        List_MyGame.setLayoutManager(layoutManager1);
+        List_MyGame.setAdapter(join_adapter);
+    }
+    public void setList_Add(){
+        Layout_Add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                join_models.add(new Join_MyGame_Model(Join.this, "", ""));
+                join_adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
     public void Address_Flag(){
         if(!Edit_Address1.getText().toString().equals("") && !Edit_Address2.getText().toString().equals("") && !Edit_Address3.getText().toString().equals("")){
             flag_address = true;
