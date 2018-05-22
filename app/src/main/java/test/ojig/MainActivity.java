@@ -71,9 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.layout_promotion:
                 intent = new Intent(MainActivity.this, Promotion.class);
                 break;
-            case R.id.layout_store:
-                intent = new Intent(MainActivity.this, Store.class);
-                break;
 
         }
         if (intent != null) {
