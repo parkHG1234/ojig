@@ -31,6 +31,7 @@ public class Promotion_Focus extends AppCompatActivity {
     TextView Txt_Name, Txt_Title, Txt_Date, Txt_DateNum, Txt_Company, Txt_Address, Txt_Memo;
 
     String promotion_pk = "";
+    String category = "";
     String name = "";
     String title = "";
     String date = "";
@@ -103,6 +104,7 @@ public class Promotion_Focus extends AppCompatActivity {
             company_name = parseredData[0][5];
             company_address = parseredData[0][6];
             contents = parseredData[0][7];
+            category = parseredData[0][8];
 
             Txt_Name.setText(name);
             Txt_Title.setText(title);
@@ -112,13 +114,13 @@ public class Promotion_Focus extends AppCompatActivity {
             Txt_Address.setText(company_address);
             Txt_Memo.setText(contents);
 
-            try {
-                String En_img = URLEncoder.encode(promotion_pk, "utf-8");
-                Glide.with(Promotion_Focus.this).load("http://13.209.35.228:8080/Promotion/" + En_img + ".jpg")
+            if(category.equals("adult")){
+                Glide.with(Promotion_Focus.this).load("http://13.209.35.228:8080/Promotion/item/" + promotion_pk + ".jpg")
                         .into(Img);
-                Log.i("test", En_img);
-            } catch (UnsupportedEncodingException e) {
-
+            }
+            else if(category.equals("adult_banner")){
+                Glide.with(Promotion_Focus.this).load("http://13.209.35.228:8080/Promotion/banner/" + promotion_pk + ".jpg")
+                        .into(Img);
             }
 
             asyncDialog.dismiss();
@@ -129,7 +131,7 @@ public class Promotion_Focus extends AppCompatActivity {
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");
-                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8"};
+                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9"};
                 String[][] parseredData = new String[jArr.length()][jsonName.length];
                 for (int i = 0; i < jArr.length(); i++) {
                     json = jArr.getJSONObject(i);

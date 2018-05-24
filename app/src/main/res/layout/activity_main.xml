@@ -245,11 +245,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_others"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#333a4a"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:onClick="onClick">
 
                     <TextView
                         android:layout_width="wrap_content"

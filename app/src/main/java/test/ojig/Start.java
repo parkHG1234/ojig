@@ -29,8 +29,8 @@ public class Start extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        preferences = getSharedPreferences("blahblah", MODE_PRIVATE);
-        User_Pk = preferences.getString("Pk", ".");
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
 
         start();
     }
@@ -46,12 +46,12 @@ public class Start extends AppCompatActivity {
                             if(User_Pk.equals(".")){
                                 Intent intent = new Intent(Start.this, Login.class);
                                 startActivity(intent);
-                                overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
+                                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                             }
                             else{
                                 Intent intent = new Intent(Start.this, MainActivity.class);
                                 startActivity(intent);
-                                overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_fade_out);
+                                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                             }
                             timer.cancel();
                             finish();

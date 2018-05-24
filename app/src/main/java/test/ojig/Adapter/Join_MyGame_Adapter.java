@@ -5,12 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
 import test.ojig.Model.Buy_Model;
 import test.ojig.Model.Join_MyGame_Model;
 import test.ojig.R;
+import test.ojig.User.Join;
 
 /**
  * Created by 박효근 on 2018-05-20.
@@ -41,6 +43,8 @@ public class Join_MyGame_Adapter extends RecyclerView.Adapter<Join_MyGame_Adapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Join_MyGame_Model items = arrData.get(position);
+        Join.mygame_name[position] = holder.Edit_name.getText().toString();
+        Join.mygame_gamecount[position] = holder.Edit_count.getText().toString();
     }
 
     @Override
@@ -52,10 +56,11 @@ public class Join_MyGame_Adapter extends RecyclerView.Adapter<Join_MyGame_Adapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
+        EditText Edit_name, Edit_count;
         public ViewHolder(View itemView) {
             super(itemView);
+            Edit_name = (EditText) itemView.findViewById(R.id.edit_name);
+            Edit_count = (EditText) itemView.findViewById(R.id.edit_count);
         }
-
     }
 }

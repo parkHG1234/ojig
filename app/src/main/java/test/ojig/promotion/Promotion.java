@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -42,22 +43,36 @@ public class Promotion extends AppCompatActivity {
     private TimerTask myTask;
     private Timer timer;
 
+    ImageView Img_Back;
+
     RecyclerView List_Promotion;
     ArrayList<Promotion_Model> promotion_models;
     Promotion_Adapter promotion_adapter;
+
+    String[][] parseredData_banner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promotion);
 
         init();
+        setImg_Back();
 
         Async async = new Async();
         async.execute();
-        setViewPager();
     }
     public void init(){
+        Img_Back = (ImageView)findViewById(R.id.img_back);
         List_Promotion = (RecyclerView)findViewById(R.id.list_promotion);
+    }
+    public void setImg_Back(){
+        Img_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+            }
+        });
     }
     public void setViewPager(){
         //프래그먼트 정의
@@ -71,9 +86,9 @@ public class Promotion extends AppCompatActivity {
         mViewPager = (ViewPager)findViewById(R.id.main1_viewpager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(parseredData_banner.length);
         ////////////
-        final int pageCount = 4;
+        final int pageCount = parseredData_banner.length;
         indicator.setNumberOfItems(pageCount);
 
         //페이지 자동 전환
@@ -131,6 +146,11 @@ public class Promotion extends AppCompatActivity {
                 try {
                 //베스트 다운로드 데이터 셋팅
                 HttpClient http = new HttpClient();
+                //배너
+                String result1 = http.HttpClient("Web_Ojig", "Adult_Promotion_Banner.jsp", params);
+                parseredData_banner = jsonParserList(result1);
+
+                //아이템
                 String result = http.HttpClient("Web_Ojig", "Adult_Promotion.jsp", params);
                 parseredData = jsonParserList(result);
 
@@ -150,6 +170,8 @@ public class Promotion extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+
+            setViewPager();
 
             LinearLayoutManager layoutManager1 = new LinearLayoutManager(Promotion.this);
             layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
@@ -195,9 +217,10 @@ public class Promotion extends AppCompatActivity {
             Fragment f = new Promotion_ViewPage();
             Bundle bundle = new Bundle();
 
+
             //이미지 URL 동적 전송 ex) 1_1
-            String Image_txt =  "banner" + Integer.toString(position + 1);
-            bundle.putString("Image", Image_txt);
+            String promotion_pk =  parseredData_banner[position][0];
+            bundle.putString("Promotion_Pk", promotion_pk);
             f.setArguments(bundle);
             return f;
         }
@@ -205,7 +228,7 @@ public class Promotion extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return parseredData_banner.length;
         }
 
         @Override
@@ -213,5 +236,11 @@ public class Promotion extends AppCompatActivity {
             return null;
         }
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
 }

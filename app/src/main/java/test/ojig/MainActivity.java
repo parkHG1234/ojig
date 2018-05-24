@@ -14,12 +14,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 
 import test.ojig.Buy.Buy;
 import test.ojig.Local.Local;
+import test.ojig.Others.Others;
 import test.ojig.Sell.Sell;
 import test.ojig.Store.Store;
 import test.ojig.promotion.Promotion;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RelativeLayout layout_buy, layout_sell, layout_promotion;
 
     String User_Pk = "";
+
     ImageView Img_Add;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +74,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.layout_promotion:
                 intent = new Intent(MainActivity.this, Promotion.class);
                 break;
-
+            case R.id.layout_others:
+                intent = new Intent(MainActivity.this, Others.class);
+                break;
         }
         if (intent != null) {
             startActivity(intent);
-            overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out);
+            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
         }
     }
 

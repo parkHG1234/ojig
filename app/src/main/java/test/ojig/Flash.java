@@ -38,11 +38,6 @@ public class Flash extends AppCompatActivity {
     String Project_version = "1.0";
     String[][] ParsedData_Setting;
 
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
-    String User_Pk = "";
-    Boolean Guide = true;
-
     TimerTask myTask;
     Timer timer;
     String strCurToday;
@@ -52,28 +47,12 @@ public class Flash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flash);
 
-        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
-        User_Pk = preferences.getString("User_Pk", ".");
         //Guide = preferences.getBoolean("Guide", true);
 
         currentTime();
 
         Check_Setting();
 
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo("test.blahblah", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("ttt","key_hash="+ Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            Log.d("ttt",e +"");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            Log.d("ttt",e +"");
-        }
     }
     public void Check_Setting(){
         HttpClient http_setting = new HttpClient();

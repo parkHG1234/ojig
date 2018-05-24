@@ -77,7 +77,9 @@ public class Join extends AppCompatActivity {
 
     RecyclerView List_MyGame;
     LinearLayout Layout_Add;
-    ArrayList<Join_MyGame_Model> join_models;
+    public static ArrayList<Join_MyGame_Model> join_models;
+    public static String[] mygame_name;
+    public static String[] mygame_gamecount;
     Join_MyGame_Adapter join_adapter;
 
     LinearLayout Layout_Join;
@@ -87,7 +89,7 @@ public class Join extends AppCompatActivity {
 
     TimerTask myTask;
     Timer timer;
-    int rnd = 0;
+    int rnd = 0; int mygame_count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +110,12 @@ public class Join extends AppCompatActivity {
         setJoin_Event();
     }
     public void init(){
+        mygame_name = new String[20];
+        mygame_gamecount = new String[20];
+        for(int i = 0 ; i < 20 ; i++){
+            mygame_name[i] = " ";
+            mygame_gamecount[i] = " ";
+        }
         Edit_Name = (EditText)findViewById(R.id.edit_name);
         Line_Name = (TextView)findViewById(R.id.line_name);
         Img_NameCheck = (ImageView)findViewById(R.id.img_namecheck);
@@ -451,7 +459,7 @@ public class Join extends AppCompatActivity {
     public void setList_MyGame(){
         join_models = new ArrayList<Join_MyGame_Model>();
         join_models.add(new Join_MyGame_Model(Join.this, "", ""));
-
+        mygame_count++;
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(Join.this);
         layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager1.scrollToPosition(0);
@@ -467,6 +475,7 @@ public class Join extends AppCompatActivity {
             public void onClick(View v) {
                 join_models.add(new Join_MyGame_Model(Join.this, "", ""));
                 join_adapter.notifyDataSetChanged();
+                mygame_count++;
             }
         });
     }
@@ -483,8 +492,20 @@ public class Join extends AppCompatActivity {
         Layout_Join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for(int i = 0; i < List_MyGame.getChildCount(); i++){
+                    Log.i("name", mygame_name[i]);
+                    Log.i("count", mygame_gamecount[i]);
+                }
                 Async async = new Async();
                 async.execute(str_phone, str_pass, str_name, str_address_num, str_address_txt, str_address_focus);
+
+//                ArrayList<String> mannschaftsnamen = new ArrayList<String>();
+//                EditText et;
+//                for (int i = 0; i < myList.getCount(); i++) {
+//                    v = myList.getAdapter().getView(i, null, null);
+//                    et = (EditText) v.findViewById(i);
+//                    mannschaftsnamen.add(et.getText().toString());
+//                }
             }
         });
     }

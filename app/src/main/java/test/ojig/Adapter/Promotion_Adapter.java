@@ -52,14 +52,10 @@ public class Promotion_Adapter extends RecyclerView.Adapter<Promotion_Adapter.Vi
         holder.Txt_Company.setText(items.getCompanyName());
         holder.Txt_Title.setText(items.getTitle());
         holder.Txt_Date.setText(items.getDate()+"");
-        try {
-            String En_img = URLEncoder.encode(items.getPk(), "utf-8");
-            Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Promotion/" + En_img + ".jpg")
-                    .into(holder.Img_Img);
-            Log.i("test", En_img);
-        } catch (UnsupportedEncodingException e) {
 
-        }
+        Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Promotion/item/" + items.getPk() + ".jpg")
+                .into(holder.Img_Img);
+
         holder.Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
