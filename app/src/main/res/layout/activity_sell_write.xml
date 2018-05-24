@@ -20,7 +20,8 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/back" />
+            android:src="@drawable/back"
+            android:onClick="onClick"/>
 
     </LinearLayout>
 

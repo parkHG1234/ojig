@@ -92,6 +92,10 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
                 intent.putExtra("User_Pk", User_Pk);
                 startActivity(intent);
                 break;
+            case R.id.img_back:
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                break;
         }
     }
 

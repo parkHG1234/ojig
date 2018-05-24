@@ -31,9 +31,9 @@ import test.ojig.Fragment.Sell_ViewPager_Fragment;
 import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 
-public class Sell_Focus extends AppCompatActivity {
+public class Sell_Focus extends AppCompatActivity implements View.OnClickListener{
     private Button img_call;
-    private TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_buy_name, txt_user, txt_memo;
+    private TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_sell_name, txt_user, txt_memo;
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private TimerTask myTask;
@@ -70,25 +70,30 @@ public class Sell_Focus extends AppCompatActivity {
 
         Async async = new Async();
         async.execute(sell_pk);
-        setViewPager();
     }
 
-    public void setViewPager(){
+
+
+
+    public void setViewPager(String[][] data) {
         //프래그먼트 정의
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        final DotIndicator indicator = (DotIndicator)findViewById(R.id.indicator);
+
+        final int pageCount = data.length;
+
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), data);
+        final DotIndicator indicator = (DotIndicator) findViewById(R.id.indicator);
         // 도트 색 지정
         indicator.setSelectedDotColor(getResources().getColor(R.color.point));
         indicator.setUnselectedDotColor(Color.parseColor("#dadada"));
         indicator.bringToFront();
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager)findViewById(R.id.sell_viewpager);
+        mViewPager = (ViewPager) findViewById(R.id.sell_viewpager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(data.length - 1);
         ////////////
-        final int pageCount = 4;
         indicator.setNumberOfItems(pageCount);
+
 
         //페이지 자동 전환
         myTask = new TimerTask() {
@@ -97,9 +102,9 @@ public class Sell_Focus extends AppCompatActivity {
                     @Override
                     public void run() {
                         int currentPage = mViewPager.getCurrentItem();
-                        if( currentPage >= pageCount - 1 ) mViewPager.setCurrentItem( 0, true );
-                        else mViewPager.setCurrentItem( currentPage + 1, true );
-                        indicator.setSelectedItem( ( currentPage + 1 == pageCount ) ? 0 : currentPage + 1, true );
+                        if (currentPage >= pageCount - 1) mViewPager.setCurrentItem(0, true);
+                        else mViewPager.setCurrentItem(currentPage + 1, true);
+                        indicator.setSelectedItem((currentPage + 1 == pageCount) ? 0 : currentPage + 1, true);
                     }
                 });
             }
@@ -126,9 +131,7 @@ public class Sell_Focus extends AppCompatActivity {
         });
     }
 
-    public void init(){
-
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+    public void init() {
 
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_title = (TextView) findViewById(R.id.txt_title);
@@ -136,20 +139,35 @@ public class Sell_Focus extends AppCompatActivity {
         txt_address = (TextView) findViewById(R.id.txt_address);
         txt_company_name = (TextView) findViewById(R.id.txt_company_name);
         txt_company_focus = (TextView) findViewById(R.id.txt_company_focus);
-        txt_buy_name = (TextView) findViewById(R.id.txt_buy_name);
+        txt_sell_name = (TextView) findViewById(R.id.txt_sell_name);
         txt_user = (TextView) findViewById(R.id.txt_user);
         txt_memo = (TextView) findViewById(R.id.txt_memo);
         img_call = (Button) findViewById(R.id.img_call);
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.img_back:
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                break;
+        }
+    }
+
     public class Async extends AsyncTask<String, Void, String> {
         ProgressDialog asyncDialog = new ProgressDialog(Sell_Focus.this);
+        HttpClient http;
+        String result;
 
-        String[][] parseredData;
+        String[][] sell_parseredData;
+        String[][] user_parseredData;
+        String[][] image_parseredData;
 
         @Override
         protected void onPreExecute() {
+            http = new HttpClient();
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             asyncDialog.setMessage("wait...");
             // show dialog
@@ -162,10 +180,18 @@ public class Sell_Focus extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
                 //베스트 다운로드 데이터 셋팅
-                HttpClient http = new HttpClient();
 
-                String result = http.HttpClient("Web_Ojig2", "sell_focus_select.jsp", params);
-                parseredData = jsonParserList(result);
+                result = http.HttpClient("Web_Ojig2", "sell_focus_select.jsp", params);
+                sell_parseredData = jsonParserList(result);
+
+
+                result = http.HttpClient("Web_Ojig2", "user_select.jsp", sell_parseredData[0][2]);
+                user_parseredData = UserjsonParserList(result);
+
+
+                result = http.HttpClient("Web_Ojig2", "sell_focus_image_select.jsp", sell_pk);
+                image_parseredData = ImagejsonParserList(result);
+
 
                 return "succed";
             } catch (Exception e) {
@@ -179,59 +205,49 @@ public class Sell_Focus extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            sell_pk = parseredData[0][0];
-            category = parseredData[0][1];
-            user_pk = parseredData[0][2];
-            name = parseredData[0][3];
-            title = parseredData[0][4];
-            price = parseredData[0][5];
-            address = parseredData[0][6];
-            amount = parseredData[0][7];
-            memo = parseredData[0][8];
-            status = parseredData[0][9];
+
+            sell_pk = sell_parseredData[0][0];
+            category = sell_parseredData[0][1];
+            user_pk = sell_parseredData[0][2];
+            name = sell_parseredData[0][3];
+            title = sell_parseredData[0][4];
+            price = sell_parseredData[0][5];
+            address = sell_parseredData[0][6];
+            amount = sell_parseredData[0][7];
+            memo = sell_parseredData[0][8];
+            status = sell_parseredData[0][9];
 
 
+            phone = user_parseredData[0][1];
+            pass = user_parseredData[0][2];
+            company_name = user_parseredData[0][3];
+            company_num = user_parseredData[0][4];
+            company_txt = user_parseredData[0][5];
+            company_focus = user_parseredData[0][6];
 
-            HttpClient http = new HttpClient();
-            result = http.HttpClient("Web_Ojig2", "user_select.jsp", user_pk);
-            parseredData = UserjsonParserList(result);
 
+            setViewPager(image_parseredData);
 
-
-            phone = parseredData[0][1];
-            pass = parseredData[0][2];
-            company_name = parseredData[0][3];
-            company_num = parseredData[0][4];
-            company_txt = parseredData[0][5];
-            company_focus = parseredData[0][6];
 
             txt_name.setText(name);
             txt_title.setText(title);
             txt_address.setText(address);
             txt_amount.setText(amount + "대희망");
             txt_memo.setText(memo);
-            txt_buy_name.setText(name);
+            txt_sell_name.setText(address);
             txt_user.setText(company_name);
             txt_company_focus.setText(company_focus);
             txt_company_name.setText(company_name);
             img_call.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+phone)));
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone)));
                 }
             });
 
 
 //            Txt_Memo.setText(contents);
 
-//            try {
-//                String En_img = URLEncoder.encode(buy_pk, "utf-8");
-//                Glide.with(Buy_Focus.this).load("http://13.209.35.228:8080/Promotion/" + En_img + ".jpg")
-//                        .into(Img);
-//                Log.i("test", En_img);
-//            } catch (UnsupportedEncodingException e) {
-//
-//            }
 
             asyncDialog.dismiss();
         }
@@ -276,6 +292,27 @@ public class Sell_Focus extends AppCompatActivity {
                 return null;
             }
         }
+
+
+        public String[][] ImagejsonParserList(String pRecvServerPage) {
+            Log.i("서버에서 받은 전체 내용", pRecvServerPage);
+            try {
+                JSONObject json = new JSONObject(pRecvServerPage);
+                JSONArray jArr = json.getJSONArray("List");
+                String[] jsonName = {"msg1", "msg2"};
+                String[][] parseredData = new String[jArr.length()][jsonName.length];
+                for (int i = 0; i < jArr.length(); i++) {
+                    json = jArr.getJSONObject(i);
+                    for (int j = 0; j < jsonName.length; j++) {
+                        parseredData[i][j] = json.getString(jsonName[j]);
+                    }
+                }
+                return parseredData;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 
     @Override
@@ -287,8 +324,17 @@ public class Sell_Focus extends AppCompatActivity {
 
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        public SectionsPagerAdapter(FragmentManager fm) {
+        String[][] data;
+        int pagercount;
+
+        public SectionsPagerAdapter(FragmentManager fm, String[][] data) {
             super(fm);
+            this.data = data;
+            if(data.length != 0) {
+                pagercount = data.length;
+            }else{
+                pagercount = 3;
+            }
         }
 
         @Override
@@ -299,7 +345,12 @@ public class Sell_Focus extends AppCompatActivity {
             Bundle bundle = new Bundle();
 
             //이미지 URL 동적 전송 ex) 1_1
-            String Image_txt =  "banner" + Integer.toString(position + 1);
+            String Image_txt;
+            if (data.length != 0) {
+                Image_txt = data[position][1];
+            } else {
+                Image_txt = "banner" + Integer.toString(position + 1);
+            }
             bundle.putString("Image", Image_txt);
             f.setArguments(bundle);
             return f;
@@ -308,7 +359,8 @@ public class Sell_Focus extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+
+            return pagercount;
         }
 
         @Override

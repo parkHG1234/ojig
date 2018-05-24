@@ -32,11 +32,9 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_sell, parent, false);
 
         return new ViewHolder(v);
-
     }
 
     @Override
@@ -44,6 +42,7 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
         final Sell_Model items = arrData.get(position);
         holder.tv_name.setText(items.getName());
         holder.tv_title.setText(items.getTitle());
+        holder.tv_price.setText(items.getPrice() + "원");
         holder.tv_address.setText(items.getAddress());
         holder.tv_gamecount.setText(items.getAmount() + "대 희망");
 //
@@ -75,7 +74,8 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout Layout;
         private TextView tv_title, tv_name, tv_price, tv_address, tv_gamecount;
-        private ImageView img_deal, img_sell, img_call;
+        private ImageView img_deal, img_sell;
+        private Button img_call;
         public ViewHolder(View itemView) {
             super(itemView);
             Layout = (LinearLayout)itemView.findViewById(R.id.layout);
@@ -86,7 +86,7 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
             tv_gamecount = (TextView)itemView.findViewById(R.id.tv_gamecount);
             img_deal = (ImageView)itemView.findViewById(R.id.img_deal);
             img_sell = (ImageView)itemView.findViewById(R.id.img_sell);
-            img_call = (ImageView)itemView.findViewById(R.id.img_call);
+            img_call = (Button)itemView.findViewById(R.id.img_call);
 
         }
 

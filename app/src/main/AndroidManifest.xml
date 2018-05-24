@@ -17,15 +17,14 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".User.Login">
-        </activity>
-        <activity android:name=".Start"></activity>
-        <activity android:name=".Flash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Start"></activity>
+
 
         <activity
             android:name=".Buy.Buy"
@@ -57,19 +56,21 @@
         <activity
             android:name=".Store.Store"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".Others.Others"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Store.Store_Write"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Store.Store_Focus"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".User.Join"
             android:screenOrientation="portrait"></activity>
-
         <activity android:name=".User.Join_Address"
             android:screenOrientation="portrait"></activity>
-
         <activity android:name=".promotion.Promotion"></activity>
-
         <activity android:name=".promotion.Promotion_Focus"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 </manifest>

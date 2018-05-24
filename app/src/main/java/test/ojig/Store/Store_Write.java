@@ -22,8 +22,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,28 +36,31 @@ import java.util.Arrays;
 
 import test.ojig.Model.User_Model;
 import test.ojig.R;
-import test.ojig.Uitility.FileUpload;
 import test.ojig.Uitility.HttpClient;
 
 public class Store_Write extends AppCompatActivity implements View.OnClickListener {
 
     private String area = "";
-    private Button btn_area;
-    private AlertDialog dialog;
+    private Button btn_deal, btn_rent;
     private String Profile = "";
     private String User_Pk;
     private ArrayList<User_Model> user_models;
     private String[][] parseredData;
-    private EditText edt_title, edt_name, edt_amount, edt_memo, edt_company_name, edt_phone, edt_company_focus;
+    private AlertDialog dialog;
+    private Button btn_area;
+    private EditText et_title, et_space, et_layer, et_price, et_deposit, et_rental, et_memo, et_company_name, et_phone, et_company_focus;
     private ImageView img_write0, img_write1, img_write2, img_write3, img_write4, img_write5;
     private ArrayList<String> img_path;
     private ArrayList<ImageView> img_obj;
+    private LinearLayout layout_deal, layout_rent;
+    private Boolean flag = true;
+    private String type = "deal";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sell_write);
+        setContentView(R.layout.activity_store_write);
 
         init();
     }
@@ -80,34 +85,73 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
         img_obj = new ArrayList<ImageView>(Arrays.asList(img_write0, img_write1, img_write2, img_write3, img_write4, img_write5));
 
         User_Pk = getIntent().getStringExtra("User_Pk");
-//        btn_area = (Button) findViewById(R.id.btn_area);
-//        btn_area.setOnClickListener(this);
-//        edt_title = (EditText) findViewById(R.id.edt_title);
-//        edt_name = (EditText) findViewById(R.id.edt_name);
-//        edt_amount = (EditText) findViewById(R.id.edt_amount);
-//        edt_memo = (EditText) findViewById(R.id.edt_memo);
-//        edt_company_name = (EditText) findViewById(R.id.edt_company_name);
-//        edt_phone = (EditText) findViewById(R.id.edt_phone);
-//        edt_company_focus = (EditText) findViewById(R.id.edt_company_focus);
+
+        btn_area = (Button) findViewById(R.id.btn_area);
+        et_title = (EditText) findViewById(R.id.et_title);
+        et_space = (EditText) findViewById(R.id.et_space);
+        et_layer = (EditText) findViewById(R.id.et_layer);
+        et_price = (EditText) findViewById(R.id.et_price);
+        et_deposit = (EditText) findViewById(R.id.et_deposit);
+        et_rental = (EditText) findViewById(R.id.et_rental);
+        et_memo = (EditText) findViewById(R.id.et_memo);
+        et_company_name = (EditText) findViewById(R.id.et_company_name);
+        et_phone = (EditText) findViewById(R.id.et_phone);
+        et_company_focus = (EditText) findViewById(R.id.et_company_focus);
+        btn_deal = (Button) findViewById(R.id.btn_deal);
+        btn_rent = (Button) findViewById(R.id.btn_rent);
+        layout_deal = (LinearLayout) findViewById(R.id.layout_deal);
+        layout_rent = (LinearLayout) findViewById(R.id.layout_rent);
+        btn_rent.setSelected(true);
+
+        setBtn();
 //
-//        HttpClient http = new HttpClient();
-//        String result = http.HttpClient("Web_Ojig2", "user_select.jsp", User_Pk);
-//        parseredData = jsonParserList(result);
-//
-//
-//        user_models = new ArrayList<User_Model>();
-//        for (int i = 0; i < parseredData.length; i++) {
-//            user_models.add(new User_Model(Sell_Write.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6]));
-//        }
-//
-//        edt_company_name.setText(user_models.get(0).getCompany_Name());
-//        edt_phone.setText(user_models.get(0).getPhone());
-//        edt_company_focus.setText(user_models.get(0).getCompany_Focus());
+        HttpClient http = new HttpClient();
+        String result = http.HttpClient("Web_Ojig2", "user_select.jsp", User_Pk);
+        parseredData = jsonParserList(result);
+
+
+        user_models = new ArrayList<User_Model>();
+        for (int i = 0; i < parseredData.length; i++) {
+            user_models.add(new User_Model(Store_Write.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6]));
+        }
+
+        et_company_name.setText(user_models.get(0).getCompany_Name());
+        et_phone.setText(user_models.get(0).getPhone());
+        et_company_focus.setText(user_models.get(0).getCompany_Focus());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_write:
+                btn_write();
+                break;
+            case R.id.img_write0:
+                Album(0);
+                break;
+            case R.id.img_write1:
+                Album(1);
+                break;
+            case R.id.img_write2:
+                Album(2);
+                break;
+            case R.id.img_write3:
+                Album(3);
+                break;
+            case R.id.img_write4:
+                Album(4);
+                break;
+            case R.id.img_write5:
+                Album(5);
+                break;
+            case R.id.btn_deal:
+                flag = true;
+                setBtn();
+                break;
+            case R.id.btn_rent:
+                flag = false;
+                setBtn();
+                break;
             case R.id.btn_area:
                 setDialog_Area(v);
                 break;
@@ -144,30 +188,37 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
             case R.id.jeju:
                 dialogset("제주");
                 break;
-            case R.id.btn_write:
-                btn_write();
-                break;
-            case R.id.img_write0:
-                Album(0);
-                break;
-            case R.id.img_write1:
-                Album(1);
-                break;
-            case R.id.img_write2:
-                Album(2);
-                break;
-            case R.id.img_write3:
-                Album(3);
-                break;
-            case R.id.img_write4:
-                Album(4);
-                break;
-            case R.id.img_write5:
-                Album(5);
-                break;
         }
     }
 
+
+    public void setDialog_Area(View view) {
+        LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.dialog_area, (ViewGroup) view.findViewById(R.id.Root));
+
+        final AlertDialog.Builder aDialog = new AlertDialog.Builder(Store_Write.this);
+        aDialog.setCancelable(false);
+        aDialog.setView(layout);
+        // Dialog 사이즈 조절 하기
+        dialog = aDialog.create();
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                if (i == KeyEvent.KEYCODE_BACK) {
+                    dialog.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        dialog.show();
+    }
+
+    private void dialogset(String area) {
+        this.area = area;
+        btn_area.setText(area);
+        dialog.dismiss();
+    }
 
     public void Album(int i) {
         Uri uri = Uri.parse("content://media/external/images/media");
@@ -181,6 +232,29 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
         startActivityForResult(intent, i);
     }
 
+    public void setBtn() {
+        if (flag) {
+            btn_deal.setSelected(true);
+            btn_deal.setBackgroundColor(getResources().getColor(R.color.point));
+            btn_deal.setTextColor(getResources().getColor(R.color.white));
+            btn_rent.setSelected(false);
+            btn_rent.setBackgroundColor(getResources().getColor(R.color.white));
+            btn_rent.setTextColor(getResources().getColor(R.color.black));
+            layout_deal.setVisibility(View.VISIBLE);
+            layout_rent.setVisibility(View.GONE);
+            type = "deal";
+        } else {
+            btn_deal.setSelected(false);
+            btn_deal.setBackgroundColor(getResources().getColor(R.color.white));
+            btn_deal.setTextColor(getResources().getColor(R.color.black));
+            btn_rent.setSelected(true);
+            btn_rent.setBackgroundColor(getResources().getColor(R.color.point));
+            btn_rent.setTextColor(getResources().getColor(R.color.white));
+            layout_deal.setVisibility(View.GONE);
+            layout_rent.setVisibility(View.VISIBLE);
+            type = "rent";
+        }
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         try {
@@ -225,60 +299,79 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    public void fileUpload() {
-        FileUpload fileUpload = new FileUpload(Store_Write.this, img_path, User_Pk);
-        fileUpload.execute();
-    }
 
     private void btn_write() {
+        if (et_title.getText().length() != 0) {
+            if (!area.equals("")) {
+                if (et_space.getText().length() != 0) {
+                    if (et_layer.getText().length() != 0) {
+                        if (flag) {
+                            if (et_price.getText().length() != 0) {
+                                if (et_memo.getText().length() != 0) {
+                                    HttpClient http = new HttpClient();
+                                    String result = http.HttpClient("Web_Ojig2", "store_write.jsp", type, User_Pk, et_title.getText().toString(), et_space.getText().toString(), et_layer.getText().toString(), et_price.getText().toString(), area, et_memo.getText().toString(), et_company_name.getText().toString(), et_phone.getText().toString(), et_company_focus.getText().toString());
 
-        if (edt_title.getText().length() != 0) {
-            if (edt_name.getText().length() != 0) {
-                if (!area.equals("")) {
-                    if (edt_amount.getText().length() != 0) {
-                        if (edt_memo.getText().length() != 0) {
-                            if (edt_company_name.getText().length() != 0) {
-                                if (edt_phone.getText().length() != 0) {
-                                    if (edt_company_focus.getText().length() != 0) {
-                                        HttpClient http = new HttpClient();
-                                        String result = http.HttpClient("Web_Ojig2", "sell_write.jsp", User_Pk, edt_title.getText().toString(), edt_name.getText().toString(), area, edt_amount.getText().toString(),
-                                                edt_memo.getText().toString(), edt_company_name.getText().toString(), edt_phone.getText().toString(), edt_company_focus.getText().toString(),String.valueOf(img_path.size()));
-                                        Log.i("result", result);
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(result);
-                                            if (jsonObject.getString("msg1").equals("succed")) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(result);
+                                        if (jsonObject.getString("msg1").equals("succed")) {
 
-                                                fileUpload();
-                                                finish();
-                                            } else {
-                                                Toast.makeText(getApplicationContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_LONG).show();
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
+                                            finish();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_LONG).show();
                                         }
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "주소를 입력해주세요", Toast.LENGTH_LONG).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "핸드폰번호를 입력해주세요", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "메모를 입력해주세요", Toast.LENGTH_LONG).show();
+
                                 }
                             } else {
-                                Toast.makeText(getApplicationContext(), "회사명을 입력해주세요", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "매매가를 입력해주세요", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), "메모를 입력해주세요", Toast.LENGTH_LONG).show();
+                            if (et_deposit.getText().length() != 0) {
+                                if (et_rental.getText().length() != 0) {
+                                    if (et_memo.getText().length() != 0) {
+                                        HttpClient http = new HttpClient();
+                                        String result = http.HttpClient("Web_Ojig2", "store_write.jsp", type, User_Pk, et_title.getText().toString(), et_space.getText().toString(), et_layer.getText().toString(), et_deposit.getText().toString(),
+                                                et_rental.getText().toString(), area, et_memo.getText().toString(), et_company_name.getText().toString(), et_phone.getText().toString(), et_company_focus.getText().toString());
+
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(result);
+                                        if (jsonObject.getString("msg1").equals("succed")) {
+
+                                            finish();
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_LONG).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "메모가를 입력해주세요", Toast.LENGTH_LONG).show();
+
+                                    }
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "임대료를 입력해주세요", Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "보증금을 입력해주세요", Toast.LENGTH_LONG).show();
+
+                            }
                         }
+
                     } else {
-                        Toast.makeText(getApplicationContext(), "구입희망 수량을 입력해주세요", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "층수를 입력해주세요", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "지역을 선택해주세요", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "평수를 입력해주세요", Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "구입희망 게임기을 입력해주세요", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "지역를 선택해주세요", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "글제목을 입력해주세요", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "제목를 입력해주세요", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -313,31 +406,23 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
         return bitmap;
     }
 
-    public void setDialog_Area(View view) {
-        LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.dialog_area, (ViewGroup) view.findViewById(R.id.Root));
-
-        final AlertDialog.Builder aDialog = new AlertDialog.Builder(Store_Write.this);
-        aDialog.setCancelable(false);
-        aDialog.setView(layout);
-        // Dialog 사이즈 조절 하기
-        dialog = aDialog.create();
-        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
-                if (i == KeyEvent.KEYCODE_BACK) {
-                    dialog.dismiss();
-                    return true;
+    public String[][] jsonParserList(String pRecvServerPage) {
+        Log.i("서버에서 받은 전체 내용", pRecvServerPage);
+        try {
+            JSONObject json = new JSONObject(pRecvServerPage);
+            JSONArray jArr = json.getJSONArray("List");
+            String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7"};
+            String[][] parseredData = new String[jArr.length()][jsonName.length];
+            for (int i = 0; i < jArr.length(); i++) {
+                json = jArr.getJSONObject(i);
+                for (int j = 0; j < jsonName.length; j++) {
+                    parseredData[i][j] = json.getString(jsonName[j]);
                 }
-                return false;
             }
-        });
-        dialog.show();
-    }
-
-    private void dialogset(String area) {
-        this.area = area;
-        btn_area.setText(area);
-        dialog.dismiss();
+            return parseredData;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -7,13 +7,13 @@ import android.os.AsyncTask;
 
 import java.util.ArrayList;
 
-public class FileUpload extends AsyncTask<String, Void, String> {
+public class Sell_FileUpload extends AsyncTask<String, Void, String> {
     private ProgressDialog asyncDialog = null;
     private ArrayList<String> img_path;
     private String Sell_Pk;
     private Context context;
 
-    public FileUpload(Context context, ArrayList<String> img_path, String Sell_Pk) {
+    public Sell_FileUpload(Context context, ArrayList<String> img_path, String Sell_Pk) {
         this.context = context;
         asyncDialog = new ProgressDialog(context);
         this.img_path = img_path;

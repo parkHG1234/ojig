@@ -32,15 +32,13 @@ import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import test.ojig.Model.User_Model;
 import test.ojig.R;
-import test.ojig.Uitility.FileUpload;
 import test.ojig.Uitility.HttpClient;
+import test.ojig.Uitility.Sell_FileUpload;
 
 public class Sell_Write extends AppCompatActivity implements View.OnClickListener {
     public SharedPreferences preferences = null; //캐쉬 데이터 생성
@@ -48,7 +46,6 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
     private String area = "";
     private Button btn_area;
     private AlertDialog dialog;
-    private String Profile = "";
     private String User_Pk;
     private ArrayList<User_Model> user_models;
     private String[][] parseredData;
@@ -243,8 +240,8 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
     }
 
     public void fileUpload(String Sell_Pk) {
-        FileUpload fileUpload = new FileUpload(Sell_Write.this, img_path, Sell_Pk);
-        fileUpload.execute();
+        Sell_FileUpload sellFileUpload = new Sell_FileUpload(Sell_Write.this, img_path, Sell_Pk);
+        sellFileUpload.execute();
     }
 
     private void btn_write() {
@@ -264,9 +261,9 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
                                         try {
                                             JSONObject jsonObject = new JSONObject(result);
                                             if (jsonObject.getString("msg1").equals("succed")) {
-//                                                for(int i = 0 ; i < img_count; i++){
-//                                                    http.HttpClient("Web_Ojig", "sell_imageupload.jsp", jsonObject.getString("msg2"), Integer.toString(i+1));
-//                                                }
+                                                for(int i = 0 ; i < img_count; i++){
+                                                    http.HttpClient("Web_Ojig", "sell_imageupload.jsp", jsonObject.getString("msg2"), Integer.toString(i+1));
+                                                }
                                                 fileUpload(jsonObject.getString("msg2"));
                                             } else {
                                                 Toast.makeText(getApplicationContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_LONG).show();

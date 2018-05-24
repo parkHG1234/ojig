@@ -2,6 +2,7 @@ package test.ojig.Store;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,65 +32,66 @@ import test.ojig.Uitility.HttpClient;
  */
 
 public class Store extends AppCompatActivity implements View.OnClickListener {
-//    private EditText Edt_search;
+    SharedPreferences preferences = null; //캐쉬 데이터 생성
+    private EditText Edt_search;
     private RecyclerView List_Store;
 //
     private List<Store_Model> store_list;
     private ArrayList<Store_Model> store_models;
     private Store_Adapter store_adapter;
-//    private String User_Pk;
+    private String User_Pk;
 //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
-//
-//        User_Pk = getIntent().getStringExtra("User_Pk");
-//
-//        init();
-//
-//
+
+                init();
+
+
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
 
         List_Store = (RecyclerView) findViewById(R.id.list_store);
         Async async = new Async();
         async.execute();
     }
-//
-//    public void init() {
-//        Edt_search = (EditText) findViewById(R.id.et_search);
-//
-//        Edt_search.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//            }
-//
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                // input창에 문자를 입력할때마다 호출된다.
-//                // search 메소드를 호출한다.
-//                String text = Edt_search.getText().toString();
-//                search(text);
-//            }
-//        });
-//
-//
-//    }
-//
+
+    public void init() {
+        Edt_search = (EditText) findViewById(R.id.et_search);
+
+        Edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // input창에 문자를 입력할때마다 호출된다.
+                // search 메소드를 호출한다.
+                String text = Edt_search.getText().toString();
+                search(text);
+            }
+        });
+
+
+    }
+
     @Override
     public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.btn_write:
-//                Intent intent = new Intent(Store.this, Store_Write.class);
-//                intent.putExtra("User_Pk",User_Pk);
-//                startActivity(intent);
-//                break;
-//        }
+        switch (v.getId()) {
+            case R.id.btn_write:
+                Intent intent = new Intent(Store.this, Store_Write.class);
+                intent.putExtra("User_Pk",User_Pk);
+                startActivity(intent);
+                break;
+        }
     }
 //
     public class Async extends AsyncTask<String, Void, String> {
@@ -110,17 +112,17 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected String doInBackground(String... params) {
             try {
-                //베스트 다운로드 데이터 셋팅
-//                HttpClient http = new HttpClient();
-//                String result = http.HttpClient("Web_Ojig2", "store_select.jsp", params);
-//                parseredData = jsonParserList(result);
-//
-//                store_list = new ArrayList<Store_Model>();
-//                for (int i = 0; i < parseredData.length; i++) {
-//                    store_list.add(new Store_Model(Store.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6], parseredData[i][7], parseredData[i][8], parseredData[i][9], parseredData[i][10], parseredData[i][11]));
-//                }
-//                store_models = new ArrayList<Store_Model>();
-//                store_models.addAll(store_list);
+//                베스트 다운로드 데이터 셋팅
+                HttpClient http = new HttpClient();
+                String result = http.HttpClient("Web_Ojig2", "store_select.jsp", params);
+                parseredData = jsonParserList(result);
+
+                store_list = new ArrayList<Store_Model>();
+                for (int i = 0; i < parseredData.length; i++) {
+                    store_list.add(new Store_Model(Store.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6], parseredData[i][7], parseredData[i][8], parseredData[i][9], parseredData[i][10], parseredData[i][11], parseredData[i][12]));
+                }
+                store_models = new ArrayList<Store_Model>();
+                store_models.addAll(store_list);
 
                 return "succed";
             } catch (Exception e) {
@@ -151,7 +153,7 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");
-                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12"};
+                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12", "msg13"};
                 String[][] parseredData = new String[jArr.length()][jsonName.length];
                 for (int i = 0; i < jArr.length(); i++) {
                     json = jArr.getJSONObject(i);
