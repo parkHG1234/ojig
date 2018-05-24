@@ -194,7 +194,7 @@ public class Buy_Focus  extends AppCompatActivity {
 
 
         public String[][] UserjsonParserList(String pRecvServerPage) {
-            Log.i("서버에서 받은 전체 내용", pRecvServerPage);
+            Log.i("서버에서 받은 유저 내용", pRecvServerPage);
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");

@@ -62,7 +62,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Store.Store_Focus"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity android:name=".Others.Others"
             android:screenOrientation="portrait"/>
         <activity android:name=".User.Join"
@@ -71,6 +71,9 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".promotion.Promotion"></activity>
         <activity android:name=".promotion.Promotion_Focus"></activity>
+
+        <activity android:name=".Uitility.FullScreenVideoActivity"
+            android:screenOrientation="landscape"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />

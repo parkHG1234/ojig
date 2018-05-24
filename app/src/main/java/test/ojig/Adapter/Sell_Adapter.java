@@ -1,5 +1,6 @@
 package test.ojig.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import test.ojig.Model.Sell_Model;
 import test.ojig.R;
+import test.ojig.Sell.Sell;
 import test.ojig.Sell.Sell_Focus;
 
 public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> {
@@ -53,7 +57,9 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
         } else if (items.getStatus().equals("finish")) {
             holder.img_deal.setImageResource(R.drawable.deal_finish);
         }
-//
+
+        Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Img_Sell/"+items.getSell_Pk()+"_1.jpg")
+                .into(holder.img_sell);
         holder.Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

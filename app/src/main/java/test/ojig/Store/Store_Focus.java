@@ -6,17 +6,17 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.Surface;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -25,12 +25,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import test.ojig.Fragment.Store_ViewPager_Fragment;
 import test.ojig.R;
+import test.ojig.Uitility.FullScreenMediaController;
 import test.ojig.Uitility.HttpClient;
 
 public class Store_Focus extends AppCompatActivity implements View.OnClickListener {
@@ -39,6 +35,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
     private LinearLayout layout_deal, layout_rent;
     private ImageView player;
     private VideoView vv;
+    private MediaController mediaController;
 
     private String store_pk = "";
     private String category = "";
@@ -77,6 +74,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
+        player.setVisibility(View.VISIBLE);
 
     }
 
@@ -85,55 +83,13 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
 
 
         String uriPath = "http://sites.google.com/site/ubiaccessmobile/sample_video.mp4";
-
         Uri uri = Uri.parse(uriPath);
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int h = displaymetrics.heightPixels;
-        int w = displaymetrics.widthPixels;
-
         vv.setVideoURI(uri);
-
         vv.requestFocus();
-
-        vv.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-
-            @Override
-
-            public boolean onInfo(MediaPlayer mp, int what, int extra) {
-
-                switch (what) {
-
-                    case MediaPlayer.MEDIA_ERROR_TIMED_OUT:
-
-                        Toast.makeText(getApplicationContext(), "MEDIA_ERROR_TIMED_OUT", Toast.LENGTH_LONG).show();
-
-                        break;
-
-                    case MediaPlayer.MEDIA_INFO_BUFFERING_START:
-
-                        // Progress Diaglog 출력
-
-                        Toast.makeText(getApplicationContext(), "MEDIA_INFO_BUFFERING_START", Toast.LENGTH_LONG).show();
-
-                        break;
-
-                    case MediaPlayer.MEDIA_INFO_BUFFERING_END:
-
-                        // Progress Dialog 삭제
-
-                        Toast.makeText(getApplicationContext(), "MEDIA_INFO_BUFFERING_END", Toast.LENGTH_LONG).show();
-
-                        break;
-
-                }
-
-                return false;
-
-            }
-
-        });
-
+        mediaController = new FullScreenMediaController(this);
+        mediaController.setAnchorView(vv);
+        mediaController.setMediaPlayer(vv);
+        vv.setMediaController(mediaController);
 
     }
 
@@ -163,11 +119,13 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 break;
             case R.id.player:
-                player.setVisibility(View.INVISIBLE);
                 vv.start();
+                player.setVisibility(View.GONE);
+
                 break;
         }
     }
+
 
     public class Async extends AsyncTask<String, Void, String> {
         ProgressDialog asyncDialog = new ProgressDialog(Store_Focus.this);
@@ -176,7 +134,6 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
 
         String[][] store_parseredData;
         String[][] user_parseredData;
-        String[][] image_parseredData;
 
         @Override
         protected void onPreExecute() {
@@ -319,6 +276,4 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
         finish();
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
-
-
 }

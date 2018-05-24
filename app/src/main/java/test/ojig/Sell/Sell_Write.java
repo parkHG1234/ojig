@@ -83,9 +83,9 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
         img_write4 = (ImageView) findViewById(R.id.img_write4);
         img_write5 = (ImageView) findViewById(R.id.img_write5);
 
-        Img_Layout1 = (LinearLayout)findViewById(R.id.img_layout1);
-        Img_Layout2 = (LinearLayout)findViewById(R.id.img_layout2);
-        Img_Layout3 = (LinearLayout)findViewById(R.id.img_layout3);
+        Img_Layout1 = (LinearLayout) findViewById(R.id.img_layout1);
+        Img_Layout2 = (LinearLayout) findViewById(R.id.img_layout2);
+        Img_Layout3 = (LinearLayout) findViewById(R.id.img_layout3);
 
 
         img_path = new ArrayList<String>();
@@ -96,7 +96,7 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
         btn_area.setOnClickListener(this);
         edt_title = (EditText) findViewById(R.id.edt_title);
         edt_name = (EditText) findViewById(R.id.edt_name);
-        edt_price = (EditText)findViewById(R.id.edt_price);
+        edt_price = (EditText) findViewById(R.id.edt_price);
         edt_amount = (EditText) findViewById(R.id.edt_amount);
         edt_memo = (EditText) findViewById(R.id.edt_memo);
         edt_company_name = (EditText) findViewById(R.id.edt_company_name);
@@ -254,22 +254,28 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
                             if (edt_company_name.getText().length() != 0) {
                                 if (edt_phone.getText().length() != 0) {
                                     if (edt_company_focus.getText().length() != 0) {
-                                        HttpClient http = new HttpClient();
-                                        String result = http.HttpClient("Web_Ojig2", "sell_write.jsp", User_Pk, edt_title.getText().toString(), edt_name.getText().toString(),area, edt_price.getText().toString(), edt_amount.getText().toString(),
-                                                edt_memo.getText().toString(), edt_company_name.getText().toString(), edt_phone.getText().toString(), edt_company_focus.getText().toString());
-                                        Log.i("resultaaa", result);
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(result);
-                                            if (jsonObject.getString("msg1").equals("succed")) {
-                                                for(int i = 0 ; i < img_count; i++){
-                                                    http.HttpClient("Web_Ojig", "sell_imageupload.jsp", jsonObject.getString("msg2"), Integer.toString(i+1));
+                                        if (img_path.size() > 1) {
+
+
+                                            HttpClient http = new HttpClient();
+                                            String result = http.HttpClient("Web_Ojig2", "sell_write.jsp", User_Pk, edt_title.getText().toString(), edt_name.getText().toString(), area, edt_price.getText().toString(), edt_amount.getText().toString(),
+                                                    edt_memo.getText().toString(), edt_company_name.getText().toString(), edt_phone.getText().toString(), edt_company_focus.getText().toString());
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(result);
+                                                if (jsonObject.getString("msg1").equals("succed")) {
+                                                    for (int i = 0; i < img_count; i++) {
+                                                        http.HttpClient("Web_Ojig", "sell_imageupload.jsp", jsonObject.getString("msg2"), Integer.toString(i + 1));
+                                                    }
+
+                                                    fileUpload(jsonObject.getString("msg2"));
+                                                } else {
+                                                    Toast.makeText(getApplicationContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_LONG).show();
                                                 }
-                                                fileUpload(jsonObject.getString("msg2"));
-                                            } else {
-                                                Toast.makeText(getApplicationContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_LONG).show();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
                                             }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
+                                        }else{
+                                            Toast.makeText(getApplicationContext(), "주소를 입력해주세요", Toast.LENGTH_LONG).show();
                                         }
                                     } else {
                                         Toast.makeText(getApplicationContext(), "주소를 입력해주세요", Toast.LENGTH_LONG).show();
@@ -355,6 +361,7 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
         btn_area.setText(area);
         dialog.dismiss();
     }
+
     public String[][] jsonParserList(String pRecvServerPage) {
         Log.i("서버에서 받은 전체 내용", pRecvServerPage);
         try {
