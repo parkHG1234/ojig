@@ -2,6 +2,7 @@ package test.ojig.Store;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -24,6 +26,9 @@ import android.widget.VideoView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import test.ojig.R;
 import test.ojig.Uitility.FullScreenMediaController;
@@ -58,6 +63,10 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
     private String company_txt = "";
     private String company_focus = "";
 
+
+    private Timer timer;
+    private TimerTask myTask;
+    private ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +89,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
 
     public void setVideoView() {
         vv = (VideoView) findViewById(R.id.vv);
-
+        mProgressBar = (ProgressBar)findViewById(R.id.Progressbar);
 
         String uriPath = "http://sites.google.com/site/ubiaccessmobile/sample_video.mp4";
         Uri uri = Uri.parse(uriPath);
@@ -90,6 +99,21 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
         mediaController.setAnchorView(vv);
         mediaController.setMediaPlayer(vv);
         vv.setMediaController(mediaController);
+        Drawable draw= null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            draw = getDrawable(R.drawable.custom_progressbar);
+        }
+
+        mProgressBar.setProgressDrawable(draw);
+        vv.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+            @Override
+            public boolean onInfo(MediaPlayer mp, int what, int extra) {
+                if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+                    mProgressBar.setVisibility(View.GONE);
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -121,7 +145,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
             case R.id.player:
                 vv.start();
                 player.setVisibility(View.GONE);
-
+                mProgressBar.setVisibility(View.VISIBLE);
                 break;
         }
     }
