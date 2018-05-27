@@ -498,14 +498,6 @@ public class Join extends AppCompatActivity {
                 }
                 Async async = new Async();
                 async.execute(str_phone, str_pass, str_name, str_address_num, str_address_txt, str_address_focus);
-
-//                ArrayList<String> mannschaftsnamen = new ArrayList<String>();
-//                EditText et;
-//                for (int i = 0; i < myList.getCount(); i++) {
-//                    v = myList.getAdapter().getView(i, null, null);
-//                    et = (EditText) v.findViewById(i);
-//                    mannschaftsnamen.add(et.getText().toString());
-//                }
             }
         });
     }

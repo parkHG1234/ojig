@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -32,6 +33,8 @@ import test.ojig.Uitility.HttpClient;
  */
 
 public class Sell extends AppCompatActivity implements View.OnClickListener {
+    ImageView Img_Back;
+
     SharedPreferences preferences = null; //캐쉬 데이터 생성
     private EditText Edt_search;
     private RecyclerView List_Sell;
@@ -58,6 +61,14 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void init() {
+        Img_Back = (ImageView)findViewById(R.id.img_back);
+        Img_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+            }
+        });
         Edt_search = (EditText) findViewById(R.id.et_search);
         List_Sell = (RecyclerView) findViewById(R.id.list_sell);
 
@@ -197,5 +208,11 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         }
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
         sell_adapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
 }

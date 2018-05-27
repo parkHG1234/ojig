@@ -28,6 +28,5 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"
-        android:src="@drawable/start2"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 </LinearLayout>

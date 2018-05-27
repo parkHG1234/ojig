@@ -32,6 +32,7 @@ import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 
 public class Sell_Focus extends AppCompatActivity implements View.OnClickListener{
+    ImageView Img_Back;
     private Button img_call;
     private TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_sell_name, txt_user, txt_memo;
     private ViewPager mViewPager;
@@ -95,23 +96,23 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         indicator.setNumberOfItems(pageCount);
 
 
-        //페이지 자동 전환
-        myTask = new TimerTask() {
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int currentPage = mViewPager.getCurrentItem();
-                        if (currentPage >= pageCount - 1) mViewPager.setCurrentItem(0, true);
-                        else mViewPager.setCurrentItem(currentPage + 1, true);
-                        indicator.setSelectedItem((currentPage + 1 == pageCount) ? 0 : currentPage + 1, true);
-                    }
-                });
-            }
-        };
-        timer = new Timer();
-        //timer.schedule(myTask, 5000);  // 5초후 실행하고 종료
-        timer.schedule(myTask, 500, 3000); // 5초후 첫실행, 3초마다 계속실행
+        //페이지 자동 전환 보류
+//        myTask = new TimerTask() {
+//            public void run() {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        int currentPage = mViewPager.getCurrentItem();
+//                        if (currentPage >= pageCount - 1) mViewPager.setCurrentItem(0, true);
+//                        else mViewPager.setCurrentItem(currentPage + 1, true);
+//                        indicator.setSelectedItem((currentPage + 1 == pageCount) ? 0 : currentPage + 1, true);
+//                    }
+//                });
+//            }
+//        };
+//        timer = new Timer();
+//        //timer.schedule(myTask, 5000);  // 5초후 실행하고 종료
+//        timer.schedule(myTask, 500, 3000); // 5초후 첫실행, 3초마다 계속실행
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -132,7 +133,14 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
     }
 
     public void init() {
-
+        Img_Back = (ImageView)findViewById(R.id.img_back);
+        Img_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+            }
+        });
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_title = (TextView) findViewById(R.id.txt_title);
         txt_amount = (TextView) findViewById(R.id.txt_amount);
@@ -315,14 +323,6 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-    }
-
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         String[][] data;
         int pagercount;
@@ -368,5 +368,11 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
             return null;
         }
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
 }

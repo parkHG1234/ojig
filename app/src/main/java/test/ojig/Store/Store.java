@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -32,6 +33,8 @@ import test.ojig.Uitility.HttpClient;
  */
 
 public class Store extends AppCompatActivity implements View.OnClickListener {
+    ImageView Img_Back;
+
     SharedPreferences preferences = null; //캐쉬 데이터 생성
     private EditText Edt_search;
     private RecyclerView List_Store;
@@ -58,6 +61,14 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void init() {
+        Img_Back = (ImageView)findViewById(R.id.img_back);
+        Img_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+            }
+        });
         Edt_search = (EditText) findViewById(R.id.et_search);
 
         Edt_search.addTextChangedListener(new TextWatcher() {

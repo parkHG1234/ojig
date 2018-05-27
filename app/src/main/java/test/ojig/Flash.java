@@ -78,7 +78,7 @@ public class Flash extends AppCompatActivity {
         }
         else{
             myTask = new TimerTask() {
-                int i = 3;
+                int i = 2;
 
                 public void run() {
                     runOnUiThread(new Runnable() {

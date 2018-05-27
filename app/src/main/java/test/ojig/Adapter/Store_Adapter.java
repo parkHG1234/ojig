@@ -44,12 +44,14 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
         final Store_Model items = arrData.get(position);
         holder.tv_title.setText(items.getTitle());
         if(items.getType().equals("deal")){
-            holder.tv_type.setText("매매");
+            holder.btn_type.setText("매매");
+            holder.tv_price.setText(convertHangul(items.getPrice()));
         }else if(items.getType().equals("rent")){
-            holder.tv_type.setText("임대");
+            holder.btn_type.setText("임대");
+            holder.tv_price.setText(items.getDeposit()+"  /  "+items.getRental());
         }
         holder.tv_space.setText(items.getSpace() + "평");
-        holder.tv_layer.setText(items.getLayer() + "층");
+        holder.tv_layer.setText("/  " + items.getLayer() + "층");
         holder.tv_address.setText(items.getAddress());
 //
         if (items.getStatus().equals("possible")) {
@@ -65,6 +67,7 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
             public void onClick(View view) {
                 Intent intent = new Intent(context, Store_Focus.class);
                 intent.putExtra("Store_Pk", items.getStore_Pk());
+                items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 context.startActivity(intent);
             }
         });
@@ -80,15 +83,16 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout Layout;
-        private TextView tv_title, tv_type, tv_space, tv_layer, tv_address;
+        private TextView tv_title, tv_space, tv_layer, tv_address, tv_price;
         private ImageView img_deal, img_store;
-        private Button img_call;
+        private Button btn_type, img_call;
 
         public ViewHolder(View itemView) {
             super(itemView);
             Layout = (LinearLayout) itemView.findViewById(R.id.layout);
+            tv_price = (TextView) itemView.findViewById(R.id.tv_price);
             tv_title = (TextView) itemView.findViewById(R.id.tv_title);
-            tv_type = (TextView) itemView.findViewById(R.id.tv_type);
+            btn_type = (Button) itemView.findViewById(R.id.btn_type);
             tv_space = (TextView) itemView.findViewById(R.id.tv_space);
             tv_layer = (TextView) itemView.findViewById(R.id.tv_layer);
             tv_address = (TextView) itemView.findViewById(R.id.tv_address);
@@ -96,5 +100,14 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
 
         }
 
+    }
+    public String convertHangul(String money){
+        String[] han1 = {"","1","2","3","4","5","6","7","8","9"};
+        String[] han2 = {"","십","백","천"}; String[] han3 = {"","만","억","조","경"};
+        StringBuffer result = new StringBuffer(); int len = money.length();
+        for(int i=len-1; i>=0; i--){
+            result.append(han1[Integer.parseInt(money.substring(len-i-1, len-i))]);
+            if(Integer.parseInt(money.substring(len-i-1, len-i)) > 0) result.append(han2[i%4]);
+            if(i%4 == 0) result.append(han3[i/4]); } return result.toString();
     }
 }

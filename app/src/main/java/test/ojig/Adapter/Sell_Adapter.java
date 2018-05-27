@@ -65,6 +65,7 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
             public void onClick(View view) {
                 Intent intent = new Intent(context, Sell_Focus.class);
                 intent.putExtra("Sell_Pk", items.getSell_Pk());
+                items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 context.startActivity(intent);
             }
         });

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -33,17 +34,15 @@ public class Start extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
-        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
-        User_Pk = preferences.getString("User_Pk", ".");
-        init();
-        start();
-    }
-    public void init(){
         Img_flash2 = (ImageView)findViewById(R.id.img_flash2);
         //인증번호 완료 시 이벤트
         GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(Img_flash2);
-        Glide.with(Start.this).load(R.drawable.start2).into(gifImage);
+        Glide.with(this).load(R.drawable.start2).into(gifImage);
+
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
+
+        start();
     }
     public void start(){
         myTask = new TimerTask() {

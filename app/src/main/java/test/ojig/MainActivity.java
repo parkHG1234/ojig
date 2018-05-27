@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 
 import test.ojig.Buy.Buy;
+import test.ojig.Delivery.Delivery_Address;
 import test.ojig.Local.Local;
 import test.ojig.Others.Others;
 import test.ojig.Sell.Sell;
@@ -79,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.layout_others:
                 intent = new Intent(MainActivity.this, Others.class);
+                break;
+            case R.id.layout_delivery:
+                intent = new Intent(MainActivity.this, Delivery_Address.class);
                 break;
         }
         if (intent != null) {

@@ -40,7 +40,7 @@
                     android:includeFontPadding="false"
                     android:text="글쓰기 제목 영역입니다."
                     android:textColor="@color/black"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

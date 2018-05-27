@@ -63,8 +63,13 @@
         <activity
             android:name=".Store.Store_Focus"
             android:screenOrientation="portrait"/>
+
         <activity android:name=".Others.Others"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".Delivery.Delivery_Address"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".User.Join"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".User.Join_Address"

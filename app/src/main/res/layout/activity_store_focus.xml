@@ -150,11 +150,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="매매가 : "
                     android:textColor="@color/black"
                     android:textSize="26sp" />
@@ -167,11 +169,11 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginRight="10dp"
                     android:fontFamily="@font/notosansmonocjkkr_bold_cus"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="1,123,456원"
                     android:textColor="@color/black"
-                    android:textSize="26sp" />
+                    android:textSize="24sp" />
             </LinearLayout>
 
             <LinearLayout

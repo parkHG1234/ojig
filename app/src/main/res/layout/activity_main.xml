@@ -189,6 +189,7 @@
                     android:id="@+id/layout_store"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="3dp"
                     android:layout_weight="1"
                     android:background="#333a4a"
                     android:gravity="center"
@@ -197,11 +198,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosansmonocjkkr_bold_cus"
                         android:text="매장 매매"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
-                        android:fontFamily="@font/notosansmonocjkkr_bold_cus"
-                        />
+                        android:textSize="24sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -214,10 +214,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="게임기 매매"
+                        android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+                        android:text="게임기 임대"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
-                        android:fontFamily="@font/notosansmonocjkkr_bold_cus" />
+                        android:textSize="24sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -229,18 +229,20 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/layout_delivery"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="3dp"
                     android:layout_weight="1"
                     android:background="#333a4a"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:onClick="onClick">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/notosansmonocjkkr_bold_cus"
-                        android:text="배차정보"
+                        android:text="지역별 현황"
                         android:textColor="@color/white"
                         android:textSize="24sp" />
                 </LinearLayout>
@@ -274,8 +276,4 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:src="@drawable/add_main"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="#be9b62"></LinearLayout>
 </LinearLayout>
