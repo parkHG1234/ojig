@@ -116,7 +116,8 @@
                     android:includeFontPadding="false"
                     android:textColor="@color/black"
                     android:textColorHint="@color/text_hint"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:onClick="onClick"/>
             </LinearLayout>
 
             //평수 / 층수 레이아웃
@@ -143,6 +144,7 @@
                         android:fontFamily="@font/notosanscjkkr_medium_cus"
                         android:gravity="center"
                         android:hint="평수"
+                        android:inputType="number"
                         android:includeFontPadding="false"
                         android:textColor="@color/black"
                         android:textColorHint="@color/text_hint"
@@ -193,7 +195,8 @@
                     android:includeFontPadding="false"
                     android:textColor="@color/black"
                     android:textColorHint="@color/text_hint"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:inputType="number"/>
             </LinearLayout>
 
             <LinearLayout
@@ -222,7 +225,8 @@
                         android:includeFontPadding="false"
                         android:textColor="@color/black"
                         android:textColorHint="@color/text_hint"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:inputType="number"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -295,17 +299,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
-                    android:text="사진은 한장이상 올려주세요"
+                    android:text="동영상을 올려주세요"
                     android:textColor="@color/text_gray"
                     android:textSize="22sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="최대 6장까지 가능합니다."
-                    android:textColor="@color/text_gray"
-                    android:textSize="16dp" />
 
 
                 <LinearLayout
@@ -316,7 +312,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/img_write0"
+                        android:id="@+id/video_write"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -327,64 +323,6 @@
 
                     <ImageView
                         android:id="@+id/img_write1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:onClick="onClick"
-                        android:src="@drawable/img_add"
-                        android:visibility="invisible"
-                        android:adjustViewBounds="true"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/img_layout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/img_write2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:adjustViewBounds="true"
-                        android:onClick="onClick"
-                        android:src="@drawable/img_add" />
-
-                    <ImageView
-                        android:id="@+id/img_write3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:onClick="onClick"
-                        android:src="@drawable/img_add"
-                        android:visibility="invisible"
-                        android:adjustViewBounds="true"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/img_layout3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/img_write4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:adjustViewBounds="true"
-                        android:onClick="onClick"
-                        android:src="@drawable/img_add" />
-
-                    <ImageView
-                        android:id="@+id/img_write5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"

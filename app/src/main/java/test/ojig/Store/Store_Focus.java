@@ -2,6 +2,9 @@ package test.ojig.Store;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -27,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -89,9 +94,10 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
 
     public void setVideoView() {
         vv = (VideoView) findViewById(R.id.vv);
+        setVideo_Img();
         mProgressBar = (ProgressBar)findViewById(R.id.Progressbar);
 
-        String uriPath = "http://sites.google.com/site/ubiaccessmobile/sample_video.mp4";
+        String uriPath = "http://13.209.35.228:8080/Video_Store/"+store_pk+".mp4";
         Uri uri = Uri.parse(uriPath);
         vv.setVideoURI(uri);
         vv.requestFocus();
@@ -114,7 +120,6 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
                 return false;
             }
         });
-
     }
 
     public void init() {
@@ -134,7 +139,16 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
         player = (ImageView) findViewById(R.id.player);
 
     }
+    public void setVideo_Img(){
+        try {
+            URL url = new URL("http://13.209.35.228:8080/Video_Store/thumbnail/" + store_pk + ".jpg");
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
+            vv.setBackgroundDrawable(bitmapDrawable);
+        }catch (IOException e){
 
+        }
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -146,10 +160,10 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
                 vv.start();
                 player.setVisibility(View.GONE);
                 mProgressBar.setVisibility(View.VISIBLE);
+                vv.setBackgroundDrawable(null);
                 break;
         }
     }
-
 
     public class Async extends AsyncTask<String, Void, String> {
         ProgressDialog asyncDialog = new ProgressDialog(Store_Focus.this);
@@ -236,7 +250,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
             tv_deposit.setText(deposit);
             tv_rental.setText(rental);
             tv_company_name.setText(company_name);
-            tv_company_focus.setText(company_focus);
+            tv_company_focus.setText(company_txt + company_focus);
 
 
             img_call.setOnClickListener(new View.OnClickListener() {

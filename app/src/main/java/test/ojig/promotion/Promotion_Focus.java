@@ -126,20 +126,6 @@ public class Promotion_Focus extends AppCompatActivity {
             draw = getDrawable(R.drawable.custom_progressbar);
         }
 
-        //웹 영상 썸네일 저장 방법
-//        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-//        try {
-//            retriever.setDataSource("http://sites.google.com/site/ubiaccessmobile/sample_video.mp4");
-//            Bitmap a = retriever.getFrameAtTime(0,MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
-//            Bitmap ThumbnailUtil = createVideoThumbnail("http://sites.google.com/site/ubiaccessmobile/sample_video.mp4", MediaStore.Video.Thumbnails.MINI_KIND);
-//            BitmapDrawable bitmapDrawable = new BitmapDrawable(ThumbnailUtil);
-//            vv.setBackgroundDrawable(bitmapDrawable);
-//        } catch (IllegalArgumentException e){
-//
-//        }finally {
-//            retriever.release();
-//        }
-
         mProgressBar.setProgressDrawable(draw);
         vv.setOnInfoListener(new MediaPlayer.OnInfoListener() {
             @Override

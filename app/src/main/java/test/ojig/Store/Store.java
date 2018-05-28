@@ -60,6 +60,13 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
         async.execute();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Async async = new Async();
+        async.execute();
+    }
+
     public void init() {
         Img_Back = (ImageView)findViewById(R.id.img_back);
         Img_Back.setOnClickListener(new View.OnClickListener() {

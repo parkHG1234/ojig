@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("User_Pk",User_Pk);
                 break;
             case R.id.layout_local:
-                intent = new Intent(MainActivity.this, Local.class);
+                Toast.makeText(MainActivity.this,"준비 중입니다.",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_promotion:
                 intent = new Intent(MainActivity.this, Promotion.class);

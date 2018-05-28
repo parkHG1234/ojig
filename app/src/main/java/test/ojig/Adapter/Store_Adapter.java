@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import test.ojig.Model.Store_Model;
@@ -62,6 +64,9 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
             holder.img_deal.setImageResource(R.drawable.deal_finish);
         }
 
+        Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Video_Store/thumbnail/"+items.getStore_Pk()+".jpg")
+                .into(holder.img_store);
+
         holder.Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +102,7 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
             tv_layer = (TextView) itemView.findViewById(R.id.tv_layer);
             tv_address = (TextView) itemView.findViewById(R.id.tv_address);
             img_deal = (ImageView) itemView.findViewById(R.id.img_deal);
-
+            img_store = (ImageView) itemView.findViewById(R.id.img_store);
         }
 
     }
