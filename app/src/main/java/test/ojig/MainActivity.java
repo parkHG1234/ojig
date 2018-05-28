@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(MainActivity.this, Others.class);
                 break;
             case R.id.layout_delivery:
-                intent = new Intent(MainActivity.this, Delivery_Address.class);
+                intent = new Intent(MainActivity.this, Local.class);
                 break;
         }
         if (intent != null) {

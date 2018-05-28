@@ -17,8 +17,8 @@ public class Store_Model {
     private String Address;
     private String Memo;
     private String status;
-
-    public Store_Model(android.app.Activity activity, String store_Pk, String category, String type, String user_Pk, String title, String space, String layer, String price, String deposit, String rental, String address, String memo, String status) {
+    private String Video;
+    public Store_Model(android.app.Activity activity, String store_Pk, String category, String type, String user_Pk, String title, String space, String layer, String price, String deposit, String rental, String address, String memo, String status, String video) {
         Activity = activity;
         Store_Pk = store_Pk;
         Category = category;
@@ -33,6 +33,7 @@ public class Store_Model {
         Address = address;
         Memo = memo;
         this.status = status;
+        Video = video;
     }
 
     public android.app.Activity getActivity() {
@@ -89,5 +90,9 @@ public class Store_Model {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getVideo(){
+        return Video;
     }
 }

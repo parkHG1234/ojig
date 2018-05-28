@@ -59,8 +59,8 @@ public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
             public void onClick(View view) {
                 Intent intent = new Intent(context, Buy_Focus.class);
                 intent.putExtra("Buy_Pk", items.getBuy_Pk());
-                items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 context.startActivity(intent);
+                items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
             }
         });
     }

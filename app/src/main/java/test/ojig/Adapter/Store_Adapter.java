@@ -64,16 +64,22 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
             holder.img_deal.setImageResource(R.drawable.deal_finish);
         }
 
-        Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Video_Store/thumbnail/"+items.getStore_Pk()+".jpg")
-                .into(holder.img_store);
+        if(items.getVideo().equals("true")){
+            Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Video_Store/thumbnail/"+items.getStore_Pk()+".jpg")
+                    .into(holder.img_store);
+        }
+        else{
+            holder.img_store.setBackgroundColor(items.getActivity().getResources().getColor(R.color.black));
+        }
+
 
         holder.Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, Store_Focus.class);
                 intent.putExtra("Store_Pk", items.getStore_Pk());
-                items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 context.startActivity(intent);
+                items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
             }
         });
     }
@@ -84,7 +90,6 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
 
         return this.arrData.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout Layout;

@@ -197,6 +197,10 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
             case R.id.jeju:
                 dialogset("제주");
                 break;
+            case R.id.img_back:
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                break;
         }
     }
     public void setDialog_Area(View view) {
@@ -554,4 +558,10 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+    }
 }

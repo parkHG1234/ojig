@@ -42,4 +42,11 @@ public class Local_Focus extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+    }
 }

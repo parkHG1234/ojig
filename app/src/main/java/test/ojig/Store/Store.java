@@ -49,8 +49,7 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
 
-                init();
-
+        init();
 
         preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
         User_Pk = preferences.getString("User_Pk", ".");
@@ -97,8 +96,6 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
                 search(text);
             }
         });
-
-
     }
 
     @Override
@@ -132,12 +129,12 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
             try {
 //                베스트 다운로드 데이터 셋팅
                 HttpClient http = new HttpClient();
-                String result = http.HttpClient("Web_Ojig2", "store_select.jsp", params);
+                String result = http.HttpClient("Web_Ojig", "Store.jsp", params);
                 parseredData = jsonParserList(result);
 
                 store_list = new ArrayList<Store_Model>();
                 for (int i = 0; i < parseredData.length; i++) {
-                    store_list.add(new Store_Model(Store.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6], parseredData[i][7], parseredData[i][8], parseredData[i][9], parseredData[i][10], parseredData[i][11], parseredData[i][12]));
+                    store_list.add(new Store_Model(Store.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6], parseredData[i][7], parseredData[i][8], parseredData[i][9], parseredData[i][10], parseredData[i][11], parseredData[i][12], parseredData[i][13]));
                 }
                 store_models = new ArrayList<Store_Model>();
                 store_models.addAll(store_list);
@@ -171,7 +168,7 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");
-                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12", "msg13"};
+                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12", "msg13", "msg14"};
                 String[][] parseredData = new String[jArr.length()][jsonName.length];
                 for (int i = 0; i < jArr.length(); i++) {
                     json = jArr.getJSONObject(i);
@@ -209,5 +206,12 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
         }
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
         store_adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
 }
