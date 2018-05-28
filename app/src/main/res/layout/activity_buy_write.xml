@@ -235,7 +235,8 @@
                     android:includeFontPadding="false"
                     android:textColor="@color/black"
                     android:textColorHint="@color/text_gray"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:inputType="number"/>
             </LinearLayout>
             //구매자 주소
             <LinearLayout

@@ -13,7 +13,7 @@ public class Sell_Model {
     private String Address;
     private String Amount;
     private String Memo;
-    private String status;
+    private String Status;
 
     public Sell_Model(android.app.Activity activity, String sell_Pk, String category, String user_Pk, String name, String title, String price, String address, String amount, String memo, String status) {
         Activity = activity;
@@ -26,7 +26,8 @@ public class Sell_Model {
         Address = address;
         Amount = amount;
         Memo = memo;
-        this.status = status;
+        Status = status;
+
     }
 
     public android.app.Activity getActivity() {
@@ -71,6 +72,7 @@ public class Sell_Model {
 
 
     public String getStatus() {
-        return status;
+        return Status;
     }
+
 }

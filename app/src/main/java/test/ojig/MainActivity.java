@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import test.ojig.Buy.Buy;
 import test.ojig.Delivery.Delivery_Address;
 import test.ojig.Local.Local;
+import test.ojig.Machine.Machine;
 import test.ojig.Others.Others;
 import test.ojig.Sell.Sell;
 import test.ojig.Store.Store;
@@ -78,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.layout_store:
                 intent = new Intent(MainActivity.this, Store.class);
+                break;
+            case R.id.layout_machine:
+                intent = new Intent(MainActivity.this, Machine.class);
                 break;
             case R.id.layout_others:
                 intent = new Intent(MainActivity.this, Others.class);

@@ -1,4 +1,4 @@
-package test.ojig.Store;
+package test.ojig.Machine;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
@@ -6,9 +6,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 
-public class Store_ViewPager extends ViewPager {
+public class Machine_ViewPager extends ViewPager {
 
-    public Store_ViewPager(Context context, AttributeSet attrs)
+    public Machine_ViewPager(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }

@@ -1,4 +1,4 @@
-package test.ojig.Sell;
+package test.ojig.Machine;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,32 +28,31 @@ import org.json.JSONObject;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import test.ojig.Fragment.Machine_ViewPager_Fragment;
 import test.ojig.Fragment.Sell_ViewPager_Fragment;
 import test.ojig.R;
+import test.ojig.Sell.Sell_Focus;
 import test.ojig.Uitility.HttpClient;
 
-public class Sell_Focus extends AppCompatActivity implements View.OnClickListener{
-    ImageView Img_Back;
-    private Button img_call;
-    private TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_sell_name, txt_user, txt_memo;
+public class Machine_Focus extends AppCompatActivity implements View.OnClickListener {
+
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private TimerTask myTask;
     private Timer timer;
 
-
-    private String sell_pk = "";
-    private String category = "";
-    private String user_pk = "";
-    private String name = "";
-    private String title = "";
-    private String price = "";
-    private String address = "";
-    private String amount = "";
-    private String memo = "";
-    private String img = "";
-    private String video = "";
-    private String status = "";
+    private TextView tv_title, tv_count, tv_address, tv_price, tv_company_name, tv_company_focus, tv_store_name, tv_memo, tv_address2, tv_count2;
+    private ImageView img_status;
+    private Button img_call;
+    private String machine_pk = "";
+    private String user_pk="";
+    private String title="";
+    private String machine="";
+    private String address="";
+    private String price="";
+    private String count="";
+    private String memo="";
+    private String status="";
 
     private String phone = "";
     private String pass = "";
@@ -61,25 +61,50 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
     private String company_txt = "";
     private String company_focus = "";
 
+
+    private ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sell_focus);
+        setContentView(R.layout.activity_machine_focus);
 
         init();
-        sell_pk = getIntent().getStringExtra("Sell_Pk");
+        machine_pk = getIntent().getStringExtra("Machine_Pk");
+
 
         Async async = new Async();
-        async.execute(sell_pk);
+        async.execute(machine_pk);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+    }
 
+    public void init() {
+
+        img_status = (ImageView)findViewById(R.id.img_status);
+        tv_title = (TextView)findViewById(R.id.tv_title);
+        tv_count = (TextView)findViewById(R.id.tv_count);
+        tv_address = (TextView)findViewById(R.id.tv_address);
+        tv_price = (TextView)findViewById(R.id.tv_price);
+        tv_company_name = (TextView)findViewById(R.id.tv_company_name);
+        tv_company_focus = (TextView)findViewById(R.id.tv_company_focus);
+        tv_store_name = (TextView)findViewById(R.id.tv_store_name);
+        tv_memo = (TextView)findViewById(R.id.tv_memo);
+
+        tv_address2 = (TextView)findViewById(R.id.tv_address2);
+        tv_count2 = (TextView)findViewById(R.id.tv_count2);
+        img_call = (Button)findViewById(R.id.img_call);
+
+    }
 
     public void setViewPager(String[][] data) {
         //프래그먼트 정의
 
         final int pageCount = data.length;
+        Log.i("aaaaa",String.valueOf(pageCount));
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), data);
         final DotIndicator indicator = (DotIndicator) findViewById(R.id.indicator);
@@ -88,7 +113,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         indicator.setUnselectedDotColor(Color.parseColor("#dadada"));
         indicator.bringToFront();
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.sell_viewpager);
+        mViewPager = (ViewPager) findViewById(R.id.machine_viewpager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         mViewPager.setOffscreenPageLimit(data.length - 1);
@@ -132,31 +157,9 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         });
     }
 
-    public void init() {
-        Img_Back = (ImageView)findViewById(R.id.img_back);
-        Img_Back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-            }
-        });
-        txt_name = (TextView) findViewById(R.id.txt_name);
-        txt_title = (TextView) findViewById(R.id.txt_title);
-        txt_amount = (TextView) findViewById(R.id.txt_amount);
-        txt_address = (TextView) findViewById(R.id.txt_address);
-        txt_company_name = (TextView) findViewById(R.id.txt_company_name);
-        txt_company_focus = (TextView) findViewById(R.id.txt_company_focus);
-        txt_sell_name = (TextView) findViewById(R.id.txt_sell_name);
-        txt_user = (TextView) findViewById(R.id.txt_user);
-        txt_memo = (TextView) findViewById(R.id.txt_memo);
-        img_call = (Button) findViewById(R.id.img_call);
-
-    }
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.img_back:
                 finish();
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
@@ -164,12 +167,13 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+
     public class Async extends AsyncTask<String, Void, String> {
-        ProgressDialog asyncDialog = new ProgressDialog(Sell_Focus.this);
+        ProgressDialog asyncDialog = new ProgressDialog(Machine_Focus.this);
         HttpClient http;
         String result;
 
-        String[][] sell_parseredData;
+        String[][] machine_parseredData;
         String[][] user_parseredData;
         String[][] image_parseredData;
 
@@ -189,21 +193,20 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
             try {
                 //베스트 다운로드 데이터 셋팅
 
-                result = http.HttpClient("Web_Ojig2", "sell_focus_select.jsp", params);
-                sell_parseredData = jsonParserList(result);
+                result = http.HttpClient("Web_Ojig2", "machine_focus_select.jsp", params);
+                machine_parseredData = jsonParserList(result);
 
 
-                result = http.HttpClient("Web_Ojig2", "user_select.jsp", sell_parseredData[0][2]);
+                result = http.HttpClient("Web_Ojig2", "user_select.jsp", machine_parseredData[0][1]);
                 user_parseredData = UserjsonParserList(result);
 
-
-                result = http.HttpClient("Web_Ojig2", "sell_focus_image_select.jsp", sell_pk);
+                Log.i("machine_pk",machine_pk);
+                result = http.HttpClient("Web_Ojig2", "machine_focus_image_select.jsp", machine_pk);
                 image_parseredData = ImagejsonParserList(result);
-
 
                 return "succed";
             } catch (Exception e) {
-                Toast.makeText(Sell_Focus.this, getString(R.string.http_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Machine_Focus.this, getString(R.string.http_error), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
                 return "failed";
             }
@@ -213,18 +216,16 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-
-            sell_pk = sell_parseredData[0][0];
-            category = sell_parseredData[0][1];
-            user_pk = sell_parseredData[0][2];
-            name = sell_parseredData[0][3];
-            title = sell_parseredData[0][4];
-            price = sell_parseredData[0][5];
-            address = sell_parseredData[0][6];
-            amount = sell_parseredData[0][7];
-            memo = sell_parseredData[0][8];
-            status = sell_parseredData[0][9];
-
+            machine_pk = machine_parseredData[0][0];
+            Log.i("machine_pk",machine_pk);
+            user_pk = machine_parseredData[0][1];
+            title = machine_parseredData[0][2];
+            machine = machine_parseredData[0][3];
+            address = machine_parseredData[0][4];
+            price = machine_parseredData[0][5];
+            count = machine_parseredData[0][6];
+            memo = machine_parseredData[0][7];
+            status = machine_parseredData[0][8];
 
             phone = user_parseredData[0][1];
             pass = user_parseredData[0][2];
@@ -233,19 +234,18 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
             company_txt = user_parseredData[0][5];
             company_focus = user_parseredData[0][6];
 
+            tv_title.setText(title);
+            tv_address.setText(address);
+            tv_price.setText(price + "원");
+            tv_count.setText(count +"대 보유");
+            tv_memo.setText(memo);
+            tv_address2.setText(address);
+            tv_count2.setText(count);
+
+
 
             setViewPager(image_parseredData);
 
-
-            txt_name.setText(name);
-            txt_title.setText(title);
-            txt_address.setText(address);
-            txt_amount.setText(amount + "대희망");
-            txt_memo.setText(memo);
-            txt_sell_name.setText(address);
-            txt_user.setText(company_name);
-            txt_company_focus.setText(company_focus);
-            txt_company_name.setText(company_name);
             img_call.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -254,18 +254,17 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
             });
 
 
-//            Txt_Memo.setText(contents);
 
 
             asyncDialog.dismiss();
         }
 
         public String[][] jsonParserList(String pRecvServerPage) {
-            Log.i("서버에서 받은 Sell 내용", pRecvServerPage);
+            Log.i("서버에서 받은 Machine 내용", pRecvServerPage);
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");
-                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10"};
+                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9"};
                 String[][] parseredData = new String[jArr.length()][jsonName.length];
                 for (int i = 0; i < jArr.length(); i++) {
                     json = jArr.getJSONObject(i);
@@ -282,7 +281,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
 
 
         public String[][] UserjsonParserList(String pRecvServerPage) {
-            Log.i("서버에서 받은 Sell_유저 내용", pRecvServerPage);
+            Log.i("서버에서 받은 유저 내용", pRecvServerPage);
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");
@@ -303,7 +302,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
 
 
         public String[][] ImagejsonParserList(String pRecvServerPage) {
-            Log.i("서버에서 받은 Sell_이미지 내용", pRecvServerPage);
+            Log.i("서버에서 받은 이미지 내용", pRecvServerPage);
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");
@@ -323,6 +322,8 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         String[][] data;
         int pagercount;
@@ -333,7 +334,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
             if(data.length != 0) {
                 pagercount = data.length;
             }else{
-                pagercount = 3;
+                pagercount = 1;
             }
         }
 
@@ -341,7 +342,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         public Fragment getItem(int position) {
 
             //프래그 먼트 생성
-            Fragment f = new Sell_ViewPager_Fragment();
+            Fragment f = new Machine_ViewPager_Fragment();
             Bundle bundle = new Bundle();
 
             //이미지 URL 동적 전송 ex) 1_1
@@ -369,6 +370,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         }
 
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

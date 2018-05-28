@@ -33,9 +33,8 @@ public class FullScreenMediaController extends MediaController {
         FrameLayout.LayoutParams params =
                 new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
                         LayoutParams.WRAP_CONTENT);
-//        params.gravity = Gravity.RIGHT;
-//        params.rightMargin = 80;
-        params.gravity = Gravity.RIGHT|Gravity.BOTTOM;
+        params.gravity = Gravity.RIGHT;
+        params.rightMargin = 80;
         fullScreen.setImageResource(R.drawable.fullscreen);
         addView(fullScreen, params);
 

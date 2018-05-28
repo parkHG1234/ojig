@@ -1,5 +1,6 @@
 package test.ojig.Store;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -38,6 +39,9 @@ import java.util.TimerTask;
 import test.ojig.R;
 import test.ojig.Uitility.FullScreenMediaController;
 import test.ojig.Uitility.HttpClient;
+
+import static android.view.View.SCROLLBARS_INSIDE_OVERLAY;
+import static android.view.View.SCROLLBARS_OUTSIDE_INSET;
 
 public class Store_Focus extends AppCompatActivity implements View.OnClickListener {
     private Button img_call;
@@ -102,6 +106,9 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
         vv.setVideoURI(uri);
         vv.requestFocus();
         mediaController = new FullScreenMediaController(this);
+        mediaController.computeScroll();
+        mediaController.setScrollContainer(true);
+        mediaController.setScrollBarSize(-30);
         mediaController.setAnchorView(vv);
         mediaController.setMediaPlayer(vv);
         vv.setMediaController(mediaController);

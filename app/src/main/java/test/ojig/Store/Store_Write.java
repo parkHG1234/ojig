@@ -127,9 +127,9 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
         btn_rent.setSelected(true);
 
         setBtn();
-//
+
         HttpClient http = new HttpClient();
-        String result = http.HttpClient("Web_Ojig2", "user_select.jsp", User_Pk);
+        String result = http.HttpClient("Web_Ojig1", "user_select.jsp", User_Pk);
         parseredData = jsonParserList(result);
 
 
@@ -138,9 +138,9 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
             user_models.add(new User_Model(Store_Write.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6]));
         }
 
-        et_company_name.setText(user_models.get(0).getCompany_Name());
-        et_phone.setText(user_models.get(0).getPhone());
-        et_company_focus.setText(user_models.get(0).getCompany_Focus());
+//        et_company_name.setText(user_models.get(0).getCompany_Name());
+//        et_phone.setText(user_models.get(0).getPhone());
+//        et_company_focus.setText(user_models.get(0).getCompany_Focus());
     }
 
     @Override

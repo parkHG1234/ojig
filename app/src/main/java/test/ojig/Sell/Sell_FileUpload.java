@@ -1,4 +1,4 @@
-package test.ojig.Uitility;
+package test.ojig.Sell;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -6,6 +6,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
+
+import test.ojig.Uitility.HttpClient;
+import test.ojig.Uitility.HttpFileUpload;
 
 public class Sell_FileUpload extends AsyncTask<String, Void, String> {
     private ProgressDialog asyncDialog = null;

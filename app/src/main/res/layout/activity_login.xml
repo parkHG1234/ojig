@@ -57,8 +57,7 @@
                     android:includeFontPadding="false"
                     android:textColor="@color/white"
                     android:textColorHint="#445272"
-                    android:textSize="16sp"
-                    android:text="01068785496"/>
+                    android:textSize="16sp"/>
             </LinearLayout>
 
             //비밀번호 입력
@@ -95,8 +94,7 @@
                     android:textColor="@color/white"
                     android:textColorHint="#445272"
                     android:textSize="16sp"
-                    android:inputType="textPassword"
-                    android:text="1234"/>
+                    android:inputType="textPassword"/>
             </LinearLayout>
 
             //로그인 버튼

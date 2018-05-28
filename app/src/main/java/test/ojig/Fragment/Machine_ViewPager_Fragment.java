@@ -14,13 +14,13 @@ import java.net.URLEncoder;
 
 import test.ojig.R;
 
-public class Sell_ViewPager_Fragment extends Fragment {
+public class Machine_ViewPager_Fragment extends Fragment {
     ImageView img;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_sell, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_machine, container, false);
 
         Bundle extra = getArguments();
         String a = extra.getString("Image");
@@ -35,7 +35,7 @@ public class Sell_ViewPager_Fragment extends Fragment {
 
         try {
             String En_img = URLEncoder.encode(imgUrl,"utf-8");
-            Glide.with(rootview.getContext()).load("http://13.209.35.228:8080/Img_Sell/" + En_img + ".jpg")
+            Glide.with(rootview.getContext()).load("http://13.209.35.228:8080/Img_Machine/" + En_img + ".jpg")
                     .into(img);
         } catch (UnsupportedEncodingException e) {
 

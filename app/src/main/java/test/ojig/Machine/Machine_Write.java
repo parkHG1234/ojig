@@ -1,9 +1,8 @@
-package test.ojig.Sell;
+package test.ojig.Machine;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -23,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -38,31 +36,28 @@ import java.util.Arrays;
 import test.ojig.Model.User_Model;
 import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
+import test.ojig.Sell.Sell_FileUpload;
 
-public class Sell_Write extends AppCompatActivity implements View.OnClickListener {
-    public SharedPreferences preferences = null; //캐쉬 데이터 생성
+public class Machine_Write extends AppCompatActivity implements View.OnClickListener {
 
     private String area = "";
-    private Button btn_area;
-    private AlertDialog dialog;
+    private String Profile = "";
     private String User_Pk;
     private ArrayList<User_Model> user_models;
     private String[][] parseredData;
-    private EditText edt_title, edt_name, edt_price, edt_amount, edt_memo, edt_company_name, edt_phone, edt_company_focus;
+    private AlertDialog dialog;
+    private Button btn_area;
+    private EditText et_title, et_machine, et_price, et_count, et_memo, et_company_name, et_phone, et_company_focus;
     private ImageView img_write0, img_write1, img_write2, img_write3, img_write4, img_write5;
     private ArrayList<String> img_path;
-    LinearLayout Img_Layout1, Img_Layout2, Img_Layout3;
     private ArrayList<ImageView> img_obj;
     int img_count = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sell_write);
-
-        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
-        User_Pk = preferences.getString("User_Pk", ".");
-
+        setContentView(R.layout.activity_machine_write);
 
         init();
     }
@@ -75,6 +70,7 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
 
     private void init() {
 
+
         img_write0 = (ImageView) findViewById(R.id.img_write0);
         img_write1 = (ImageView) findViewById(R.id.img_write1);
         img_write2 = (ImageView) findViewById(R.id.img_write2);
@@ -82,26 +78,23 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
         img_write4 = (ImageView) findViewById(R.id.img_write4);
         img_write5 = (ImageView) findViewById(R.id.img_write5);
 
-        Img_Layout1 = (LinearLayout) findViewById(R.id.img_layout1);
-        Img_Layout2 = (LinearLayout) findViewById(R.id.img_layout2);
-        Img_Layout3 = (LinearLayout) findViewById(R.id.img_layout3);
-
-
         img_path = new ArrayList<String>();
         img_obj = new ArrayList<ImageView>(Arrays.asList(img_write0, img_write1, img_write2, img_write3, img_write4, img_write5));
 
         User_Pk = getIntent().getStringExtra("User_Pk");
-        btn_area = (Button) findViewById(R.id.btn_area);
-        btn_area.setOnClickListener(this);
-        edt_title = (EditText) findViewById(R.id.edt_title);
-        edt_name = (EditText) findViewById(R.id.edt_name);
-        edt_price = (EditText) findViewById(R.id.edt_price);
-        edt_amount = (EditText) findViewById(R.id.edt_amount);
-        edt_memo = (EditText) findViewById(R.id.edt_memo);
-        edt_company_name = (EditText) findViewById(R.id.edt_company_name);
-        edt_phone = (EditText) findViewById(R.id.edt_phone);
-        edt_company_focus = (EditText) findViewById(R.id.edt_company_focus);
+        Log.i("User_Pk", User_Pk);
 
+        btn_area = (Button) findViewById(R.id.btn_area);
+        et_title = (EditText) findViewById(R.id.et_title);
+        et_machine = (EditText) findViewById(R.id.et_machine);
+        et_count = (EditText) findViewById(R.id.et_count);
+        et_price = (EditText) findViewById(R.id.et_price);
+        et_memo = (EditText) findViewById(R.id.et_memo);
+        et_company_name = (EditText) findViewById(R.id.et_company_name);
+        et_phone = (EditText) findViewById(R.id.et_phone);
+        et_company_focus = (EditText) findViewById(R.id.et_company_focus);
+
+//
         HttpClient http = new HttpClient();
         String result = http.HttpClient("Web_Ojig2", "user_select.jsp", User_Pk);
         parseredData = jsonParserList(result);
@@ -109,17 +102,38 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
 
         user_models = new ArrayList<User_Model>();
         for (int i = 0; i < parseredData.length; i++) {
-            user_models.add(new User_Model(Sell_Write.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6]));
+            user_models.add(new User_Model(Machine_Write.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6]));
         }
 
-        edt_company_name.setText(user_models.get(0).getCompany_Name());
-        edt_phone.setText(user_models.get(0).getPhone());
-        edt_company_focus.setText(user_models.get(0).getCompany_Focus());
+        et_company_name.setText(user_models.get(0).getCompany_Name());
+        et_phone.setText(user_models.get(0).getPhone());
+        et_company_focus.setText(user_models.get(0).getCompany_Focus());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_write:
+                btn_write();
+                break;
+            case R.id.img_write0:
+                Album(0);
+                break;
+            case R.id.img_write1:
+                Album(1);
+                break;
+            case R.id.img_write2:
+                Album(2);
+                break;
+            case R.id.img_write3:
+                Album(3);
+                break;
+            case R.id.img_write4:
+                Album(4);
+                break;
+            case R.id.img_write5:
+                Album(5);
+                break;
             case R.id.btn_area:
                 setDialog_Area(v);
                 break;
@@ -156,30 +170,36 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
             case R.id.jeju:
                 dialogset("제주");
                 break;
-            case R.id.btn_write:
-                btn_write();
-                break;
-            case R.id.img_write0:
-                Album(0);
-                break;
-            case R.id.img_write1:
-                Album(1);
-                Img_Layout2.setVisibility(View.VISIBLE);
-                break;
-            case R.id.img_write2:
-                Album(2);
-                break;
-            case R.id.img_write3:
-                Album(3);
-                Img_Layout3.setVisibility(View.VISIBLE);
-                break;
-            case R.id.img_write4:
-                Album(4);
-                break;
-            case R.id.img_write5:
-                Album(5);
-                break;
         }
+    }
+
+
+    public void setDialog_Area(View view) {
+        LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.dialog_area, (ViewGroup) view.findViewById(R.id.Root));
+
+        final AlertDialog.Builder aDialog = new AlertDialog.Builder(Machine_Write.this);
+        aDialog.setCancelable(false);
+        aDialog.setView(layout);
+        // Dialog 사이즈 조절 하기
+        dialog = aDialog.create();
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                if (i == KeyEvent.KEYCODE_BACK) {
+                    dialog.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        dialog.show();
+    }
+
+    private void dialogset(String area) {
+        this.area = area;
+        btn_area.setText(area);
+        dialog.dismiss();
     }
 
     public void Album(int i) {
@@ -193,6 +213,7 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
         //결과값을 받아오는 액티비티를 실행한다.
         startActivityForResult(intent, i);
     }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         try {
@@ -216,9 +237,9 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
                     img_path.add(requestCode, absolutePath);
                     if (requestCode <= 5) {
                         img_count++;
-                        if(requestCode==5){
+                        if (requestCode == 5) {
                             Snackbar.make(getCurrentFocus(), "6장이 최대입니다.", Snackbar.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             img_obj.get(requestCode + 1).setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -242,63 +263,69 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void fileUpload(String Sell_Pk) {
-        Sell_FileUpload sell_FileUpload = new Sell_FileUpload(Sell_Write.this, img_path, Sell_Pk);
-        sell_FileUpload.execute();
+    public void fileUpload(String Machine_Pk) {
+        Machine_FileUpload machine_FileUpload = new Machine_FileUpload(Machine_Write.this, img_path, Machine_Pk);
+        for(int i=0;i<img_path.size();i++){
+            Log.i("aaaaaa",img_path.get(i).toString());
+        }
+        Log.i("aaaaaaa",Machine_Pk);
+        machine_FileUpload.execute();
     }
 
     private void btn_write() {
-        Log.i("aaaa",edt_company_focus.getText().toString());
-        if (edt_title.getText().length() != 0) {
-            if (edt_name.getText().length() != 0) {
-                if (!area.equals("")) {
-                    if (edt_amount.getText().length() != 0) {
-                        if (edt_memo.getText().length() != 0) {
-                            if (edt_company_name.getText().length() != 0) {
-                                if (edt_phone.getText().length() != 0) {
-                                    if (edt_company_focus.getText().length() != 0) {
 
-                                            HttpClient http = new HttpClient();
-                                            String result = http.HttpClient("Web_Ojig2", "sell_write.jsp", User_Pk, edt_title.getText().toString(), edt_name.getText().toString(), area, edt_price.getText().toString(), edt_amount.getText().toString(),
-                                                    edt_memo.getText().toString(), edt_company_name.getText().toString(), edt_phone.getText().toString(), edt_company_focus.getText().toString());
-                                            try {
-                                                JSONObject jsonObject = new JSONObject(result);
-                                                if (jsonObject.getString("msg1").equals("succed")) {
-                                                    for (int i = 0; i < img_count; i++) {
-                                                        http.HttpClient("Web_Ojig", "sell_imageupload.jsp", jsonObject.getString("msg2"), Integer.toString(i + 1));
-                                                    }
+        if (et_title.getText().length() != 0) {
+            if (et_machine.getText().length() != 0) {
+                if (et_price.getText().length() != 0) {
+                    if (et_count.getText().length() != 0) {
+                        if (!area.equals("")) {
+                            if (et_memo.getText().length() != 0) {
+                                HttpClient http = new HttpClient();
+                                String result = http.HttpClient("Web_Ojig2", "machine_write.jsp",
+                                        User_Pk,
+                                        et_title.getText().toString(),
+                                        et_machine.getText().toString(),
+                                        et_price.getText().toString(),
+                                        et_count.getText().toString(),
+                                        area,
+                                        et_memo.getText().toString(),
+                                        et_company_name.getText().toString(),
+                                        et_phone.getText().toString(),
+                                        et_company_focus.getText().toString());
 
-                                                    fileUpload(jsonObject.getString("msg2"));
-                                                } else {
-                                                    Toast.makeText(getApplicationContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_LONG).show();
-                                                }
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "주소를 입력해주세요", Toast.LENGTH_LONG).show();
+                                try {
+                                    JSONObject jsonObject = new JSONObject(result);
+                                    if (jsonObject.getString("msg1").equals("succed")) {
+
+                                        for (int i = 0; i < img_count; i++) {
+                                            http.HttpClient("Web_Ojig", "machine_imageupload.jsp", jsonObject.getString("msg2"), Integer.toString(i + 1));
+                                        }
+                                        fileUpload(jsonObject.getString("msg2"));
+                                   } else {
+                                        Toast.makeText(getApplicationContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_LONG).show();
                                     }
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "핸드폰번호를 입력해주세요", Toast.LENGTH_LONG).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
                             } else {
-                                Toast.makeText(getApplicationContext(), "회사명을 입력해주세요", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "메모을 입력해주세요", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), "메모를 입력해주세요", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "지역을 선택해주세요", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), "구입희망 수량을 입력해주세요", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "보유 갯수을 입력해주세요", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "지역을 선택해주세요", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "가격을 입력해주세요", Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "구입희망 게임기을 입력해주세요", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "게임기명을 입력해주세요", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "글제목을 입력해주세요", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "제목을 입력해주세요", Toast.LENGTH_LONG).show();
         }
+
     }
 
     public int exifOrientationToDegrees(int exifOrientation) {
@@ -332,35 +359,6 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
         return bitmap;
     }
 
-    public void setDialog_Area(View view) {
-        LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.dialog_area, (ViewGroup) view.findViewById(R.id.Root));
-
-        final AlertDialog.Builder aDialog = new AlertDialog.Builder(Sell_Write.this);
-        aDialog.setCancelable(false);
-        aDialog.setView(layout);
-        // Dialog 사이즈 조절 하기
-        dialog = aDialog.create();
-        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
-                if (i == KeyEvent.KEYCODE_BACK) {
-                    dialog.dismiss();
-                    return true;
-                }
-                return false;
-            }
-        });
-        dialog.show();
-    }
-
-    private void dialogset(String area) {
-        Log.i("area",this.area);
-        this.area = area;
-        btn_area.setText(area);
-        dialog.dismiss();
-    }
-
     public String[][] jsonParserList(String pRecvServerPage) {
         Log.i("서버에서 받은 전체 내용", pRecvServerPage);
         try {
@@ -380,5 +378,4 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
             return null;
         }
     }
-
 }
