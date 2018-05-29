@@ -1,7 +1,5 @@
 package test.ojig.Adapter;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -14,15 +12,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 
 import java.util.ArrayList;
 
 import test.ojig.Model.Sell_Model;
 import test.ojig.R;
-import test.ojig.Sell.Sell;
 import test.ojig.Sell.Sell_Focus;
 
 public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> {
@@ -53,8 +50,10 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
         holder.tv_price.setText(items.getPrice() + "원");
         holder.tv_address.setText(items.getAddress());
         holder.tv_gamecount.setText(items.getAmount() + "대 희망");
-//
-        if (items.getStatus().equals("possible")) {
+
+        if (items.getStatus().equals("wait")) {
+            holder.img_deal.setVisibility(View.GONE);
+        } else if (items.getStatus().equals("possible")) {
             holder.img_deal.setImageResource(R.drawable.deal_possible);
         } else if (items.getStatus().equals("ing")) {
             holder.img_deal.setImageResource(R.drawable.deal_ing);
@@ -64,7 +63,7 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
 
         Drawable mDefaultBackground = context.getResources().getDrawable(R.drawable.area);
 
-        Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Img_Sell/" + items.getSell_Pk() + "_1.jpg")
+        Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Img_Sell/" + items.getSell_Pk() + "_0.jpg")
                 .error(mDefaultBackground)
                 .into(holder.img_sell);
 
@@ -72,10 +71,15 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
         holder.Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, Sell_Focus.class);
-                intent.putExtra("Sell_Pk", items.getSell_Pk());
-                context.startActivity(intent);
-                items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+
+                if (items.getStatus().equals("wait")) {
+                    Toast.makeText(context, "확인이 필요한 글입니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(context, Sell_Focus.class);
+                    intent.putExtra("Sell_Pk", items.getSell_Pk());
+                    context.startActivity(intent);
+                    items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                }
             }
         });
     }
@@ -83,7 +87,6 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
     @Override
 
     public int getItemCount() {
-
         return this.arrData.size();
     }
 

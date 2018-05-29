@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -62,6 +63,8 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
             holder.img_deal.setImageResource(R.drawable.deal_ing);
         } else if (items.getStatus().equals("finish")) {
             holder.img_deal.setImageResource(R.drawable.deal_finish);
+        } else{
+            holder.img_deal.setVisibility(View.INVISIBLE);
         }
 
         if(items.getVideo().equals("true")){
@@ -76,10 +79,15 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
         holder.Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, Store_Focus.class);
-                intent.putExtra("Store_Pk", items.getStore_Pk());
-                context.startActivity(intent);
-                items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+
+                if(items.getStatus().equals("wait")){
+                    Toast.makeText(context,"확인이 필요한 글입니다.", Toast.LENGTH_LONG).show();
+                }else {
+                    Intent intent = new Intent(context, Store_Focus.class);
+                    intent.putExtra("Store_Pk", items.getStore_Pk());
+                    context.startActivity(intent);
+                    items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                }
             }
         });
     }

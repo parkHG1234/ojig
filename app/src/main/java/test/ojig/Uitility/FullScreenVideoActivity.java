@@ -27,20 +27,15 @@ public class FullScreenVideoActivity extends AppCompatActivity {
 
         videoView = findViewById(R.id.videoView);
         mProgressBar = findViewById(R.id.Progressbar);
-        String fullScreen = getIntent().getStringExtra("fullScreenInd");
-        if ("y".equals(fullScreen)) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-        String uriPath = "http://sites.google.com/site/ubiaccessmobile/sample_video.mp4";
-        Uri videoUri = Uri.parse(uriPath);
+        Uri videoUri = Uri.parse(getIntent().getStringExtra("Url"));
 
         videoView.setVideoURI(videoUri);
 
         mediaController = new ScreenMediaController(this);
-//        mediaController.setAnchorView(videoView);
 
         videoView.setMediaController(mediaController);
         videoView.start();
@@ -50,11 +45,10 @@ public class FullScreenVideoActivity extends AppCompatActivity {
             public void onCompletion(MediaPlayer mp) {
                 // invoke your activity here
                 finish();
-
             }
         });
 
-        Drawable draw= null;
+        Drawable draw = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             draw = getDrawable(R.drawable.custom_progressbar);
         }
@@ -68,8 +62,5 @@ public class FullScreenVideoActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
-
-
 }

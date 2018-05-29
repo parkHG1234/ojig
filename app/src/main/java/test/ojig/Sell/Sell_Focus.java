@@ -31,8 +31,8 @@ import test.ojig.Fragment.Sell_ViewPager_Fragment;
 import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 
-public class Sell_Focus extends AppCompatActivity implements View.OnClickListener{
-    ImageView Img_Back;
+public class Sell_Focus extends AppCompatActivity implements View.OnClickListener {
+    private ImageView Img_Back, img_deal;
     private Button img_call;
     private TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_sell_name, txt_user, txt_memo;
     private ViewPager mViewPager;
@@ -74,8 +74,6 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
     }
 
 
-
-
     public void setViewPager(String[][] data) {
         //프래그먼트 정의
 
@@ -91,49 +89,52 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         mViewPager = (ViewPager) findViewById(R.id.sell_viewpager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mViewPager.setOffscreenPageLimit(data.length - 1);
+        mViewPager.setOffscreenPageLimit(data.length);
         ////////////
         indicator.setNumberOfItems(pageCount);
 
+        if (pageCount > 1) {
+            //페이지 자동 전환 보류
+            myTask = new TimerTask() {
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            int currentPage = mViewPager.getCurrentItem();
+                            if (currentPage >= pageCount - 1) mViewPager.setCurrentItem(0, true);
+                            else mViewPager.setCurrentItem(currentPage + 1, true);
+                            indicator.setSelectedItem((currentPage + 1 == pageCount) ? 0 : currentPage + 1, true);
+                        }
+                    });
+                }
+            };
+            timer = new Timer();
+            //timer.schedule(myTask, 5000);  // 5초후 실행하고 종료
+            timer.schedule(myTask, 500, 3000); // 5초후 첫실행, 3초마다 계속실행
 
-        //페이지 자동 전환 보류
-        myTask = new TimerTask() {
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int currentPage = mViewPager.getCurrentItem();
-                        if (currentPage >= pageCount - 1) mViewPager.setCurrentItem(0, true);
-                        else mViewPager.setCurrentItem(currentPage + 1, true);
-                        indicator.setSelectedItem((currentPage + 1 == pageCount) ? 0 : currentPage + 1, true);
-                    }
-                });
-            }
-        };
-        timer = new Timer();
-        //timer.schedule(myTask, 5000);  // 5초후 실행하고 종료
-        timer.schedule(myTask, 500, 3000); // 5초후 첫실행, 3초마다 계속실행
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                }
 
-            }
+                @Override
+                public void onPageSelected(int position) {
+                    indicator.setSelectedItem(mViewPager.getCurrentItem(), true);
+                }
 
-            @Override
-            public void onPageSelected(int position) {
-                indicator.setSelectedItem(mViewPager.getCurrentItem(), true);
-            }
+                @Override
+                public void onPageScrollStateChanged(int state) {
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+                }
+            });
 
-            }
-        });
+
+        }
     }
 
     public void init() {
-        Img_Back = (ImageView)findViewById(R.id.img_back);
+        Img_Back = (ImageView) findViewById(R.id.img_back);
         Img_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,6 +142,8 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
             }
         });
+
+        img_deal = (ImageView) findViewById(R.id.img_deal);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_title = (TextView) findViewById(R.id.txt_title);
         txt_amount = (TextView) findViewById(R.id.txt_amount);
@@ -156,7 +159,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.img_back:
                 finish();
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
@@ -235,7 +238,15 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
 
 
             setViewPager(image_parseredData);
-
+            if (status.equals("wait")) {
+                img_deal.setVisibility(View.INVISIBLE);
+            } else if (status.equals("possible")) {
+                img_deal.setImageResource(R.drawable.deal_possible);
+            } else if (status.equals("ing")) {
+                img_deal.setImageResource(R.drawable.deal_ing);
+            } else if (status.equals("finish")) {
+                img_deal.setImageResource(R.drawable.deal_finish);
+            }
 
             txt_name.setText(name);
             txt_title.setText(title);
@@ -330,10 +341,10 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         public SectionsPagerAdapter(FragmentManager fm, String[][] data) {
             super(fm);
             this.data = data;
-            if(data.length != 0) {
+            if (data.length == 0) {
+                pagercount = 1;
+            } else {
                 pagercount = data.length;
-            }else{
-                pagercount = 3;
             }
         }
 
@@ -346,10 +357,10 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
 
             //이미지 URL 동적 전송 ex) 1_1
             String Image_txt;
-            if (data.length != 0) {
-                Image_txt = data[position][1];
+            if (data.length == 0) {
+                Image_txt = "";
             } else {
-                Image_txt = "banner" + Integer.toString(position + 1);
+                Image_txt = data[position][1];
             }
             bundle.putString("Image", Image_txt);
             f.setArguments(bundle);
@@ -369,6 +380,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         }
 
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

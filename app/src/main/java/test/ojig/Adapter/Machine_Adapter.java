@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -50,6 +51,15 @@ public class Machine_Adapter extends RecyclerView.Adapter<Machine_Adapter.ViewHo
         holder.tv_count.setText(items.getCount() + "개");
         holder.tv_address.setText(items.getAddress());
 
+        if (items.getStatus().equals("possible")) {
+            holder.Img_deal.setImageResource(R.drawable.deal_possible);
+        } else if (items.getStatus().equals("ing")) {
+            holder.Img_deal.setImageResource(R.drawable.deal_ing);
+        } else if (items.getStatus().equals("finish")) {
+            holder.Img_deal.setImageResource(R.drawable.deal_finish);
+        } else {
+            holder.Img_deal.setVisibility(View.INVISIBLE);
+        }
 
 
         Drawable mDefaultBackground = context.getResources().getDrawable(R.drawable.area);
@@ -61,9 +71,16 @@ public class Machine_Adapter extends RecyclerView.Adapter<Machine_Adapter.ViewHo
         holder.Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, Machine_Focus.class);
-                intent.putExtra("Machine_Pk", items.getMachine_Pk());
-                context.startActivity(intent);
+
+                if (items.getStatus().equals("wait")) {
+                    Toast.makeText(context, "확인이 필요한 글입니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(context, Machine_Focus.class);
+                    intent.putExtra("Machine_Pk", items.getMachine_Pk());
+                    context.startActivity(intent);
+                    items.getActivity().overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+
+                }
             }
         });
     }
@@ -79,7 +96,8 @@ public class Machine_Adapter extends RecyclerView.Adapter<Machine_Adapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout Layout;
         private TextView tv_title, tv_machine, tv_price, tv_count, tv_address;
-        private ImageView img_machine;
+        private ImageView img_machine, Img_deal;
+
         public ViewHolder(View itemView) {
             super(itemView);
             Layout = (LinearLayout) itemView.findViewById(R.id.layout);
@@ -89,6 +107,7 @@ public class Machine_Adapter extends RecyclerView.Adapter<Machine_Adapter.ViewHo
             tv_count = (TextView) itemView.findViewById(R.id.tv_count);
             tv_address = (TextView) itemView.findViewById(R.id.tv_address);
             img_machine = (ImageView) itemView.findViewById(R.id.img_machine);
+            Img_deal = (ImageView) itemView.findViewById(R.id.img_deal);
         }
 
     }

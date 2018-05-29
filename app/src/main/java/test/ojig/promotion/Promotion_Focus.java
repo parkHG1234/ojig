@@ -2,27 +2,15 @@ package test.ojig.promotion;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.MediaMetadataRetriever;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 
@@ -30,16 +18,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
-
 import test.ojig.R;
-import test.ojig.Uitility.FullScreenMediaController;
+import test.ojig.Uitility.FullScreenVideoActivity;
 import test.ojig.Uitility.HttpClient;
 
 /**
@@ -47,12 +27,10 @@ import test.ojig.Uitility.HttpClient;
  */
 
 public class Promotion_Focus extends AppCompatActivity {
-    ImageView Img;
+    ImageView img_video;
     TextView Txt_Name, Txt_Title, Txt_Date, Txt_DateNum, Txt_Company, Txt_Address, Txt_Memo;
 
     private ImageView player;
-    private VideoView vv;
-    private MediaController mediaController;
     private ProgressBar mProgressBar;
 
     String promotion_pk = "";
@@ -78,7 +56,6 @@ public class Promotion_Focus extends AppCompatActivity {
 
         Async async = new Async();
         async.execute(promotion_pk);
-        setVideoView();
 
     }
     @Override
@@ -97,46 +74,14 @@ public class Promotion_Focus extends AppCompatActivity {
         Txt_Memo = (TextView) findViewById(R.id.txt_memo);
     }
     public void setImg_Play(){
+        img_video = (ImageView) findViewById(R.id.img_video);
         player = (ImageView)findViewById(R.id.player);
         player.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vv.start();
-                player.setVisibility(View.GONE);
-                mProgressBar.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-    public void setVideoView() {
-        vv = (VideoView) findViewById(R.id.vv);
-        mProgressBar = (ProgressBar)findViewById(R.id.Progressbar);
-
-        String uriPath = "http://sites.google.com/site/ubiaccessmobile/sample_video.mp4";
-        Uri uri = Uri.parse(uriPath);
-        vv.setVideoURI(uri);
-
-        vv.requestFocus();
-        mediaController = new FullScreenMediaController(this);
-        mediaController.setAnchorView(vv);
-        mediaController.setMediaPlayer(vv);
-        vv.setMediaController(mediaController);
-
-        Drawable draw= null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            draw = getDrawable(R.drawable.custom_progressbar);
-        }
-
-        mProgressBar.setProgressDrawable(draw);
-        vv.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-            @Override
-            public boolean onInfo(MediaPlayer mp, int what, int extra) {
-                if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                    //Img.setVisibility(View.GONE);
-                    mProgressBar.setVisibility(View.GONE);
-                    vv.setVisibility(View.VISIBLE);
-                    vv.setBackgroundDrawable(null);
-                }
-                return false;
+                Intent intent = new Intent(Promotion_Focus.this, FullScreenVideoActivity.class);
+                intent.putExtra("Url","http://sites.google.com/site/ubiaccessmobile/sample_video.mp4");
+                startActivity(intent);
             }
         });
     }
@@ -194,27 +139,11 @@ public class Promotion_Focus extends AppCompatActivity {
 
 
             if (category.equals("adult")) {
-                try{
-                    URL url = new URL("http://13.209.35.228:8080/Promotion/item/" + promotion_pk + ".jpg");
-                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
-                    vv.setBackgroundDrawable(bitmapDrawable);
-                }catch (MalformedURLException e2){
-
-                }catch (IOException e1){
-
-                }
+                Glide.with(Promotion_Focus.this).load("http://13.209.35.228:8080/Promotion/item/" + promotion_pk + ".jpg")
+                        .into(img_video);
             } else if (category.equals("adult_banner")) {
-                try{
-                    URL url = new URL("http://13.209.35.228:8080/Promotion/banner/" + promotion_pk + ".jpg");
-                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
-                    vv.setBackgroundDrawable(bitmapDrawable);
-                }catch (MalformedURLException e2){
-
-                }catch (IOException e1){
-
-                }
+                Glide.with(Promotion_Focus.this).load("http://13.209.35.228:8080/Promotion/banner/" + promotion_pk + ".jpg")
+                        .into(img_video);
             }
             asyncDialog.dismiss();
         }

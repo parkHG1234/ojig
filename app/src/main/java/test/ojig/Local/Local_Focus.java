@@ -9,11 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import test.ojig.Adapter.Local_Adapter;
-import test.ojig.Adapter.Sell_Adapter;
 import test.ojig.Model.Local_Model;
-import test.ojig.Model.Sell_Model;
 import test.ojig.R;
-import test.ojig.Sell.Sell;
 
 public class Local_Focus extends AppCompatActivity {
 

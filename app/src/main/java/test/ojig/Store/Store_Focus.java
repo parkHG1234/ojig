@@ -1,55 +1,34 @@
 package test.ojig.Store;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.Surface;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import test.ojig.R;
-import test.ojig.Uitility.FullScreenMediaController;
+import test.ojig.Uitility.FullScreenVideoActivity;
 import test.ojig.Uitility.HttpClient;
-
-import static android.view.View.SCROLLBARS_INSIDE_OVERLAY;
-import static android.view.View.SCROLLBARS_OUTSIDE_INSET;
 
 public class Store_Focus extends AppCompatActivity implements View.OnClickListener {
     private Button img_call;
     private TextView tv_title, tv_type, tv_address, tv_price, tv_deposit, tv_rental, tv_company_name, tv_company_focus;
     private LinearLayout layout_deal, layout_rent;
-    private ImageView player;
-    private VideoView vv;
-    private MediaController mediaController;
+    private ImageView img_video, player, img_deal;
 
     private String store_pk = "";
     private String category = "";
@@ -73,9 +52,6 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
     private String company_focus = "";
 
 
-    private Timer timer;
-    private TimerTask myTask;
-    private ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +62,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
 
         Async async = new Async();
         async.execute(store_pk);
-        setVideoView();
+        setVideo_Img();
     }
 
     @Override
@@ -96,43 +72,11 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    public void setVideoView() {
-        vv = (VideoView) findViewById(R.id.vv);
-        setVideo_Img();
-        mProgressBar = (ProgressBar)findViewById(R.id.Progressbar);
-
-        String uriPath = "http://13.209.35.228:8080/Video_Store/"+store_pk+".mp4";
-        Uri uri = Uri.parse(uriPath);
-        vv.setVideoURI(uri);
-        vv.requestFocus();
-        mediaController = new FullScreenMediaController(this);
-        mediaController.computeScroll();
-        mediaController.setScrollContainer(true);
-        mediaController.setScrollBarSize(-30);
-        mediaController.setAnchorView(vv);
-        mediaController.setMediaPlayer(vv);
-        vv.setMediaController(mediaController);
-        Drawable draw= null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            draw = getDrawable(R.drawable.custom_progressbar);
-        }
-
-        mProgressBar.setProgressDrawable(draw);
-        vv.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-            @Override
-            public boolean onInfo(MediaPlayer mp, int what, int extra) {
-                if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                    mProgressBar.setVisibility(View.GONE);
-                }
-                return false;
-            }
-        });
-    }
 
     public void init() {
 
-        layout_deal = (LinearLayout)findViewById(R.id.layout_deal);
-        layout_rent = (LinearLayout)findViewById(R.id.layout_rent);
+        layout_deal = (LinearLayout) findViewById(R.id.layout_deal);
+        layout_rent = (LinearLayout) findViewById(R.id.layout_rent);
 
         tv_title = (TextView) findViewById(R.id.tv_title);
         tv_type = (TextView) findViewById(R.id.tv_type);
@@ -144,18 +88,18 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
         tv_company_focus = (TextView) findViewById(R.id.tv_company_focus);
         img_call = (Button) findViewById(R.id.img_call);
         player = (ImageView) findViewById(R.id.player);
+        img_deal = (ImageView) findViewById(R.id.img_deal);
 
     }
-    public void setVideo_Img(){
-        try {
-            URL url = new URL("http://13.209.35.228:8080/Video_Store/thumbnail/" + store_pk + ".jpg");
-            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            BitmapDrawable bitmapDrawable = new BitmapDrawable(bmp);
-            vv.setBackgroundDrawable(bitmapDrawable);
-        }catch (IOException e){
 
-        }
+    public void setVideo_Img() {
+        img_video = (ImageView) findViewById(R.id.img_video);
+
+        Glide.with(this).load("http://13.209.35.228:8080/Video_Store/thumbnail/" + store_pk + ".jpg")
+                .into(img_video);
+
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -164,10 +108,12 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 break;
             case R.id.player:
-                vv.start();
                 player.setVisibility(View.GONE);
-                mProgressBar.setVisibility(View.VISIBLE);
-                vv.setBackgroundDrawable(null);
+
+
+                Intent intent = new Intent(Store_Focus.this, FullScreenVideoActivity.class);
+                intent.putExtra("Url","http://13.209.35.228:8080/Video_Store/" + store_pk + ".mp4");
+                startActivity(intent);
                 break;
         }
     }
@@ -232,7 +178,6 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
             status = store_parseredData[0][12];
 
 
-
             phone = user_parseredData[0][1];
             pass = user_parseredData[0][2];
             company_name = user_parseredData[0][3];
@@ -241,14 +186,24 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
             company_focus = user_parseredData[0][6];
 
 
-            if(type.equals("deal")){
+            if (type.equals("deal")) {
                 tv_type.setText("매매");
                 layout_deal.setVisibility(View.VISIBLE);
                 layout_rent.setVisibility(View.GONE);
-            }else if(type.equals("rent")){
+            } else if (type.equals("rent")) {
                 tv_type.setText("임대");
                 layout_deal.setVisibility(View.GONE);
                 layout_rent.setVisibility(View.VISIBLE);
+            }
+
+            if (status.equals("possible")) {
+                img_deal.setImageResource(R.drawable.deal_possible);
+            } else if (status.equals("ing")) {
+                img_deal.setImageResource(R.drawable.deal_ing);
+            } else if (status.equals("finish")) {
+                img_deal.setImageResource(R.drawable.deal_finish);
+            } else {
+                img_deal.setVisibility(View.INVISIBLE);
             }
 
             tv_title.setText(title);
@@ -266,8 +221,6 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
                     startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone)));
                 }
             });
-
-
 
 
             asyncDialog.dismiss();
