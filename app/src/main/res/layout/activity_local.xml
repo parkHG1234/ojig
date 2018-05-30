@@ -97,7 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="대전"
+                    android:text="충북"
                     android:textColor="@color/white"
                     android:textSize="30dp" />
             </RelativeLayout>
@@ -114,7 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="대구"
+                    android:text="강원"
                     android:textColor="@color/white"
                     android:textSize="30dp" />
             </RelativeLayout>
@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="광주"
+                    android:text="충남"
                     android:textColor="@color/white"
                     android:textSize="30dp" />
             </RelativeLayout>
@@ -186,7 +186,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="전남"
+                    android:text="전북"
                     android:textColor="@color/white"
                     android:textSize="30dp" />
             </RelativeLayout>
@@ -203,7 +203,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="전북"
+                    android:text="경남"
                     android:textColor="@color/white"
                     android:textSize="30dp" />
             </RelativeLayout>
@@ -229,7 +229,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="경남"
+                    android:text="전남"
                     android:textColor="@color/white"
                     android:textSize="30dp" />
             </RelativeLayout>
@@ -246,7 +246,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="부산"
+                    android:text="제주"
                     android:textColor="@color/white"
                     android:textSize="30dp" />
             </RelativeLayout>

@@ -68,7 +68,7 @@ public class Login extends AppCompatActivity {
         Layout_Find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, Join.class);
+                Intent intent = new Intent(Login.this, Find.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
             }

@@ -15,11 +15,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".User.Login">
-        </activity>
-        <activity android:name=".Start"></activity>
-        <activity android:name=".Flash">
+
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".User.Login"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".Start"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".Flash"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -83,10 +90,14 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".User.Join"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".User.Find"
+            android:screenOrientation="portrait"/>
         <activity android:name=".User.Join_Address"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".promotion.Promotion"></activity>
-        <activity android:name=".promotion.Promotion_Focus"></activity>
+        <activity android:name=".promotion.Promotion"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".promotion.Promotion_Focus"
+            android:screenOrientation="portrait"></activity>
 
         <activity android:name=".Uitility.FullScreenVideoActivity"
             android:screenOrientation="landscape"/>

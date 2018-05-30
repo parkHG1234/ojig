@@ -31,6 +31,7 @@ public class Local extends AppCompatActivity implements View.OnClickListener{
         switch (v.getId()){
             case R.id.layout_1:
                 intent = new Intent(Local.this, Local_Focus.class);
+                intent.putExtra("Area", "서울");
                 break;
             case R.id.layout_2:
                 intent = new Intent(Local.this, Local_Focus.class);
