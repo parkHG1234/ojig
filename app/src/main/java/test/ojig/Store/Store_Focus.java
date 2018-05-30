@@ -20,13 +20,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+
 import test.ojig.R;
 import test.ojig.Uitility.FullScreenVideoActivity;
 import test.ojig.Uitility.HttpClient;
+import test.ojig.Uitility.convertHangul;
 
 public class Store_Focus extends AppCompatActivity implements View.OnClickListener {
-    private Button img_call;
-    private TextView tv_title, tv_type, tv_address, tv_price, tv_deposit, tv_rental, tv_company_name, tv_company_focus;
+    private LinearLayout img_call;
+    private TextView tv_title, tv_type, tv_address, tv_price, tv_deposit, tv_rental, tv_company_name, tv_company_focus, txt_user, txt_memo;
     private LinearLayout layout_deal, layout_rent;
     private ImageView img_video, player, img_deal;
 
@@ -43,6 +46,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
     private String address = "";
     private String memo = "";
     private String status = "";
+    private String video = "";
 
     private String phone = "";
     private String pass = "";
@@ -62,13 +66,13 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
 
         Async async = new Async();
         async.execute(store_pk);
-        setVideo_Img();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        player.setVisibility(View.VISIBLE);
+
 
     }
 
@@ -86,18 +90,25 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
         tv_rental = (TextView) findViewById(R.id.tv_rental);
         tv_company_name = (TextView) findViewById(R.id.tv_company_name);
         tv_company_focus = (TextView) findViewById(R.id.tv_company_focus);
-        img_call = (Button) findViewById(R.id.img_call);
+        img_call = (LinearLayout) findViewById(R.id.img_call);
         player = (ImageView) findViewById(R.id.player);
         img_deal = (ImageView) findViewById(R.id.img_deal);
-
+        txt_user = (TextView) findViewById(R.id.txt_user);
+        txt_memo = (TextView) findViewById(R.id.txt_memo);
     }
 
     public void setVideo_Img() {
         img_video = (ImageView) findViewById(R.id.img_video);
-
-        Glide.with(this).load("http://13.209.35.228:8080/Video_Store/thumbnail/" + store_pk + ".jpg")
-                .into(img_video);
-
+        if(video.equals("true")){
+            player.setVisibility(View.VISIBLE);
+            Glide.with(this).load("http://13.209.35.228:8080/Video_Store/thumbnail/" + store_pk + ".jpg")
+                    .into(img_video);
+        }
+        else{
+            player.setVisibility(View.GONE);
+            Glide.with(this).load(R.drawable.basic_mainlist)
+                    .into(img_video);
+        }
     }
 
     @Override
@@ -109,11 +120,15 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.player:
                 player.setVisibility(View.GONE);
+                if(video.equals("true")){
+                    Intent intent = new Intent(Store_Focus.this, FullScreenVideoActivity.class);
+                    intent.putExtra("Url","http://13.209.35.228:8080/Video_Store/" + store_pk + ".mp4");
+                    startActivity(intent);
+                }
+                else{
+                }
 
 
-                Intent intent = new Intent(Store_Focus.this, FullScreenVideoActivity.class);
-                intent.putExtra("Url","http://13.209.35.228:8080/Video_Store/" + store_pk + ".mp4");
-                startActivity(intent);
                 break;
         }
     }
@@ -142,11 +157,11 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
             try {
                 //베스트 다운로드 데이터 셋팅
 
-                result = http.HttpClient("Web_Ojig2", "store_focus_select.jsp", params);
+                result = http.HttpClient("Web_Ojig", "Store_Focus.jsp", params);
                 store_parseredData = jsonParserList(result);
 
 
-                result = http.HttpClient("Web_Ojig2", "user_select.jsp", store_parseredData[0][3]);
+                result = http.HttpClient("Web_Ojig", "User.jsp", store_parseredData[0][3]);
                 user_parseredData = UserjsonParserList(result);
 
 
@@ -176,7 +191,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
             address = store_parseredData[0][10];
             memo = store_parseredData[0][11];
             status = store_parseredData[0][12];
-
+            video = store_parseredData[0][13];
 
             phone = user_parseredData[0][1];
             pass = user_parseredData[0][2];
@@ -190,10 +205,13 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
                 tv_type.setText("매매");
                 layout_deal.setVisibility(View.VISIBLE);
                 layout_rent.setVisibility(View.GONE);
+                convertHangul convertHangul = new convertHangul();
+                tv_price.setText(convertHangul.convertHangul(price)+"원");
             } else if (type.equals("rent")) {
                 tv_type.setText("임대");
                 layout_deal.setVisibility(View.GONE);
                 layout_rent.setVisibility(View.VISIBLE);
+                tv_price.setText(deposit + " / " + rental);
             }
 
             if (status.equals("possible")) {
@@ -208,12 +226,13 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
 
             tv_title.setText(title);
             tv_address.setText(address);
-            tv_price.setText(price);
             tv_deposit.setText(deposit);
             tv_rental.setText(rental);
             tv_company_name.setText(company_name);
             tv_company_focus.setText(company_txt + company_focus);
 
+            txt_user.setText(company_name);
+            txt_memo.setText(memo);
 
             img_call.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -221,7 +240,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
                     startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone)));
                 }
             });
-
+            setVideo_Img();
 
             asyncDialog.dismiss();
         }
@@ -231,7 +250,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
             try {
                 JSONObject json = new JSONObject(pRecvServerPage);
                 JSONArray jArr = json.getJSONArray("List");
-                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12", "msg13"};
+                String[] jsonName = {"msg1", "msg2", "msg3", "msg4", "msg5", "msg6", "msg7", "msg8", "msg9", "msg10", "msg11", "msg12", "msg13", "msg14"};
                 String[][] parseredData = new String[jArr.length()][jsonName.length];
                 for (int i = 0; i < jArr.length(); i++) {
                     json = jArr.getJSONObject(i);

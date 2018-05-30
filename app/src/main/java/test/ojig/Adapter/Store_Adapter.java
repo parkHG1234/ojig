@@ -48,7 +48,7 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
         holder.tv_title.setText(items.getTitle());
         if(items.getType().equals("deal")){
             holder.btn_type.setText("매매");
-            holder.tv_price.setText(convertHangul(items.getPrice()));
+            holder.tv_price.setText(convertHangul(items.getPrice())+"원");
         }else if(items.getType().equals("rent")){
             holder.btn_type.setText("임대");
             holder.tv_price.setText(items.getDeposit()+"  /  "+items.getRental());
@@ -72,7 +72,8 @@ public class Store_Adapter extends RecyclerView.Adapter<Store_Adapter.ViewHolder
                     .into(holder.img_store);
         }
         else{
-            holder.img_store.setBackgroundColor(items.getActivity().getResources().getColor(R.color.black));
+            Glide.with(items.getActivity()).load(R.drawable.basic_mainlist)
+                    .into(holder.img_store);
         }
 
 

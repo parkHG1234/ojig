@@ -319,7 +319,7 @@
                         android:layout_weight="1"
                         android:adjustViewBounds="true"
                         android:onClick="onClick"
-                        android:src="@drawable/img_add" />
+                        android:src="@drawable/add_video" />
 
                     <ImageView
                         android:id="@+id/img_write1"

@@ -18,8 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import test.ojig.Choice;
 import test.ojig.MainActivity;
 import test.ojig.R;
+import test.ojig.Start;
 import test.ojig.Uitility.HttpClient;
 
 /**
@@ -34,10 +36,17 @@ public class Login extends AppCompatActivity {
     RelativeLayout Layout_Login;
     EditText Edit_Phone, Edit_Pass;
     static Activity act_Login;
+    String User_Pk = "";
+    String Category = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
+        Category = preferences.getString("Category", ".");
 
         init();
 
@@ -79,6 +88,16 @@ public class Login extends AppCompatActivity {
                     editor.putString("User_Pk", parseredData_login[0][0]);
                     editor.commit();
 
+                    if(Category.equals(".")){
+                        Intent intent = new Intent(Login.this, Choice.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                    }
+                    else{
+                        Intent intent = new Intent(Login.this, MainActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                    }
                     startActivity(new Intent(Login.this, MainActivity.class));
                     finish();
                 }

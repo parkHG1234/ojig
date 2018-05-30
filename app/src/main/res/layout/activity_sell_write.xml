@@ -20,8 +20,8 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/back"
-            android:onClick="onClick"/>
+            android:onClick="onClick"
+            android:src="@drawable/back" />
 
     </LinearLayout>
 
@@ -82,7 +82,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
                     android:background="@null"
                     android:fontFamily="@font/notosanscjkkr_medium_cus"
                     android:gravity="center"
@@ -104,16 +103,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
                     android:background="@null"
                     android:fontFamily="@font/notosanscjkkr_medium_cus"
                     android:gravity="center"
-                    android:hint="희망가격"
+                    android:hint="판매가격"
                     android:includeFontPadding="false"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textColorHint="@color/text_hint"
-                    android:textSize="18sp"
-                    android:inputType="number"/>
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -157,13 +155,13 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:fontFamily="@font/notosanscjkkr_medium_cus"
-                        android:includeFontPadding="false"
                         android:gravity="center"
-                        android:hint="구매희망 갯수"
+                        android:hint="판매희망 갯수"
+                        android:includeFontPadding="false"
+                        android:inputType="number"
                         android:textColor="@color/black"
                         android:textColorHint="@color/text_hint"
-                        android:textSize="18sp"
-                        android:inputType="number"/>
+                        android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -199,7 +197,7 @@
                     android:hint="메모 작성"
                     android:includeFontPadding="false"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/text_gray"
+                    android:textColorHint="@color/text_hint"
                     android:textSize="18sp" />
             </LinearLayout>
 

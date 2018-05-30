@@ -41,21 +41,30 @@ public class Machine extends AppCompatActivity implements View.OnClickListener {
     private ArrayList<Machine_Model> machine_models;
     private Machine_Adapter machine_adapter;
     private String User_Pk;
+    private String Category;
 //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_machine);
 
-                init();
+        init();
 
 
         preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
         User_Pk = preferences.getString("User_Pk", ".");
+        Category = preferences.getString("Category", ".");
 
         List_Machine = (RecyclerView) findViewById(R.id.list_machine);
         Async async = new Async();
-        async.execute();
+        async.execute(Category);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Async async = new Async();
+        async.execute(Category);
     }
 
     public void init() {
@@ -87,11 +96,16 @@ public class Machine extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.img_back:
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                break;
             case R.id.btn_write:
                 Intent intent = new Intent(Machine.this, Machine_Write.class);
                 Log.i("User_Pk",User_Pk);
                 intent.putExtra("User_Pk",User_Pk);
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 break;
         }
     }
@@ -116,7 +130,7 @@ public class Machine extends AppCompatActivity implements View.OnClickListener {
             try {
 //                베스트 다운로드 데이터 셋팅
                 HttpClient http = new HttpClient();
-                String result = http.HttpClient("Web_Ojig2", "machine_select.jsp", params);
+                String result = http.HttpClient("Web_Ojig", "Machine.jsp", params);
                 parseredData = jsonParserList(result);
 
                 machine_list = new ArrayList<Machine_Model>();
@@ -193,5 +207,11 @@ public class Machine extends AppCompatActivity implements View.OnClickListener {
         }
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
         machine_adapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
 }

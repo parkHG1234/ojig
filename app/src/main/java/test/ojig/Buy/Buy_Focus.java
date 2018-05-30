@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,9 +25,10 @@ import test.ojig.Uitility.HttpClient;
 
 public class Buy_Focus  extends AppCompatActivity {
     ImageView Img_Back;
-    ImageView Img;
-    Button img_call;
+    ImageView Img_deal;
+    LinearLayout img_call;
     TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_buy_name, txt_user, txt_memo;
+    TextView txt_amount2;
 
     private String buy_pk = "";
     private String category = "";
@@ -63,17 +67,18 @@ public class Buy_Focus  extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
             }
         });
-        Img = (ImageView) findViewById(R.id.img);
+        Img_deal = (ImageView) findViewById(R.id.img_deal);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_title = (TextView) findViewById(R.id.txt_title);
         txt_amount = (TextView) findViewById(R.id.txt_amount);
+        txt_amount2 = (TextView) findViewById(R.id.txt_amount2);
         txt_address = (TextView) findViewById(R.id.txt_address);
         txt_company_name = (TextView) findViewById(R.id.txt_company_name);
         txt_company_focus = (TextView) findViewById(R.id.txt_company_focus);
         txt_buy_name = (TextView) findViewById(R.id.txt_buy_name);
         txt_user = (TextView) findViewById(R.id.txt_user);
         txt_memo = (TextView) findViewById(R.id.txt_memo);
-        img_call = (Button) findViewById(R.id.img_call);
+        img_call = (LinearLayout) findViewById(R.id.img_call);
 
     }
 
@@ -98,7 +103,7 @@ public class Buy_Focus  extends AppCompatActivity {
                 //베스트 다운로드 데이터 셋팅
                 HttpClient http = new HttpClient();
 
-                String result = http.HttpClient("Web_Ojig2", "buy_focus_select.jsp", params);
+                String result = http.HttpClient("Web_Ojig", "Buy_Focus.jsp", params);
                 parseredData = jsonParserList(result);
 
 
@@ -114,8 +119,6 @@ public class Buy_Focus  extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-
-
             buy_pk = parseredData[0][0];
             category = parseredData[0][1];
             user_pk = parseredData[0][2];
@@ -129,7 +132,7 @@ public class Buy_Focus  extends AppCompatActivity {
 
 
             HttpClient http = new HttpClient();
-            result = http.HttpClient("Web_Ojig2", "user_select.jsp", user_pk);
+            result = http.HttpClient("Web_Ojig", "User.jsp", user_pk);
             parseredData = UserjsonParserList(result);
 
 
@@ -144,7 +147,8 @@ public class Buy_Focus  extends AppCompatActivity {
             txt_name.setText(name);
             txt_title.setText(title);
             txt_address.setText(address);
-            txt_amount.setText(amount + "대희망");
+            txt_amount.setText(amount + "대 희망");
+            txt_amount2.setText(amount);
             txt_memo.setText(memo);
             txt_buy_name.setText(name);
             txt_user.setText(company_name);
@@ -156,7 +160,18 @@ public class Buy_Focus  extends AppCompatActivity {
                     startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+phone)));
                 }
             });
-
+            if(status.equals("possible")){
+                Glide.with(Buy_Focus.this).load(R.drawable.deal_possible)
+                        .into(Img_deal);
+            }
+            else if(status.equals("ing")){
+                Glide.with(Buy_Focus.this).load(R.drawable.deal_ing)
+                        .into(Img_deal);
+            }
+            else if(status.equals("finish")){
+                Glide.with(Buy_Focus.this).load(R.drawable.deal_finish)
+                        .into(Img_deal);
+            }
 
 //            Txt_Memo.setText(contents);
 

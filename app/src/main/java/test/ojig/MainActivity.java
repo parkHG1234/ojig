@@ -1,5 +1,6 @@
 package test.ojig;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,12 +28,13 @@ import test.ojig.Machine.Machine;
 import test.ojig.Others.Others;
 import test.ojig.Sell.Sell;
 import test.ojig.Store.Store;
+import test.ojig.User.Setting;
 import test.ojig.promotion.Promotion;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public SharedPreferences preferences = null; //캐쉬 데이터 생성
 
-
+    public static Activity activity_main;
     public static final String User_Bundle = "User_Bundle";
     RelativeLayout layout_buy, layout_sell, layout_promotion;
 
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setImage_Add();
     }
     public void init(){
+        activity_main = this;
         Img_Add = (ImageView)findViewById(R.id.img_add);
     }
     public void setImage_Add(){
@@ -88,6 +91,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.layout_delivery:
                 intent = new Intent(MainActivity.this, Local.class);
+                break;
+            case R.id.img_setting:
+                intent = new Intent(MainActivity.this, Setting.class);
                 break;
         }
         if (intent != null) {

@@ -2,6 +2,7 @@ package test.ojig.Buy;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -29,11 +30,14 @@ import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 
 public class Buy_Write extends AppCompatActivity implements View.OnClickListener {
+    SharedPreferences preferences = null;
+
     private ImageView Img_Back;
     private String area = "";
     private Button btn_area;
     private AlertDialog dialog;
     private String User_Pk;
+    private String Category;
     private ArrayList<User_Model> user_models;
     private String[][] parseredData;
     private EditText edt_title, edt_name, edt_amount, edt_memo, edt_company_name, edt_phone, edt_company_focus;
@@ -42,6 +46,10 @@ public class Buy_Write extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_write);
+
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
+        Category = preferences.getString("Category", ".");
 
         init();
     }
@@ -61,7 +69,6 @@ public class Buy_Write extends AppCompatActivity implements View.OnClickListener
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
             }
         });
-        User_Pk = getIntent().getStringExtra("User_Pk");
         btn_area = (Button) findViewById(R.id.btn_area);
         btn_area.setOnClickListener(this);
         edt_title = (EditText) findViewById(R.id.edt_title);
@@ -73,7 +80,7 @@ public class Buy_Write extends AppCompatActivity implements View.OnClickListener
         edt_company_focus = (EditText) findViewById(R.id.edt_company_focus);
 
         HttpClient http = new HttpClient();
-        String result = http.HttpClient("Web_Ojig2", "user_select.jsp", User_Pk);
+        String result = http.HttpClient("Web_Ojig", "User.jsp", User_Pk);
         parseredData = jsonParserList(result);
 
 
@@ -142,8 +149,8 @@ public class Buy_Write extends AppCompatActivity implements View.OnClickListener
                                 if (edt_phone.getText().length() != 0) {
                                     if (edt_company_focus.getText().length() != 0) {
                                         HttpClient http = new HttpClient();
-                                        String result = http.HttpClient("Web_Ojig2", "buy_write.jsp", User_Pk, edt_title.getText().toString(), edt_name.getText().toString(), area, edt_amount.getText().toString(),
-                                                edt_memo.getText().toString(), edt_company_name.getText().toString(), edt_phone.getText().toString(), edt_company_focus.getText().toString());
+                                        String result = http.HttpClient("Web_Ojig", "Buy_Write.jsp", User_Pk, edt_title.getText().toString(), edt_name.getText().toString(), area, edt_amount.getText().toString(),
+                                                edt_memo.getText().toString(), edt_company_name.getText().toString(), edt_phone.getText().toString(), edt_company_focus.getText().toString(), Category);
                                         Log.i("result", result);
                                         try {
                                             JSONObject jsonObject = new JSONObject(result);

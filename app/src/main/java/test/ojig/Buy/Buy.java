@@ -2,6 +2,7 @@ package test.ojig.Buy;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,8 @@ import test.ojig.Uitility.HttpClient;
  */
 
 public class Buy extends AppCompatActivity implements View.OnClickListener {
+    SharedPreferences preferences = null; //캐쉬 데이터 생성
+
     private ImageView Img_Back;
     private EditText Edt_search;
     private RecyclerView List_Buy;
@@ -40,19 +43,30 @@ public class Buy extends AppCompatActivity implements View.OnClickListener {
     private ArrayList<Buy_Model> buy_models;
     private Buy_Adapter buy_adapter;
     private String User_Pk;
+    private String Category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
 
-        User_Pk = getIntent().getStringExtra("User_Pk");
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
+        Category = preferences.getString("Category", ".");
 
         init();
 
 
         Async async = new Async();
-        async.execute();
+        async.execute(Category);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Async async = new Async();
+        async.execute(Category);
     }
 
     public void init() {
@@ -99,6 +113,7 @@ public class Buy extends AppCompatActivity implements View.OnClickListener {
                 Intent intent = new Intent(Buy.this, Buy_Write.class);
                 intent.putExtra("User_Pk",User_Pk);
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 break;
             case R.id.img_back:
                 finish();
@@ -127,7 +142,7 @@ public class Buy extends AppCompatActivity implements View.OnClickListener {
             try {
                 //베스트 다운로드 데이터 셋팅
                 HttpClient http = new HttpClient();
-                String result = http.HttpClient("Web_Ojig2", "buy_select.jsp", params);
+                String result = http.HttpClient("Web_Ojig", "Buy.jsp", params);
                 parseredData = jsonParserList(result);
 
                 buy_list = new ArrayList<Buy_Model>();

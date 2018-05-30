@@ -6,8 +6,8 @@
     <ImageView
         android:id="@+id/img"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/basic_banner"
+        android:layout_height="250dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/basic_banner" />
 </LinearLayout>

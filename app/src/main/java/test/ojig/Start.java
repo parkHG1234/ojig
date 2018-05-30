@@ -25,7 +25,7 @@ public class Start extends AppCompatActivity {
     SharedPreferences.Editor editor;
 
     String User_Pk = "";
-
+    String Category = "";
     TimerTask myTask;
     Timer timer;
 
@@ -41,6 +41,7 @@ public class Start extends AppCompatActivity {
 
         preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
         User_Pk = preferences.getString("User_Pk", ".");
+        Category = preferences.getString("Category", ".");
 
         start();
     }
@@ -59,9 +60,16 @@ public class Start extends AppCompatActivity {
                                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                             }
                             else{
-                                Intent intent = new Intent(Start.this, MainActivity.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                                if(Category.equals(".")){
+                                    Intent intent = new Intent(Start.this, Choice.class);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                                }
+                                else{
+                                    Intent intent = new Intent(Start.this, MainActivity.class);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+                                }
                             }
                             timer.cancel();
                             finish();

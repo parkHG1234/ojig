@@ -26,6 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Choice"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".User.Setting"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".Buy.Buy"

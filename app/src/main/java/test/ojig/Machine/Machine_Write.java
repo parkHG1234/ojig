@@ -3,6 +3,7 @@ package test.ojig.Machine;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -39,10 +40,11 @@ import test.ojig.Uitility.HttpClient;
 import test.ojig.Sell.Sell_FileUpload;
 
 public class Machine_Write extends AppCompatActivity implements View.OnClickListener {
-
+    SharedPreferences preferences = null; //캐쉬 데이터 생성
     private String area = "";
     private String Profile = "";
     private String User_Pk;
+    private String Category = "";
     private ArrayList<User_Model> user_models;
     private String[][] parseredData;
     private AlertDialog dialog;
@@ -58,6 +60,10 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_machine_write);
+
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
+        Category = preferences.getString("Category", ".");
 
         init();
     }
@@ -81,8 +87,6 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
         img_path = new ArrayList<String>();
         img_obj = new ArrayList<ImageView>(Arrays.asList(img_write0, img_write1, img_write2, img_write3, img_write4, img_write5));
 
-        User_Pk = getIntent().getStringExtra("User_Pk");
-        Log.i("User_Pk", User_Pk);
 
         btn_area = (Button) findViewById(R.id.btn_area);
         et_title = (EditText) findViewById(R.id.et_title);
@@ -96,7 +100,7 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
 
 //
         HttpClient http = new HttpClient();
-        String result = http.HttpClient("Web_Ojig2", "user_select.jsp", User_Pk);
+        String result = http.HttpClient("Web_Ojig", "User.jsp", User_Pk);
         parseredData = jsonParserList(result);
 
 
@@ -169,6 +173,10 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.jeju:
                 dialogset("제주");
+                break;
+            case R.id.img_back:
+                finish();
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 break;
         }
     }
@@ -281,7 +289,7 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
                         if (!area.equals("")) {
                             if (et_memo.getText().length() != 0) {
                                 HttpClient http = new HttpClient();
-                                String result = http.HttpClient("Web_Ojig2", "machine_write.jsp",
+                                String result = http.HttpClient("Web_Ojig", "Machine_Write.jsp",
                                         User_Pk,
                                         et_title.getText().toString(),
                                         et_machine.getText().toString(),
@@ -291,7 +299,8 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
                                         et_memo.getText().toString(),
                                         et_company_name.getText().toString(),
                                         et_phone.getText().toString(),
-                                        et_company_focus.getText().toString());
+                                        et_company_focus.getText().toString(),
+                                        Category);
 
                                 try {
                                     JSONObject jsonObject = new JSONObject(result);
@@ -377,5 +386,11 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
             return null;
         }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
 }

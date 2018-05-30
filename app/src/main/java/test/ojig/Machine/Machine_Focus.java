@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,9 +43,9 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
     private TimerTask myTask;
     private Timer timer;
 
-    private TextView tv_title, tv_count, tv_address, tv_price, tv_company_name, tv_company_focus, tv_store_name, tv_memo, tv_address2, tv_count2;
+    private TextView tv_title, tv_count, tv_address, tv_price, tv_company_name, tv_company_focus, tv_store_name, tv_memo, tv_address2, tv_count2, txt_buy_name, txt_user;
     private ImageView img_status;
-    private Button img_call;
+    private LinearLayout img_call;
     private String machine_pk = "";
     private String user_pk="";
     private String title="";
@@ -93,10 +95,12 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
         tv_company_focus = (TextView)findViewById(R.id.tv_company_focus);
         tv_store_name = (TextView)findViewById(R.id.tv_store_name);
         tv_memo = (TextView)findViewById(R.id.tv_memo);
+        txt_buy_name = (TextView)findViewById(R.id.txt_buy_name);
+        txt_user = (TextView)findViewById(R.id.txt_user);
 
         tv_address2 = (TextView)findViewById(R.id.tv_address2);
         tv_count2 = (TextView)findViewById(R.id.tv_count2);
-        img_call = (Button)findViewById(R.id.img_call);
+        img_call = (LinearLayout)findViewById(R.id.img_call);
 
     }
 
@@ -236,13 +240,13 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
 
             tv_title.setText(title);
             tv_address.setText(address);
-            tv_price.setText(price + "원");
+            tv_price.setText(setPoint_rest(price) + "원");
             tv_count.setText(count +"대 보유");
             tv_memo.setText(memo);
             tv_address2.setText(address);
             tv_count2.setText(count);
-
-
+            txt_buy_name.setText(machine);
+            txt_user.setText(company_name);
 
             setViewPager(image_parseredData);
 
@@ -252,9 +256,6 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
                     startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone)));
                 }
             });
-
-
-
 
             asyncDialog.dismiss();
         }
@@ -347,10 +348,10 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
 
             //이미지 URL 동적 전송 ex) 1_1
             String Image_txt;
-            if (data.length != 0) {
-                Image_txt = data[position][1];
+            if (data.length == 0) {
+                Image_txt = "";
             } else {
-                Image_txt = "banner" + Integer.toString(position + 1);
+                Image_txt = data[position][1];
             }
             bundle.putString("Image", Image_txt);
             f.setArguments(bundle);
@@ -376,5 +377,11 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+    }
+    //금액 콤마 표현
+    public String setPoint_rest(String point){
+        DecimalFormat df = new DecimalFormat("#,##0");
+
+        return df.format(Integer.parseInt(point))+"";
     }
 }

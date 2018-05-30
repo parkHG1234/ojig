@@ -4,6 +4,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -68,11 +69,13 @@ import test.ojig.Uitility.HttpFileUpload_Video;
 
 public class Store_Write extends AppCompatActivity implements View.OnClickListener {
     private static final int SELECT_VIDEO = 3;
+    SharedPreferences preferences = null; //캐쉬 데이터 생성
 
     private String area = "";
     private Button btn_deal, btn_rent;
     private String Profile = "";
     private String User_Pk;
+    private String Category;
     private ArrayList<User_Model> user_models;
     private String[][] parseredData;
     private AlertDialog dialog;
@@ -93,6 +96,10 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_write);
 
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        User_Pk = preferences.getString("User_Pk", ".");
+        Category = preferences.getString("Category", ".");
+
         init();
 
     }
@@ -106,8 +113,6 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
     private void init() {
 
         video_write = (ImageView) findViewById(R.id.video_write);
-
-        User_Pk = getIntent().getStringExtra("User_Pk");
 
         btn_area = (Button) findViewById(R.id.btn_area);
         et_title = (EditText) findViewById(R.id.et_title);
@@ -129,7 +134,7 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
         setBtn();
 
         HttpClient http = new HttpClient();
-        String result = http.HttpClient("Web_Ojig1", "user_select.jsp", User_Pk);
+        String result = http.HttpClient("Web_Ojig", "User.jsp", User_Pk);
         parseredData = jsonParserList(result);
 
 
@@ -138,9 +143,9 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
             user_models.add(new User_Model(Store_Write.this, parseredData[i][0], parseredData[i][1], parseredData[i][2], parseredData[i][3], parseredData[i][4], parseredData[i][5], parseredData[i][6]));
         }
 
-//        et_company_name.setText(user_models.get(0).getCompany_Name());
-//        et_phone.setText(user_models.get(0).getPhone());
-//        et_company_focus.setText(user_models.get(0).getCompany_Focus());
+        et_company_name.setText(user_models.get(0).getCompany_Name());
+        et_phone.setText(user_models.get(0).getPhone());
+        et_company_focus.setText(user_models.get(0).getCompany_Focus());
     }
 
     @Override
@@ -161,7 +166,6 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
                 setBtn();
                 break;
             case R.id.btn_area:
-                Toast.makeText(Store_Write.this, "ttt", Toast.LENGTH_LONG).show();
                 setDialog_Area(v);
                 break;
             case R.id.seoul:
@@ -271,7 +275,7 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
                             if (et_price.getText().length() != 0) {
                                 if (et_memo.getText().length() != 0) {
                                     HttpClient http = new HttpClient();
-                                    String result = http.HttpClient("Web_Ojig", "Store_Write.jsp", type, User_Pk, et_title.getText().toString(), et_space.getText().toString(), et_layer.getText().toString(), et_price.getText().toString(), area, et_memo.getText().toString(), et_company_name.getText().toString(), et_phone.getText().toString(), et_company_focus.getText().toString(),video);
+                                    String result = http.HttpClient("Web_Ojig", "Store_Write.jsp", type, User_Pk, et_title.getText().toString(), et_space.getText().toString(), et_layer.getText().toString(), et_price.getText().toString(), area, et_memo.getText().toString(), et_company_name.getText().toString(), et_phone.getText().toString(), et_company_focus.getText().toString(),video, Category);
 
                                     try {
                                         JSONObject jsonObject = new JSONObject(result);
@@ -304,7 +308,7 @@ public class Store_Write extends AppCompatActivity implements View.OnClickListen
                                     if (et_memo.getText().length() != 0) {
                                         HttpClient http = new HttpClient();
                                         String result = http.HttpClient("Web_Ojig", "Store_Write.jsp", type, User_Pk, et_title.getText().toString(), et_space.getText().toString(), et_layer.getText().toString(), et_deposit.getText().toString(),
-                                                et_rental.getText().toString(), area, et_memo.getText().toString(), et_company_name.getText().toString(), et_phone.getText().toString(), et_company_focus.getText().toString(), video);
+                                                et_rental.getText().toString(), area, et_memo.getText().toString(), et_company_name.getText().toString(), et_phone.getText().toString(), et_company_focus.getText().toString(), video, Category);
 
                                     try {
                                         JSONObject jsonObject = new JSONObject(result);

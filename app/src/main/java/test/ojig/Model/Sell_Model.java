@@ -27,7 +27,6 @@ public class Sell_Model {
         Amount = amount;
         Memo = memo;
         Status = status;
-
     }
 
     public android.app.Activity getActivity() {

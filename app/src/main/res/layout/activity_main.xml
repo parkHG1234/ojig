@@ -1,20 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/img_setting"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:adjustViewBounds="true"
+            android:onClick="onClick"
+            android:src="@drawable/setting" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
-        android:layout_weight="1">
+        android:paddingTop="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,6 +89,7 @@
                 android:layout_weight="1"
                 android:background="#2b4965"
                 android:onClick="onClick">
+
                 <ImageView
                     android:id="@+id/img_sell"
                     android:layout_width="120dp"
@@ -102,7 +119,6 @@
                     android:adjustViewBounds="true"
                     android:src="@drawable/main_sell_icon" />
             </RelativeLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -118,12 +134,12 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
-                android:background="#333a4a"
+                android:background="#4a5469"
                 android:onClick="onClick">
 
                 <ImageView
                     android:id="@+id/img_local"
-                    android:layout_width="130dp"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
@@ -147,12 +163,12 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="3dp"
                 android:layout_weight="1"
-                android:background="#333a4a"
+                android:background="#4a5469"
                 android:onClick="onClick">
 
                 <ImageView
                     android:id="@+id/img_pro"
-                    android:layout_width="110dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
@@ -191,7 +207,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="6dp"
                     android:layout_weight="1"
-                    android:background="#333a4a"
+                    android:background="#4a5469"
                     android:gravity="center"
                     android:onClick="onClick">
 
@@ -210,7 +226,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="6dp"
                     android:layout_weight="1"
-                    android:background="#333a4a"
+                    android:background="#4a5469"
                     android:gravity="center"
                     android:onClick="onClick">
 
@@ -237,7 +253,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="6dp"
                     android:layout_weight="1"
-                    android:background="#333a4a"
+                    android:background="#4a5469"
                     android:gravity="center"
                     android:onClick="onClick">
 
@@ -256,7 +272,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="6dp"
                     android:layout_weight="1"
-                    android:background="#333a4a"
+                    android:background="#4a5469"
                     android:gravity="center"
                     android:onClick="onClick">
 
@@ -269,9 +285,7 @@
                         android:textSize="24sp" />
                 </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 
     <ImageView
@@ -279,5 +293,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/add_main"/>
+        android:src="@drawable/add_main" />
 </LinearLayout>

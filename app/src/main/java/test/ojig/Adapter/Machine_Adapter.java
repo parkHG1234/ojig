@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import test.ojig.Machine.Machine_Focus;
@@ -47,7 +48,7 @@ public class Machine_Adapter extends RecyclerView.Adapter<Machine_Adapter.ViewHo
         final Machine_Model items = arrData.get(position);
         holder.tv_title.setText(items.getTitle());
         holder.tv_machine.setText(items.getMachine());
-        holder.tv_price.setText(items.getPrice() + "원");
+        holder.tv_price.setText(setPoint_rest(items.getPrice()) + "원");
         holder.tv_count.setText(items.getCount() + "개");
         holder.tv_address.setText(items.getAddress());
 
@@ -62,9 +63,9 @@ public class Machine_Adapter extends RecyclerView.Adapter<Machine_Adapter.ViewHo
         }
 
 
-        Drawable mDefaultBackground = context.getResources().getDrawable(R.drawable.area);
+        Drawable mDefaultBackground = context.getResources().getDrawable(R.drawable.basic_mainlist);
 
-        Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Img_Machine/" + items.getMachine_Pk() + "_1.jpg")
+        Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Img_Machine/" + items.getMachine_Pk() + "_0.jpg")
                 .error(mDefaultBackground)
                 .into(holder.img_machine);
 
@@ -110,5 +111,11 @@ public class Machine_Adapter extends RecyclerView.Adapter<Machine_Adapter.ViewHo
             Img_deal = (ImageView) itemView.findViewById(R.id.img_deal);
         }
 
+    }
+    //금액 콤마 표현
+    public String setPoint_rest(String point){
+        DecimalFormat df = new DecimalFormat("#,##0");
+
+        return df.format(Integer.parseInt(point))+"";
     }
 }

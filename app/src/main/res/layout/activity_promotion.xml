@@ -45,10 +45,23 @@
                 android:padding="5dp" />
         </RelativeLayout>
 
-        <ImageView
+        <LinearLayout
+            android:id="@+id/img_call"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/black"/>
+            android:background="@color/point_navy"
+            android:fontFamily="@font/notosansmonocjkkr_bold_cus"
+            android:includeFontPadding="false"
+            android:textColor="@color/point_gold"
+            android:textSize="20sp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/direct_call_add" />
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list_promotion"

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import test.ojig.Model.Sell_Model;
 import test.ojig.R;
 import test.ojig.Sell.Sell_Focus;
+import test.ojig.Uitility.convertHangul;
 
 public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> {
     private Context context;
@@ -47,7 +48,8 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
         final Sell_Model items = arrData.get(position);
         holder.tv_name.setText(items.getName());
         holder.tv_title.setText(items.getTitle());
-        holder.tv_price.setText(items.getPrice() + "원");
+        convertHangul convertHangul = new convertHangul();
+        holder.tv_price.setText(convertHangul.convertHangul(items.getPrice())+"원");
         holder.tv_address.setText(items.getAddress());
         holder.tv_gamecount.setText(items.getAmount() + "대 희망");
 
@@ -61,7 +63,8 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
             holder.img_deal.setImageResource(R.drawable.deal_finish);
         }
 
-        Drawable mDefaultBackground = context.getResources().getDrawable(R.drawable.area);
+        Drawable mDefaultBackground = context.getResources().getDrawable(R.drawable.basic_mainlist);
+
 
         Glide.with(items.getActivity()).load("http://13.209.35.228:8080/Img_Sell/" + items.getSell_Pk() + "_0.jpg")
                 .error(mDefaultBackground)

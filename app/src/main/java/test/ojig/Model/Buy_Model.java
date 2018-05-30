@@ -25,6 +25,7 @@ public class Buy_Model {
         this.Amount = amount;
         this.Memo = memo;
         this.status = status;
+
     }
 
     public android.app.Activity getActivity() {
@@ -66,4 +67,5 @@ public class Buy_Model {
     public String getStatus() {
         return status;
     }
+
 }

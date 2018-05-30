@@ -43,6 +43,7 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
     private ArrayList<Store_Model> store_models;
     private Store_Adapter store_adapter;
     private String User_Pk;
+    private String Category;
 //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +54,19 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
 
         preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
         User_Pk = preferences.getString("User_Pk", ".");
+        Category = preferences.getString("Category", ".");
 
         List_Store = (RecyclerView) findViewById(R.id.list_store);
         Async async = new Async();
-        async.execute();
+        async.execute(Category);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+
         Async async = new Async();
-        async.execute();
+        async.execute(Category);
     }
 
     public void init() {
@@ -105,6 +108,7 @@ public class Store extends AppCompatActivity implements View.OnClickListener {
                 Intent intent = new Intent(Store.this, Store_Write.class);
                 intent.putExtra("User_Pk",User_Pk);
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 break;
         }
     }

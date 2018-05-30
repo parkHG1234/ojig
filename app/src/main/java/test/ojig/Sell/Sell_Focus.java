@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,17 +25,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import test.ojig.Fragment.Sell_ViewPager_Fragment;
 import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
+import test.ojig.Uitility.convertHangul;
 
 public class Sell_Focus extends AppCompatActivity implements View.OnClickListener {
     private ImageView Img_Back, img_deal;
-    private Button img_call;
-    private TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_sell_name, txt_user, txt_memo;
+    private LinearLayout img_call;
+    private TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_sell_name, txt_user, txt_memo, txt_amount2, txt_buy_name, txt_price;
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private TimerTask myTask;
@@ -93,25 +96,25 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         ////////////
         indicator.setNumberOfItems(pageCount);
 
-        if (pageCount > 1) {
-            //페이지 자동 전환 보류
-            myTask = new TimerTask() {
-                public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            int currentPage = mViewPager.getCurrentItem();
-                            if (currentPage >= pageCount - 1) mViewPager.setCurrentItem(0, true);
-                            else mViewPager.setCurrentItem(currentPage + 1, true);
-                            indicator.setSelectedItem((currentPage + 1 == pageCount) ? 0 : currentPage + 1, true);
-                        }
-                    });
-                }
-            };
-            timer = new Timer();
-            //timer.schedule(myTask, 5000);  // 5초후 실행하고 종료
-            timer.schedule(myTask, 500, 3000); // 5초후 첫실행, 3초마다 계속실행
-
+//        if (pageCount > 1) {
+//            //페이지 자동 전환 보류
+//            myTask = new TimerTask() {
+//                public void run() {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            int currentPage = mViewPager.getCurrentItem();
+//                            if (currentPage >= pageCount - 1) mViewPager.setCurrentItem(0, true);
+//                            else mViewPager.setCurrentItem(currentPage + 1, true);
+//                            indicator.setSelectedItem((currentPage + 1 == pageCount) ? 0 : currentPage + 1, true);
+//                        }
+//                    });
+//                }
+//            };
+//            timer = new Timer();
+//            //timer.schedule(myTask, 5000);  // 5초후 실행하고 종료
+//            timer.schedule(myTask, 500, 3000); // 5초후 첫실행, 3초마다 계속실행
+//
             mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -128,9 +131,6 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
 
                 }
             });
-
-
-        }
     }
 
     public void init() {
@@ -146,14 +146,17 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         img_deal = (ImageView) findViewById(R.id.img_deal);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_title = (TextView) findViewById(R.id.txt_title);
+        txt_price = (TextView)findViewById(R.id.txt_price);
         txt_amount = (TextView) findViewById(R.id.txt_amount);
+        txt_amount2 = (TextView) findViewById(R.id.txt_amount2);
         txt_address = (TextView) findViewById(R.id.txt_address);
         txt_company_name = (TextView) findViewById(R.id.txt_company_name);
         txt_company_focus = (TextView) findViewById(R.id.txt_company_focus);
         txt_sell_name = (TextView) findViewById(R.id.txt_sell_name);
+        txt_buy_name = (TextView)findViewById(R.id.txt_buy_name);
         txt_user = (TextView) findViewById(R.id.txt_user);
         txt_memo = (TextView) findViewById(R.id.txt_memo);
-        img_call = (Button) findViewById(R.id.img_call);
+        img_call = (LinearLayout) findViewById(R.id.img_call);
 
     }
 
@@ -249,13 +252,17 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
             }
 
             txt_name.setText(name);
+            txt_buy_name.setText(name);
             txt_title.setText(title);
             txt_address.setText(address);
-            txt_amount.setText(amount + "대희망");
+            convertHangul convertHangul = new convertHangul();
+            txt_price.setText(convertHangul.convertHangul(price)+"원");
+            txt_amount.setText(amount + "대 판매");
+            txt_amount2.setText(amount);
             txt_memo.setText(memo);
             txt_sell_name.setText(address);
             txt_user.setText(company_name);
-            txt_company_focus.setText(company_focus);
+            txt_company_focus.setText(company_txt+" "+company_focus);
             txt_company_name.setText(company_name);
             img_call.setOnClickListener(new View.OnClickListener() {
                 @Override
