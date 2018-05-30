@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,16 +53,18 @@ public class Machine_Adapter extends RecyclerView.Adapter<Machine_Adapter.ViewHo
         holder.tv_count.setText(items.getCount() + "개");
         holder.tv_address.setText(items.getAddress());
 
-        if (items.getStatus().equals("possible")) {
-            holder.Img_deal.setImageResource(R.drawable.deal_possible);
-        } else if (items.getStatus().equals("ing")) {
-            holder.Img_deal.setImageResource(R.drawable.deal_ing);
-        } else if (items.getStatus().equals("finish")) {
-            holder.Img_deal.setImageResource(R.drawable.deal_finish);
-        } else {
-            holder.Img_deal.setVisibility(View.INVISIBLE);
+        if(items.getStatus().equals("possible")){
+            Glide.with(context).load(R.drawable.deal_possible)
+                    .into(holder.Img_deal);
         }
-
+        else if(items.getStatus().equals("ing")){
+            Glide.with(context).load(R.drawable.deal_ing)
+                    .into(holder.Img_deal);
+        }
+        else if(items.getStatus().equals("finish")){
+            Glide.with(context).load(R.drawable.deal_finish)
+                    .into(holder.Img_deal);
+        }
 
         Drawable mDefaultBackground = context.getResources().getDrawable(R.drawable.basic_mainlist);
 

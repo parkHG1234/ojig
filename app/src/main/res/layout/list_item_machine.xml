@@ -24,8 +24,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:adjustViewBounds="true"
-                android:src="@drawable/deal_possible" />
+                android:adjustViewBounds="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -14,7 +14,6 @@ import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,7 +36,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import test.ojig.Adapter.Join_MyGame_Adapter;
 import test.ojig.MainActivity;
 import test.ojig.Model.Join_MyGame_Model;
 import test.ojig.R;
@@ -53,7 +51,9 @@ public class Join extends AppCompatActivity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
-    EditText Edit_Name;TextView Line_Name;ImageView Img_NameCheck;
+    EditText Edit_Name;
+    TextView Line_Name;
+    ImageView Img_NameCheck;
 
     EditText edit_phone;
     TextView line_phone;
@@ -75,21 +75,21 @@ public class Join extends AppCompatActivity {
     RelativeLayout Layout_AddressInput;
     EditText Edit_Address1, Edit_Address2, Edit_Address3;
 
-    RecyclerView List_MyGame;
     LinearLayout Layout_Add;
-    public static ArrayList<Join_MyGame_Model> join_models;
-    public static String[] mygame_name;
-    public static String[] mygame_gamecount;
-    Join_MyGame_Adapter join_adapter;
 
     LinearLayout Layout_Join;
+
+    LinearLayout Layout_Mygame1, Layout_Mygame2, Layout_Mygame3, Layout_Mygame4, Layout_Mygame5;
+    EditText edit_Mygamename1, edit_Mygamename2, edit_Mygamename3, edit_Mygamename4, edit_Mygamename5;
+    EditText edit_Mygamecount1, edit_Mygamecount2, edit_Mygamecount3, edit_Mygamecount4, edit_Mygamecount5;
 
     String str_name = "", str_phone = "", str_pass = "", str_address_num = "", str_address_txt = "", str_address_focus = "";
     Boolean flag_name = false, flag_phone = false, flag_pass = false, flag_address = false;
 
     TimerTask myTask;
     Timer timer;
-    int rnd = 0; int mygame_count = 0;
+    int rnd = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,20 +105,19 @@ public class Join extends AppCompatActivity {
         setAddressInput_Event();
         setEdit_Address3();
 
-        setList_MyGame();
         setList_Add();
         setJoin_Event();
+        Layout_Join.setVisibility(View.VISIBLE);
+        Layout_Join.setEnabled(true);
+        Layout_Join.setBackgroundColor(getResources().getColor(R.color.point_gold));
+
     }
-    public void init(){
-        mygame_name = new String[20];
-        mygame_gamecount = new String[20];
-        for(int i = 0 ; i < 20 ; i++){
-            mygame_name[i] = " ";
-            mygame_gamecount[i] = " ";
-        }
-        Edit_Name = (EditText)findViewById(R.id.edit_name);
-        Line_Name = (TextView)findViewById(R.id.line_name);
-        Img_NameCheck = (ImageView)findViewById(R.id.img_namecheck);
+
+    public void init() {
+
+        Edit_Name = (EditText) findViewById(R.id.edit_name);
+        Line_Name = (TextView) findViewById(R.id.line_name);
+        Img_NameCheck = (ImageView) findViewById(R.id.img_namecheck);
         Img_NameCheck.setVisibility(View.INVISIBLE);
 
         edit_phone = (EditText) findViewById(R.id.edit_phone);
@@ -129,39 +128,59 @@ public class Join extends AppCompatActivity {
         layout_smsline2 = (LinearLayout) findViewById(R.id.layout_smsline2);
         txt_sms = (TextView) findViewById(R.id.txt_sms);
 
-        layout_certi = (LinearLayout)findViewById(R.id.layout_certi);
-        edit_certi = (EditText)findViewById(R.id.edit_certi);
-        line_certi = (TextView)findViewById(R.id.line_certi);
-        img_cetricheck = (ImageView)findViewById(R.id.img_cetricheck);
-        txt_certi_succed = (TextView)findViewById(R.id.txt_certi_succed);
+        layout_certi = (LinearLayout) findViewById(R.id.layout_certi);
+        edit_certi = (EditText) findViewById(R.id.edit_certi);
+        line_certi = (TextView) findViewById(R.id.line_certi);
+        img_cetricheck = (ImageView) findViewById(R.id.img_cetricheck);
+        txt_certi_succed = (TextView) findViewById(R.id.txt_certi_succed);
         txt_certi_succed.setVisibility(View.GONE);
-        txt_cetritime = (TextView)findViewById(R.id.txt_cetritime);
+        txt_cetritime = (TextView) findViewById(R.id.txt_cetritime);
 
-        Layout_Pass = (LinearLayout)findViewById(R.id.layout_pass);
+        Layout_Pass = (LinearLayout) findViewById(R.id.layout_pass);
         Layout_Pass.setVisibility(View.GONE);
-        Layout_PassCheck = (LinearLayout)findViewById(R.id.layout_passcheck);
+        Layout_PassCheck = (LinearLayout) findViewById(R.id.layout_passcheck);
         Layout_PassCheck.setVisibility(View.GONE);
-        Line_Pass = (TextView)findViewById(R.id.line_pass);
+        Line_Pass = (TextView) findViewById(R.id.line_pass);
         Line_Pass.setVisibility(View.GONE);
-        Line_PassCheck = (TextView)findViewById(R.id.line_passcheck);
+        Line_PassCheck = (TextView) findViewById(R.id.line_passcheck);
         Line_PassCheck.setVisibility(View.GONE);
-        Edit_Pass = (EditText)findViewById(R.id.edit_pass);
-        Edit_PassCheck = (EditText)findViewById(R.id.edit_passcheck);
-        Img_PassCheck = (ImageView)findViewById(R.id.img_passcheck);
-        Img_PassCheckCheck = (ImageView)findViewById(R.id.img_passcheckcheck);
+        Edit_Pass = (EditText) findViewById(R.id.edit_pass);
+        Edit_PassCheck = (EditText) findViewById(R.id.edit_passcheck);
+        Img_PassCheck = (ImageView) findViewById(R.id.img_passcheck);
+        Img_PassCheckCheck = (ImageView) findViewById(R.id.img_passcheckcheck);
 
         //영업장 위치 레이아웃 셋팅
-        Layout_Address = (LinearLayout)findViewById(R.id.layout_address);
-        Layout_AddressInput = (RelativeLayout)findViewById(R.id.layout_addressinput);
-        Edit_Address1 = (EditText)findViewById(R.id.edit_address1);
-        Edit_Address2 = (EditText)findViewById(R.id.edit_address2);
-        Edit_Address3 = (EditText)findViewById(R.id.edit_address3);
+        Layout_Address = (LinearLayout) findViewById(R.id.layout_address);
+        Layout_AddressInput = (RelativeLayout) findViewById(R.id.layout_addressinput);
+        Edit_Address1 = (EditText) findViewById(R.id.edit_address1);
+        Edit_Address2 = (EditText) findViewById(R.id.edit_address2);
+        Edit_Address3 = (EditText) findViewById(R.id.edit_address3);
 
-        List_MyGame = (RecyclerView)findViewById(R.id.list_mygame);
-        Layout_Add = (LinearLayout)findViewById(R.id.layout_add);
+        Layout_Add = (LinearLayout) findViewById(R.id.layout_add);
 
-        Layout_Join = (LinearLayout)findViewById(R.id.layout_join);
+        Layout_Join = (LinearLayout) findViewById(R.id.layout_join);
+
+        Layout_Mygame1 = (LinearLayout) findViewById(R.id.layout_mygame1);
+        Layout_Mygame2 = (LinearLayout) findViewById(R.id.layout_mygame2);
+        Layout_Mygame3 = (LinearLayout) findViewById(R.id.layout_mygame3);
+        Layout_Mygame4 = (LinearLayout) findViewById(R.id.layout_mygame4);
+        Layout_Mygame5 = (LinearLayout) findViewById(R.id.layout_mygame5);
+
+
+        edit_Mygamename1 = (EditText) findViewById(R.id.edit_mygamename1);
+        edit_Mygamename2 = (EditText) findViewById(R.id.edit_mygamename2);
+        edit_Mygamename3 = (EditText) findViewById(R.id.edit_mygamename3);
+        edit_Mygamename4 = (EditText) findViewById(R.id.edit_mygamename4);
+        edit_Mygamename5 = (EditText) findViewById(R.id.edit_mygamename5);
+
+        edit_Mygamecount1 = (EditText) findViewById(R.id.edit_mygamecount1);
+        edit_Mygamecount2 = (EditText) findViewById(R.id.edit_mygamecount2);
+        edit_Mygamecount3 = (EditText) findViewById(R.id.edit_mygamecount3);
+        edit_Mygamecount4 = (EditText) findViewById(R.id.edit_mygamecount4);
+        edit_Mygamecount5 = (EditText) findViewById(R.id.edit_mygamecount5);
+
     }
+
     public void setEdit_NameEvent() {
         Edit_Name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -174,11 +193,10 @@ public class Join extends AppCompatActivity {
                 Line_Name.setBackgroundColor(getResources().getColor(R.color.point));
                 str_name = Edit_Name.getText().toString();
                 //번호가 다 입력됐을 경우 버튼 이벤트
-                if(str_name.equals("")){
+                if (str_name.equals("")) {
                     flag_name = false;
                     Img_NameCheck.setVisibility(View.INVISIBLE);
-                }
-                else{
+                } else {
                     flag_name = true;
                     Img_NameCheck.setVisibility(View.VISIBLE);
                     GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(Img_NameCheck, 1);
@@ -241,7 +259,7 @@ public class Join extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
-                if(keyCode == KeyEvent.KEYCODE_DEL) {
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
                     edit_phone.setText(null);
                 }
                 return false;
@@ -308,7 +326,7 @@ public class Join extends AppCompatActivity {
         setEdit_CertiEvent();
     }
 
-    public void setResms_Event(){
+    public void setResms_Event() {
         txt_certi_succed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -359,7 +377,7 @@ public class Join extends AppCompatActivity {
         });
     }
 
-    public void setEdit_PassEvent(){
+    public void setEdit_PassEvent() {
         Edit_Pass.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -368,15 +386,14 @@ public class Join extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(Edit_Pass.length() == 4){
+                if (Edit_Pass.length() == 4) {
                     str_pass = Edit_Pass.getText().toString();
                     Img_PassCheck.setVisibility(View.VISIBLE);
                     //인증번호 완료 시 이벤트
                     GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(Img_PassCheck, 1);
                     Glide.with(Join.this).load(R.drawable.join_check).into(gifImage);
                     All_Flag();
-                }
-                else{
+                } else {
                     Img_PassCheck.setVisibility(View.GONE);
                 }
             }
@@ -388,7 +405,7 @@ public class Join extends AppCompatActivity {
         });
     }
 
-    public void setEdit_PassCheckEvent(){
+    public void setEdit_PassCheckEvent() {
         Edit_PassCheck.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -398,7 +415,7 @@ public class Join extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(Edit_PassCheck.getText().toString().equals(Edit_Pass.getText().toString())){
+                if (Edit_PassCheck.getText().toString().equals(Edit_Pass.getText().toString())) {
                     flag_pass = true;
                     //비밀번호 체크시 이벤트
                     Img_PassCheckCheck.setVisibility(View.VISIBLE);
@@ -407,8 +424,7 @@ public class Join extends AppCompatActivity {
                     All_Flag();
                     Layout_Address.setVisibility(View.VISIBLE);
                     Layout_Join.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     Img_PassCheckCheck.setVisibility(View.GONE);
                 }
             }
@@ -420,7 +436,7 @@ public class Join extends AppCompatActivity {
         });
     }
 
-    public void setAddressInput_Event(){
+    public void setAddressInput_Event() {
         Layout_AddressInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -430,7 +446,8 @@ public class Join extends AppCompatActivity {
             }
         });
     }
-    public void setEdit_Address3(){
+
+    public void setEdit_Address3() {
         Edit_Address3.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -439,11 +456,10 @@ public class Join extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(Edit_Address3.getText().toString().equals("")){
+                if (Edit_Address3.getText().toString().equals("")) {
                     Address_Flag();
                     All_Flag();
-                }
-                else{
+                } else {
                     str_address_focus = Edit_Address3.getText().toString();
                     Address_Flag();
                     All_Flag();
@@ -456,60 +472,137 @@ public class Join extends AppCompatActivity {
             }
         });
     }
-    public void setList_MyGame(){
-        join_models = new ArrayList<Join_MyGame_Model>();
-        join_models.add(new Join_MyGame_Model(Join.this, "", ""));
-        mygame_count++;
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(Join.this);
-        layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager1.scrollToPosition(0);
 
-        //베스트 무료체험 어댑터 셋팅
-        join_adapter = new Join_MyGame_Adapter(Join.this, join_models, 1);
-        List_MyGame.setLayoutManager(layoutManager1);
-        List_MyGame.setAdapter(join_adapter);
-    }
-    public void setList_Add(){
+    public void setList_Add() {
         Layout_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                join_models.add(new Join_MyGame_Model(Join.this, "", ""));
-                join_adapter.notifyDataSetChanged();
-                mygame_count++;
+                if (Layout_Mygame2.getVisibility() == View.GONE) {
+                    Layout_Mygame2.setVisibility(View.VISIBLE);
+                } else if (Layout_Mygame3.getVisibility() == View.GONE) {
+                    Layout_Mygame3.setVisibility(View.VISIBLE);
+                } else if (Layout_Mygame4.getVisibility() == View.GONE) {
+                    Layout_Mygame4.setVisibility(View.VISIBLE);
+                } else if (Layout_Mygame5.getVisibility() == View.GONE) {
+                    Layout_Mygame5.setVisibility(View.VISIBLE);
+                    Layout_Add.setVisibility(View.GONE);
+                }
             }
         });
     }
 
-    public void Address_Flag(){
-        if(!Edit_Address1.getText().toString().equals("") && !Edit_Address2.getText().toString().equals("") && !Edit_Address3.getText().toString().equals("")){
+    public void Address_Flag() {
+        if (!Edit_Address1.getText().toString().equals("") && !Edit_Address2.getText().toString().equals("") && !Edit_Address3.getText().toString().equals("")) {
             flag_address = true;
-        }
-        else{
+        } else {
             flag_address = false;
         }
     }
-    public void setJoin_Event(){
+
+    public void setMyGameData(String Pk, String Area) {
+
+        ArrayList<String> gamename = new ArrayList<>();
+        ArrayList<String> gamecount = new ArrayList<>();
+
+        ArrayList<EditText> name = new ArrayList<>();
+        name.add(0, edit_Mygamename1);
+        name.add(1, edit_Mygamename2);
+        name.add(2, edit_Mygamename3);
+        name.add(3, edit_Mygamename4);
+        name.add(4, edit_Mygamename5);
+
+        ArrayList<EditText> count = new ArrayList<>();
+        count.add(0, edit_Mygamecount1);
+        count.add(1, edit_Mygamecount2);
+        count.add(2, edit_Mygamecount3);
+        count.add(3, edit_Mygamecount4);
+        count.add(4, edit_Mygamecount5);
+
+
+        for (EditText tempValue : name) {
+            if (!tempValue.getText().toString().equals("")) {
+                gamename.add(tempValue.getText().toString());
+            }
+        }
+
+        for (EditText tempValue : count) {
+            if (!tempValue.getText().toString().equals("")) {
+                gamecount.add(tempValue.getText().toString());
+            }
+        }
+
+        if (gamename.size() != gamecount.size()) {
+        } else {
+            try {
+                HttpClient http = new HttpClient();
+                for (int i = 0; i < gamename.size(); i++) {
+                    String result = http.HttpClient("Web_Ojig2", "usergame_write.jsp", Pk, Area, gamename.get(i), gamecount.get(i));
+                }
+            }catch (Exception e){
+            }
+        }
+    }
+
+    public String getArea() {
+        String area = "";
+        if (str_address_txt.substring(0, 5).contains("서울")) {
+            area = "서울";
+        } else if (str_address_txt.substring(0, 5).contains("경기")) {
+            area = "경기";
+        } else if (str_address_txt.substring(0, 5).contains("인천")) {
+            area = "경";
+        } else if (str_address_txt.substring(0, 5).contains("강원")) {
+            area = "강원";
+        } else if (str_address_txt.substring(0, 5).contains("충청북도")) {
+            area = "충북";
+        } else if (str_address_txt.substring(0, 5).contains("충청남도")) {
+            area = "충남";
+        } else if (str_address_txt.substring(0, 5).contains("전라북도")) {
+            area = "전북";
+        } else if (str_address_txt.substring(0, 5).contains("전라남도")) {
+            area = "전남";
+        } else if (str_address_txt.substring(0, 5).contains("경상북도")) {
+            area = "경북";
+        } else if (str_address_txt.substring(0, 5).contains("경상남도")) {
+            area = "경남";
+        } else if (str_address_txt.substring(0, 5).contains("제주")) {
+            area = "제주";
+        } else if (str_address_txt.substring(0, 5).contains("울산")) {
+            area = "경남";
+        } else if (str_address_txt.substring(0, 5).contains("부산")) {
+            area = "경남";
+        } else if (str_address_txt.substring(0, 5).contains("광주")) {
+            area = "전남";
+        } else if (str_address_txt.substring(0, 5).contains("대구")) {
+            area = "경북";
+        } else if (str_address_txt.substring(0, 5).contains("대전")) {
+            area = "충남";
+        }
+
+
+        return area;
+    }
+
+    public void setJoin_Event() {
         Layout_Join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i = 0; i < List_MyGame.getChildCount(); i++){
-                    Log.i("name", mygame_name[i]);
-                    Log.i("count", mygame_gamecount[i]);
-                }
                 Async async = new Async();
                 async.execute(str_phone, str_pass, str_name, str_address_num, str_address_txt, str_address_focus);
             }
         });
     }
-    public void All_Flag(){
-        if(flag_name == true && flag_phone == true && flag_pass == true && flag_address == true){
+
+    public void All_Flag() {
+        if (flag_name == true && flag_phone == true && flag_pass == true && flag_address == true) {
             Layout_Join.setEnabled(true);
             Layout_Join.setBackgroundColor(getResources().getColor(R.color.point_gold));
-        }else{
+        } else {
             Layout_Join.setEnabled(false);
             Layout_Join.setBackgroundColor(getResources().getColor(R.color.line_gray));
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
@@ -522,6 +615,7 @@ public class Join extends AppCompatActivity {
             All_Flag();
         }
     }
+
     public String[][] jsonParserList_Phone_Confirm(String pRecvServerPage) {
         Log.i("서버에서 받은 전체 내용", pRecvServerPage);
         try {
@@ -541,10 +635,11 @@ public class Join extends AppCompatActivity {
             return null;
         }
     }
+
     public class Async extends AsyncTask<String, Void, String> {
         ProgressDialog asyncDialog = new ProgressDialog(Join.this);
 
-        String result= "";
+        String result = "";
 
         @Override
         protected void onPreExecute() {
@@ -559,16 +654,24 @@ public class Join extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                Log.i("test123",str_phone);
-                Log.i("test123",str_pass);
-                Log.i("test123",str_name);
-                Log.i("test123",str_address_num);
-                Log.i("test123",str_address_txt);
-                Log.i("test123",str_address_focus);
+                Log.i("test123", str_phone);
+                Log.i("test123", str_pass);
+                Log.i("test123", str_name);
+                Log.i("test123", str_address_num);
+                Log.i("test123", str_address_txt);
+                Log.i("test123", str_address_focus);
 
                 //베스트 다운로드 데이터 셋팅
                 HttpClient http = new HttpClient();
                 result = http.HttpClient("Web_Ojig", "Join.jsp", params);
+
+                jsonParserList_Phone_Confirm(result);
+                Log.i("test123",result);
+                String[][] a = jsonParserList_Phone_Confirm(result);
+                Log.i("test123",a[0][0]);
+                Log.i("test123",getArea());
+
+                setMyGameData(a[0][0], getArea());
 
                 return "succed";
             } catch (Exception e) {
@@ -593,14 +696,16 @@ public class Join extends AppCompatActivity {
         }
 
     }
+
     public void Certi_Timer() {
-        if(myTask != null){
+        if (myTask != null) {
             myTask.cancel();
             myTask = null;
         }
         myTask = new TimerTask() {
             int i = 180;
             int certi_time = 259;
+
             public void run() {
                 runOnUiThread(new Runnable() {
                     @Override

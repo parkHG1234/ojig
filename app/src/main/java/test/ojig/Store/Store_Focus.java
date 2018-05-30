@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 
+import test.ojig.Machine.Machine_Focus;
 import test.ojig.R;
 import test.ojig.Uitility.FullScreenVideoActivity;
 import test.ojig.Uitility.HttpClient;
@@ -31,7 +32,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
     private LinearLayout img_call;
     private TextView tv_title, tv_type, tv_address, tv_price, tv_deposit, tv_rental, tv_company_name, tv_company_focus, txt_user, txt_memo;
     private LinearLayout layout_deal, layout_rent;
-    private ImageView img_video, player, img_deal;
+    private ImageView img_video, player, img_status;
 
     private String store_pk = "";
     private String category = "";
@@ -92,7 +93,7 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
         tv_company_focus = (TextView) findViewById(R.id.tv_company_focus);
         img_call = (LinearLayout) findViewById(R.id.img_call);
         player = (ImageView) findViewById(R.id.player);
-        img_deal = (ImageView) findViewById(R.id.img_deal);
+        img_status = (ImageView) findViewById(R.id.img_status);
         txt_user = (TextView) findViewById(R.id.txt_user);
         txt_memo = (TextView) findViewById(R.id.txt_memo);
     }
@@ -214,14 +215,17 @@ public class Store_Focus extends AppCompatActivity implements View.OnClickListen
                 tv_price.setText(deposit + " / " + rental);
             }
 
-            if (status.equals("possible")) {
-                img_deal.setImageResource(R.drawable.deal_possible);
-            } else if (status.equals("ing")) {
-                img_deal.setImageResource(R.drawable.deal_ing);
-            } else if (status.equals("finish")) {
-                img_deal.setImageResource(R.drawable.deal_finish);
-            } else {
-                img_deal.setVisibility(View.INVISIBLE);
+            if(status.equals("possible")){
+                Glide.with(Store_Focus.this).load(R.drawable.deal_possible)
+                        .into(img_status);
+            }
+            else if(status.equals("ing")){
+                Glide.with(Store_Focus.this).load(R.drawable.deal_ing)
+                        .into(img_status);
+            }
+            else if(status.equals("finish")){
+                Glide.with(Store_Focus.this).load(R.drawable.deal_finish)
+                        .into(img_status);
             }
 
             tv_title.setText(title);

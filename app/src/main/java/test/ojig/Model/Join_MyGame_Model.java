@@ -16,7 +16,8 @@ public class Join_MyGame_Model {
         this.Name = name;
         this.Count = count;
     }
-
+    public Join_MyGame_Model() {
+    }
     public android.app.Activity getActivity() {
         return Activity;
     }
@@ -27,6 +28,11 @@ public class Join_MyGame_Model {
 
     public String getCount() {
         return Count;
+    }
+
+    public void setData(String name, String count){
+        this.Name = name;
+        this.Count = count;
     }
 
 }

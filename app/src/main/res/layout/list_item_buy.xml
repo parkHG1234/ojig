@@ -19,7 +19,6 @@
                 android:id="@+id/img_deal"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/deal_possible"
                 android:adjustViewBounds="true"
                 android:layout_alignParentRight="true"
                 />

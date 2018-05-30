@@ -36,6 +36,7 @@ public class Machine_ViewPager_Fragment extends Fragment {
         try {
             String En_img = URLEncoder.encode(imgUrl,"utf-8");
             Glide.with(rootview.getContext()).load("http://13.209.35.228:8080/Img_Machine/" + En_img + ".jpg")
+                    .error(R.drawable.basic_mainlist)
                     .into(img);
         } catch (UnsupportedEncodingException e) {
 

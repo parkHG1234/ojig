@@ -3,6 +3,7 @@ package test.ojig.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,14 +54,17 @@ public class Sell_Adapter extends RecyclerView.Adapter<Sell_Adapter.ViewHolder> 
         holder.tv_address.setText(items.getAddress());
         holder.tv_gamecount.setText(items.getAmount() + "대 희망");
 
-        if (items.getStatus().equals("wait")) {
-            holder.img_deal.setVisibility(View.GONE);
-        } else if (items.getStatus().equals("possible")) {
-            holder.img_deal.setImageResource(R.drawable.deal_possible);
-        } else if (items.getStatus().equals("ing")) {
-            holder.img_deal.setImageResource(R.drawable.deal_ing);
-        } else if (items.getStatus().equals("finish")) {
-            holder.img_deal.setImageResource(R.drawable.deal_finish);
+        if(items.getStatus().equals("possible")){
+            Glide.with(context).load(R.drawable.deal_possible)
+                    .into(holder.img_deal);
+        }
+        else if(items.getStatus().equals("ing")){
+            Glide.with(context).load(R.drawable.deal_ing)
+                    .into(holder.img_deal);
+        }
+        else if(items.getStatus().equals("finish")){
+            Glide.with(context).load(R.drawable.deal_finish)
+                    .into(holder.img_deal);
         }
 
         Drawable mDefaultBackground = context.getResources().getDrawable(R.drawable.basic_mainlist);

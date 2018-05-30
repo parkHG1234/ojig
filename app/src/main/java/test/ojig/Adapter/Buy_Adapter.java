@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import test.ojig.Buy.Buy_Focus;
@@ -46,15 +48,17 @@ public class Buy_Adapter extends RecyclerView.Adapter<Buy_Adapter.ViewHolder> {
         holder.tv_title.setText(items.getTitle());
         holder.tv_Address.setText(items.getAddress());
         holder.tv_GameCount.setText(items.getAmount() + "대 희망");
-
-        if (items.getStatus().equals("possible")) {
-            holder.Img_deal.setImageResource(R.drawable.deal_possible);
-        } else if (items.getStatus().equals("ing")) {
-            holder.Img_deal.setImageResource(R.drawable.deal_ing);
-        } else if (items.getStatus().equals("finish")) {
-            holder.Img_deal.setImageResource(R.drawable.deal_finish);
-        } else{
-            holder.Img_deal.setVisibility(View.INVISIBLE);
+        if(items.getStatus().equals("possible")){
+            Glide.with(context).load(R.drawable.deal_possible)
+                    .into(holder.Img_deal);
+        }
+        else if(items.getStatus().equals("ing")){
+            Glide.with(context).load(R.drawable.deal_ing)
+                    .into(holder.Img_deal);
+        }
+        else if(items.getStatus().equals("finish")){
+            Glide.with(context).load(R.drawable.deal_finish)
+                    .into(holder.Img_deal);
         }
 
         holder.Layout.setOnClickListener(new View.OnClickListener() {
