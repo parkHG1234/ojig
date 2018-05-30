@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -53,6 +54,7 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
     private ImageView img_write0, img_write1, img_write2, img_write3, img_write4, img_write5;
     private ArrayList<String> img_path;
     private ArrayList<ImageView> img_obj;
+    private LinearLayout img_layout2, img_layout3;
     int img_count = 0;
 
 
@@ -76,6 +78,9 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
 
     private void init() {
 
+
+        img_layout2 = (LinearLayout) findViewById(R.id.img_layout2);
+        img_layout3 = (LinearLayout) findViewById(R.id.img_layout3);
 
         img_write0 = (ImageView) findViewById(R.id.img_write0);
         img_write1 = (ImageView) findViewById(R.id.img_write1);
@@ -244,6 +249,11 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
                 } else {
                     img_path.add(requestCode, absolutePath);
                     if (requestCode <= 5) {
+                        if(requestCode == 1){
+                            img_layout2.setVisibility(View.VISIBLE);
+                        }else if(requestCode == 3){
+                            img_layout3.setVisibility(View.VISIBLE);
+                        }
                         img_count++;
                         if (requestCode == 5) {
                             Snackbar.make(getCurrentFocus(), "6장이 최대입니다.", Snackbar.LENGTH_SHORT).show();
@@ -266,8 +276,13 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(Machine_Write.this,"확장자를 확인해주세요",Toast.LENGTH_LONG).show();
+
         } catch (NullPointerException e) {
             e.printStackTrace();
+        } catch (Exception e){
+            Toast.makeText(Machine_Write.this,"다시 시도해주세요",Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 

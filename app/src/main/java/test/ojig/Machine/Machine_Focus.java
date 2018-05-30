@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
 import org.json.JSONArray;
@@ -108,7 +109,6 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
         //프래그먼트 정의
 
         final int pageCount = data.length;
-        Log.i("aaaaa",String.valueOf(pageCount));
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), data);
         final DotIndicator indicator = (DotIndicator) findViewById(R.id.indicator);
@@ -125,40 +125,44 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
         indicator.setNumberOfItems(pageCount);
 
 
-        //페이지 자동 전환 보류
-        myTask = new TimerTask() {
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int currentPage = mViewPager.getCurrentItem();
-                        if (currentPage >= pageCount - 1) mViewPager.setCurrentItem(0, true);
-                        else mViewPager.setCurrentItem(currentPage + 1, true);
-                        indicator.setSelectedItem((currentPage + 1 == pageCount) ? 0 : currentPage + 1, true);
-                    }
-                });
-            }
-        };
-        timer = new Timer();
-        //timer.schedule(myTask, 5000);  // 5초후 실행하고 종료
-        timer.schedule(myTask, 500, 3000); // 5초후 첫실행, 3초마다 계속실행
+        if(pageCount>1) {
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
+            //페이지 자동 전환 보류
+            myTask = new TimerTask() {
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            int currentPage = mViewPager.getCurrentItem();
+                            if (currentPage >= pageCount - 1) mViewPager.setCurrentItem(0, true);
+                            else mViewPager.setCurrentItem(currentPage + 1, true);
+                            indicator.setSelectedItem((currentPage + 1 == pageCount) ? 0 : currentPage + 1, true);
+                        }
+                    });
+                }
+            };
+            timer = new Timer();
+            //timer.schedule(myTask, 5000);  // 5초후 실행하고 종료
+            timer.schedule(myTask, 500, 3000); // 5초후 첫실행, 3초마다 계속실행
 
-            @Override
-            public void onPageSelected(int position) {
-                indicator.setSelectedItem(mViewPager.getCurrentItem(), true);
-            }
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+                }
 
-            }
-        });
+                @Override
+                public void onPageSelected(int position) {
+                    indicator.setSelectedItem(mViewPager.getCurrentItem(), true);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -249,6 +253,19 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
             txt_user.setText(company_name);
 
             setViewPager(image_parseredData);
+
+            if(status.equals("possible")){
+                Glide.with(Machine_Focus.this).load(R.drawable.deal_possible)
+                        .into(img_status);
+            }
+            else if(status.equals("ing")){
+                Glide.with(Machine_Focus.this).load(R.drawable.deal_ing)
+                        .into(img_status);
+            }
+            else if(status.equals("finish")){
+                Glide.with(Machine_Focus.this).load(R.drawable.deal_finish)
+                        .into(img_status);
+            }
 
             img_call.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
 
 import org.json.JSONArray;
@@ -29,13 +30,14 @@ import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import test.ojig.Buy.Buy_Focus;
 import test.ojig.Fragment.Sell_ViewPager_Fragment;
 import test.ojig.R;
 import test.ojig.Uitility.HttpClient;
 import test.ojig.Uitility.convertHangul;
 
 public class Sell_Focus extends AppCompatActivity implements View.OnClickListener {
-    private ImageView Img_Back, img_deal;
+    private ImageView Img_Back, img_status;
     private LinearLayout img_call;
     private TextView txt_name, txt_title, txt_amount, txt_address, txt_company_name, txt_company_focus, txt_sell_name, txt_user, txt_memo, txt_amount2, txt_buy_name, txt_price;
     private ViewPager mViewPager;
@@ -143,7 +145,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
             }
         });
 
-        img_deal = (ImageView) findViewById(R.id.img_deal);
+        img_status = (ImageView) findViewById(R.id.img_status);
         txt_name = (TextView) findViewById(R.id.txt_name);
         txt_title = (TextView) findViewById(R.id.txt_title);
         txt_price = (TextView)findViewById(R.id.txt_price);
@@ -241,14 +243,19 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
 
 
             setViewPager(image_parseredData);
-            if (status.equals("wait")) {
-                img_deal.setVisibility(View.INVISIBLE);
-            } else if (status.equals("possible")) {
-                img_deal.setImageResource(R.drawable.deal_possible);
-            } else if (status.equals("ing")) {
-                img_deal.setImageResource(R.drawable.deal_ing);
-            } else if (status.equals("finish")) {
-                img_deal.setImageResource(R.drawable.deal_finish);
+
+
+            if(status.equals("possible")){
+                Glide.with(Sell_Focus.this).load(R.drawable.deal_possible)
+                        .into(img_status);
+            }
+            else if(status.equals("ing")){
+                Glide.with(Sell_Focus.this).load(R.drawable.deal_ing)
+                        .into(img_status);
+            }
+            else if(status.equals("finish")){
+                Glide.with(Sell_Focus.this).load(R.drawable.deal_finish)
+                        .into(img_status);
             }
 
             txt_name.setText(name);
