@@ -35,6 +35,39 @@ public class Local extends AppCompatActivity implements View.OnClickListener{
                 break;
             case R.id.layout_2:
                 intent = new Intent(Local.this, Local_Focus.class);
+                intent.putExtra("Area", "경기");
+                break;
+            case R.id.layout_3:
+                intent = new Intent(Local.this, Local_Focus.class);
+                intent.putExtra("Area", "충북");
+                break;
+            case R.id.layout_4:
+                intent = new Intent(Local.this, Local_Focus.class);
+                intent.putExtra("Area", "강원");
+                break;
+            case R.id.layout_5:
+                intent = new Intent(Local.this, Local_Focus.class);
+                intent.putExtra("Area", "충남");
+                break;
+            case R.id.layout_6:
+                intent = new Intent(Local.this, Local_Focus.class);
+                intent.putExtra("Area", "경북");
+                break;
+            case R.id.layout_7:
+                intent = new Intent(Local.this, Local_Focus.class);
+                intent.putExtra("Area", "전북");
+                break;
+            case R.id.layout_8:
+                intent = new Intent(Local.this, Local_Focus.class);
+                intent.putExtra("Area", "경남");
+                break;
+            case R.id.layout_9:
+                intent = new Intent(Local.this, Local_Focus.class);
+                intent.putExtra("Area", "전남");
+                break;
+            case R.id.layout_10:
+                intent = new Intent(Local.this, Local_Focus.class);
+                intent.putExtra("Area", "제주");
                 break;
         }
         if (intent != null) {
