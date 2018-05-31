@@ -688,7 +688,7 @@ public class Join extends AppCompatActivity {
         ProgressDialog asyncDialog = new ProgressDialog(Join.this);
 
         String result = "";
-
+        String[][] a;
         @Override
         protected void onPreExecute() {
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -713,8 +713,7 @@ public class Join extends AppCompatActivity {
                 HttpClient http = new HttpClient();
                 result = http.HttpClient("Web_Ojig", "Join.jsp", params);
 
-                jsonParserList_Phone_Confirm(result);
-                String[][] a = jsonParserList_Phone_Confirm(result);
+                a = jsonParserList_Phone_Confirm(result);
 
                 setMyGameData(a[0][0], getArea());
 
@@ -731,7 +730,7 @@ public class Join extends AppCompatActivity {
             super.onPostExecute(result);
             preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
             editor = preferences.edit();
-            editor.putString("User_Pk", result);
+            editor.putString("User_Pk", a[0][0]);
             editor.commit();
 
             startActivity(new Intent(Join.this, MainActivity.class));
