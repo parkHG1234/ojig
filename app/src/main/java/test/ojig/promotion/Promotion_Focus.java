@@ -105,12 +105,11 @@ public class Promotion_Focus extends AppCompatActivity {
             try {
                 //베스트 다운로드 데이터 셋팅
                 HttpClient http = new HttpClient();
-                String result = http.HttpClient("Web_Ojig", "Adult_Promotion_Focus.jsp", params);
+                String result = http.HttpClient("Web_Ojig", "Promotion_Focus.jsp", params);
                 parseredData = jsonParserList(result);
 
                 return "succed";
             } catch (Exception e) {
-                Toast.makeText(Promotion_Focus.this, getString(R.string.http_error), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
                 return "failed";
             }

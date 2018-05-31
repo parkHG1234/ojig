@@ -54,14 +54,14 @@ public class Start extends AppCompatActivity {
                     public void run() {
                         // 해당 작업을 처리함
                         if (i <= 0) {
-                            if(User_Pk.equals(".")){
-                                Intent intent = new Intent(Start.this, Login.class);
+                            if(Category.equals(".")){
+                                Intent intent = new Intent(Start.this, Choice.class);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                             }
                             else{
-                                if(Category.equals(".")){
-                                    Intent intent = new Intent(Start.this, Choice.class);
+                                if(User_Pk.equals(".")){
+                                    Intent intent = new Intent(Start.this, Login.class);
                                     startActivity(intent);
                                     overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                                 }

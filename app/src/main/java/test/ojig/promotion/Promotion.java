@@ -1,6 +1,7 @@
 package test.ojig.promotion;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ import test.ojig.Uitility.HttpClient;
  */
 
 public class Promotion extends AppCompatActivity {
+    SharedPreferences preferences = null; //캐쉬 데이터 생성
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private TimerTask myTask;
@@ -50,10 +53,16 @@ public class Promotion extends AppCompatActivity {
     Promotion_Adapter promotion_adapter;
 
     String[][] parseredData_banner;
+
+    private String Category;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promotion);
+
+        preferences = getSharedPreferences("Ojig", MODE_PRIVATE);
+        Category = preferences.getString("Category", ".");
 
         init();
         setImg_Back();
@@ -147,11 +156,11 @@ public class Promotion extends AppCompatActivity {
                 //베스트 다운로드 데이터 셋팅
                 HttpClient http = new HttpClient();
                 //배너
-                String result1 = http.HttpClient("Web_Ojig", "Adult_Promotion_Banner.jsp", params);
+                String result1 = http.HttpClient("Web_Ojig", "Promotion_Banner.jsp", Category+"_banner");
                 parseredData_banner = jsonParserList(result1);
 
                 //아이템
-                String result = http.HttpClient("Web_Ojig", "Adult_Promotion.jsp", params);
+                String result = http.HttpClient("Web_Ojig", "Promotion.jsp", Category);
                 parseredData = jsonParserList(result);
 
                 promotion_models = new ArrayList<Promotion_Model>();
@@ -161,7 +170,6 @@ public class Promotion extends AppCompatActivity {
                 }
                 return "succed";
             } catch (Exception e) {
-                Toast.makeText(Promotion.this, getString(R.string.http_error), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
                 return "failed";
             }
