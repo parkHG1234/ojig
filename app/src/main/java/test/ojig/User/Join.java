@@ -79,7 +79,7 @@ public class Join extends AppCompatActivity {
 
     LinearLayout Layout_Join;
 
-    LinearLayout Layout_Mygame1, Layout_Mygame2, Layout_Mygame3, Layout_Mygame4, Layout_Mygame5;
+    LinearLayout Layout_Mygame, Layout_Mygame1, Layout_Mygame2, Layout_Mygame3, Layout_Mygame4, Layout_Mygame5;
     EditText edit_Mygamename1, edit_Mygamename2, edit_Mygamename3, edit_Mygamename4, edit_Mygamename5;
     EditText edit_Mygamecount1, edit_Mygamecount2, edit_Mygamecount3, edit_Mygamecount4, edit_Mygamecount5;
 
@@ -160,6 +160,7 @@ public class Join extends AppCompatActivity {
 
         Layout_Join = (LinearLayout) findViewById(R.id.layout_join);
 
+        Layout_Mygame = (LinearLayout) findViewById(R.id.layout_mygame);
         Layout_Mygame1 = (LinearLayout) findViewById(R.id.layout_mygame1);
         Layout_Mygame2 = (LinearLayout) findViewById(R.id.layout_mygame2);
         Layout_Mygame3 = (LinearLayout) findViewById(R.id.layout_mygame3);
@@ -494,6 +495,7 @@ public class Join extends AppCompatActivity {
     public void Address_Flag() {
         if (!Edit_Address1.getText().toString().equals("") && !Edit_Address2.getText().toString().equals("") && !Edit_Address3.getText().toString().equals("")) {
             flag_address = true;
+            Layout_Mygame.setVisibility(View.VISIBLE);
         } else {
             flag_address = false;
         }
@@ -519,15 +521,15 @@ public class Join extends AppCompatActivity {
         count.add(4, edit_Mygamecount5);
 
 
-        for (EditText tempValue : name) {
-            if (!tempValue.getText().toString().equals("")) {
-                gamename.add(tempValue.getText().toString());
+        for (EditText Value : name) {
+            if (!Value.getText().toString().equals("")) {
+                gamename.add(Value.getText().toString());
             }
         }
 
-        for (EditText tempValue : count) {
-            if (!tempValue.getText().toString().equals("")) {
-                gamecount.add(tempValue.getText().toString());
+        for (EditText Value : count) {
+            if (!Value.getText().toString().equals("")) {
+                gamecount.add(Value.getText().toString());
             }
         }
 
@@ -537,9 +539,50 @@ public class Join extends AppCompatActivity {
                 HttpClient http = new HttpClient();
                 for (int i = 0; i < gamename.size(); i++) {
                     String result = http.HttpClient("Web_Ojig2", "usergame_write.jsp", Pk, Area, gamename.get(i), gamecount.get(i));
+                    Log.i("aaaa",result);
                 }
             }catch (Exception e){
             }
+        }
+    }
+
+
+    public boolean setMyGameData() {
+
+        ArrayList<String> gamename = new ArrayList<>();
+        ArrayList<String> gamecount = new ArrayList<>();
+
+        ArrayList<EditText> name = new ArrayList<>();
+        name.add(0, edit_Mygamename1);
+        name.add(1, edit_Mygamename2);
+        name.add(2, edit_Mygamename3);
+        name.add(3, edit_Mygamename4);
+        name.add(4, edit_Mygamename5);
+
+        ArrayList<EditText> count = new ArrayList<>();
+        count.add(0, edit_Mygamecount1);
+        count.add(1, edit_Mygamecount2);
+        count.add(2, edit_Mygamecount3);
+        count.add(3, edit_Mygamecount4);
+        count.add(4, edit_Mygamecount5);
+
+
+        for (EditText Value : name) {
+            if (!Value.getText().toString().equals("")) {
+                gamename.add(Value.getText().toString());
+            }
+        }
+
+        for (EditText Value : count) {
+            if (!Value.getText().toString().equals("")) {
+                gamecount.add(Value.getText().toString());
+            }
+        }
+
+        if (gamename.size() != gamecount.size()) {
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -587,8 +630,13 @@ public class Join extends AppCompatActivity {
         Layout_Join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Async async = new Async();
-                async.execute(str_phone, str_pass, str_name, str_address_num, str_address_txt, str_address_focus);
+                if(setMyGameData()){
+                    Async async = new Async();
+                    async.execute(str_phone, str_pass, str_name, str_address_num, str_address_txt, str_address_focus);
+                }else{
+                    Toast.makeText(getApplicationContext(),"게임기 정보를 확인해주세요",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }
@@ -666,10 +714,7 @@ public class Join extends AppCompatActivity {
                 result = http.HttpClient("Web_Ojig", "Join.jsp", params);
 
                 jsonParserList_Phone_Confirm(result);
-                Log.i("test123",result);
                 String[][] a = jsonParserList_Phone_Confirm(result);
-                Log.i("test123",a[0][0]);
-                Log.i("test123",getArea());
 
                 setMyGameData(a[0][0], getArea());
 
