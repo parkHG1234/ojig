@@ -86,6 +86,8 @@
             android:screenOrientation="portrait"/>
 
 
+        <activity android:name=".Uitility.FullScreenImage"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Others.Others"
             android:screenOrientation="portrait"/>
         <activity android:name=".User.Join"

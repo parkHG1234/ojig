@@ -1,5 +1,6 @@
 package test.ojig.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import test.ojig.R;
+import test.ojig.Uitility.FullScreenImage;
 
 public class Sell_ViewPager_Fragment extends Fragment {
     ImageView img;
@@ -23,10 +25,18 @@ public class Sell_ViewPager_Fragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_sell, container, false);
 
         Bundle extra = getArguments();
-        String a = extra.getString("Image");
+        final String a = extra.getString("Image");
 
         img = (ImageView) rootView.findViewById(R.id.img);
         setImage(rootView, a);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FullScreenImage.class);
+                intent.putExtra("imgUrl",a);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
