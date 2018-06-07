@@ -87,7 +87,7 @@ public class Flash extends AppCompatActivity {
                             // 해당 작업을 처리함
                             if (i <= 0) {
                                 HttpClient http_count = new HttpClient();
-                                http_count.HttpClient("Web_Blah","Today_Counting.jsp", strCurToday);
+                                http_count.HttpClient("Web_Ojig","Today_Counting.jsp", strCurToday);
                                 timer.cancel();
 
                                 Intent intent = new Intent(Flash.this, Start.class);

@@ -1,11 +1,13 @@
 package test.ojig;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import test.ojig.Buy.Buy;
 import test.ojig.Delivery.Delivery_Address;
@@ -28,6 +31,7 @@ import test.ojig.Machine.Machine;
 import test.ojig.Others.Others;
 import test.ojig.Sell.Sell;
 import test.ojig.Store.Store;
+import test.ojig.Uitility.HttpClient;
 import test.ojig.User.Setting;
 import test.ojig.promotion.Promotion;
 
@@ -41,6 +45,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String User_Pk = "";
 
     ImageView Img_Add;
+    protected boolean shouldAskPermissions() {
+        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
+    @TargetApi(23)
+    protected void askPermissions() {
+        String[] permissions = {
+                "android.permission.READ_EXTERNAL_STORAGE",
+                "android.permission.WRITE_EXTERNAL_STORAGE"
+        };
+        int requestCode = 200;
+        requestPermissions(permissions, requestCode);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,10 +68,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         User_Pk = preferences.getString("User_Pk", ".");
 
         checkPermission();
+        if (shouldAskPermissions()) {
+            askPermissions();
+        }
 
         init();
         setImage_Add();
+        setToken();
     }
+
     public void init(){
         activity_main = this;
         Img_Add = (ImageView)findViewById(R.id.img_add);
@@ -131,5 +154,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         return 1;
+    }
+    public void setToken(){
+        String Token = FirebaseInstanceId.getInstance().getToken();
+        HttpClient http_addtoken = new HttpClient();
+        http_addtoken.HttpClient("Web_Ojig", "User_Fcmadd.jsp", User_Pk, Token);
     }
 }

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "688549313269",
+    "firebase_url": "https://ojig-3ff2b.firebaseio.com",
+    "project_id": "ojig-3ff2b",
+    "storage_bucket": "ojig-3ff2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688549313269:android:fe8c368147506bfc",
+        "android_client_info": {
+          "package_name": "test.ojig"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688549313269-i9ipqdd34ntkioobrplse6dddo8rs0he.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "688549313269-i9ipqdd34ntkioobrplse6dddo8rs0he.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-L0MpbrtMhzA9pDsfNuDWZ9-GMYFFnXA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
