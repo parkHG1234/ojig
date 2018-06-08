@@ -18,23 +18,26 @@ import test.ojig.Uitility.FullScreenImage;
 
 public class Sell_ViewPager_Fragment extends Fragment {
     ImageView img;
-
+    String Image = ""; String sell_pk = ""; String PageCount = "";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_sell, container, false);
 
         Bundle extra = getArguments();
-        String a = extra.getString("Image");
-        final String sell_pk = extra.getString("Pk");
+        Image = extra.getString("Image");
+        sell_pk = extra.getString("Pk");
+        PageCount = extra.getString("Count");
 
         img = (ImageView) rootView.findViewById(R.id.img);
-        setImage(rootView, a);
+        setImage(rootView, Image);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(rootView.getContext(), FullScreenImage.class);
                 intent.putExtra("Pk",sell_pk);
+                intent.putExtra("Image",Image);
+                intent.putExtra("PageCount",PageCount);
                 startActivity(intent);
             }
         });
@@ -52,6 +55,5 @@ public class Sell_ViewPager_Fragment extends Fragment {
         } catch (UnsupportedEncodingException e) {
 
         }
-
     }
 }

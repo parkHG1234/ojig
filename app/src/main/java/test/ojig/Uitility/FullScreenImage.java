@@ -26,23 +26,24 @@ public class FullScreenImage extends AppCompatActivity {
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private String sell_Pk="";
+    private String Image="";
+    private int PageCount=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
         sell_Pk = getIntent().getStringExtra("Pk");
+        Image = getIntent().getStringExtra("Image");
+        PageCount = Integer.parseInt(getIntent().getStringExtra("PageCount"));
 
-        Async async = new Async();
-        async.execute(sell_Pk);
+        setViewPager();
     }
 
-    public void setViewPager(String[][] data) {
+    public void setViewPager() {
         //프래그먼트 정의
 
-        final int pageCount = data.length;
-
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), data);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         final DotIndicator indicator = (DotIndicator) findViewById(R.id.indicator);
         // 도트 색 지정
         indicator.setSelectedDotColor(getResources().getColor(R.color.point));
@@ -52,9 +53,9 @@ public class FullScreenImage extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.fullscreen_viewpager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mViewPager.setOffscreenPageLimit(data.length);
+        mViewPager.setOffscreenPageLimit(3);
         ////////////
-        indicator.setNumberOfItems(pageCount);
+        indicator.setNumberOfItems(PageCount);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -74,81 +75,10 @@ public class FullScreenImage extends AppCompatActivity {
         });
     }
 
-
-    public class Async extends AsyncTask<String, Void, String> {
-        ProgressDialog asyncDialog = new ProgressDialog(FullScreenImage.this);
-        HttpClient http;
-        String result;
-
-        String[][] image_parseredData;
-
-        @Override
-        protected void onPreExecute() {
-            http = new HttpClient();
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("wait...");
-            // show dialog
-            asyncDialog.show();
-
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                //베스트 다운로드 데이터 셋팅
-                result = http.HttpClient("Web_Ojig2", "sell_focus_image_select.jsp", sell_Pk);
-                image_parseredData = ImagejsonParserList(result);
-
-                return "succed";
-            } catch (Exception e) {
-                Toast.makeText(FullScreenImage.this, getString(R.string.http_error), Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-                return "failed";
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            setViewPager(image_parseredData);
-
-            asyncDialog.dismiss();
-        }
-
-        public String[][] ImagejsonParserList(String pRecvServerPage) {
-            Log.i("서버에서 받은 FullImage 내용", pRecvServerPage);
-            try {
-                JSONObject json = new JSONObject(pRecvServerPage);
-                JSONArray jArr = json.getJSONArray("List");
-                String[] jsonName = {"msg1", "msg2"};
-                String[][] parseredData = new String[jArr.length()][jsonName.length];
-                for (int i = 0; i < jArr.length(); i++) {
-                    json = jArr.getJSONObject(i);
-                    for (int j = 0; j < jsonName.length; j++) {
-                        parseredData[i][j] = json.getString(jsonName[j]);
-                    }
-                }
-                return parseredData;
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-    }
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        String[][] data;
-        int pagercount;
 
-        public SectionsPagerAdapter(FragmentManager fm, String[][] data) {
+        public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.data = data;
-            if (data.length == 0) {
-                pagercount = 1;
-            } else {
-                pagercount = data.length;
-            }
         }
 
         @Override
@@ -159,12 +89,7 @@ public class FullScreenImage extends AppCompatActivity {
             Bundle bundle = new Bundle();
 
             //이미지 URL 동적 전송 ex) 1_1
-            String Image_txt;
-            if (data.length == 0) {
-                Image_txt = "";
-            } else {
-                Image_txt = data[position][1];
-            }
+            String Image_txt = sell_Pk+"_"+position;
             bundle.putString("Image", Image_txt);
             f.setArguments(bundle);
             return f;
@@ -174,7 +99,7 @@ public class FullScreenImage extends AppCompatActivity {
         public int getCount() {
             // Show 3 total pages.
 
-            return pagercount;
+            return PageCount;
         }
 
         @Override

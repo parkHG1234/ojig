@@ -65,7 +65,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
     private String company_num = "";
     private String company_txt = "";
     private String company_focus = "";
-
+    int pageCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +82,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
     public void setViewPager(String[][] data) {
         //프래그먼트 정의
 
-        final int pageCount = data.length;
+        pageCount = data.length;
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), data);
         final DotIndicator indicator = (DotIndicator) findViewById(R.id.indicator);
@@ -98,25 +98,6 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         ////////////
         indicator.setNumberOfItems(pageCount);
 
-//        if (pageCount > 1) {
-//            //페이지 자동 전환 보류
-//            myTask = new TimerTask() {
-//                public void run() {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            int currentPage = mViewPager.getCurrentItem();
-//                            if (currentPage >= pageCount - 1) mViewPager.setCurrentItem(0, true);
-//                            else mViewPager.setCurrentItem(currentPage + 1, true);
-//                            indicator.setSelectedItem((currentPage + 1 == pageCount) ? 0 : currentPage + 1, true);
-//                        }
-//                    });
-//                }
-//            };
-//            timer = new Timer();
-//            //timer.schedule(myTask, 5000);  // 5초후 실행하고 종료
-//            timer.schedule(myTask, 500, 3000); // 5초후 첫실행, 3초마다 계속실행
-//
             mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -347,7 +328,6 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
             }
         }
     }
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         String[][] data;
         int pagercount;
@@ -378,6 +358,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
             }
             bundle.putString("Image", Image_txt);
             bundle.putString("Pk",sell_pk);
+            bundle.putString("Count",Integer.toString(pageCount));
             f.setArguments(bundle);
             return f;
         }
@@ -393,7 +374,6 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
         public CharSequence getPageTitle(int position) {
             return null;
         }
-
     }
 
     @Override
