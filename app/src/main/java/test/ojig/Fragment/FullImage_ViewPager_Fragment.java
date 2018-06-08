@@ -13,9 +13,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import test.ojig.R;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class FullImage_ViewPager_Fragment extends Fragment {
     ImageView img_full;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,6 +30,8 @@ public class FullImage_ViewPager_Fragment extends Fragment {
         String a = extra.getString("Image");
 
         img_full = (ImageView) rootView.findViewById(R.id.img_full);
+        PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(img_full);
+        photoViewAttacher.update();
         setImage(rootView, a);
         return rootView;
     }
