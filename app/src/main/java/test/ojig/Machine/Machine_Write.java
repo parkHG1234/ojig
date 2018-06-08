@@ -288,10 +288,7 @@ public class Machine_Write extends AppCompatActivity implements View.OnClickList
 
     public void fileUpload(String Machine_Pk) {
         Machine_FileUpload machine_FileUpload = new Machine_FileUpload(Machine_Write.this, img_path, Machine_Pk);
-        for(int i=0;i<img_path.size();i++){
-            Log.i("aaaaaa",img_path.get(i).toString());
-        }
-        Log.i("aaaaaaa",Machine_Pk);
+
         machine_FileUpload.execute();
     }
 

@@ -539,7 +539,6 @@ public class Join extends AppCompatActivity {
                 HttpClient http = new HttpClient();
                 for (int i = 0; i < gamename.size(); i++) {
                     String result = http.HttpClient("Web_Ojig2", "usergame_write.jsp", Pk, Area, gamename.get(i), gamecount.get(i));
-                    Log.i("aaaa",result);
                 }
             }catch (Exception e){
             }

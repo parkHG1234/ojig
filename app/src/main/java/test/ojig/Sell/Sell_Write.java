@@ -251,7 +251,6 @@ public class Sell_Write extends AppCompatActivity implements View.OnClickListene
     }
 
     private void btn_write() {
-        Log.i("aaaa", edt_company_focus.getText().toString());
         if (edt_title.getText().length() != 0) {
             if (edt_name.getText().length() != 0) {
                 if (!area.equals("")) {

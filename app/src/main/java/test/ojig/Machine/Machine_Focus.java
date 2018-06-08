@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -32,9 +31,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import test.ojig.Fragment.Machine_ViewPager_Fragment;
-import test.ojig.Fragment.Sell_ViewPager_Fragment;
 import test.ojig.R;
-import test.ojig.Sell.Sell_Focus;
 import test.ojig.Uitility.HttpClient;
 
 public class Machine_Focus extends AppCompatActivity implements View.OnClickListener {

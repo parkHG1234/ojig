@@ -1,6 +1,5 @@
 package test.ojig.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,44 +13,33 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import test.ojig.R;
-import test.ojig.Uitility.FullScreenImage;
 
-public class Sell_ViewPager_Fragment extends Fragment {
-    ImageView img;
+public class FullImage_ViewPager_Fragment extends Fragment {
+    ImageView img_full;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_sell, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_fullimg, container, false);
+
 
         Bundle extra = getArguments();
-        String a = extra.getString("Image");
-        final String sell_pk = extra.getString("Pk");
 
-        img = (ImageView) rootView.findViewById(R.id.img);
+        String a = extra.getString("Image");
+
+        img_full = (ImageView) rootView.findViewById(R.id.img_full);
         setImage(rootView, a);
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(rootView.getContext(), FullScreenImage.class);
-                intent.putExtra("Pk",sell_pk);
-                startActivity(intent);
-            }
-        });
         return rootView;
     }
 
     //이미지 셋팅
     public void setImage(View rootview, String imgUrl) {
-
         try {
-            String En_img = URLEncoder.encode(imgUrl,"utf-8");
+            String En_img = URLEncoder.encode(imgUrl, "utf-8");
             Glide.with(rootview.getContext()).load("http://13.209.35.228:8080/Img_Sell/" + En_img + ".jpg")
-                    .error(R.drawable.img_add)
-                    .into(img);
+                    .error(R.color.black)
+                    .into(img_full);
         } catch (UnsupportedEncodingException e) {
-
         }
-
     }
 }

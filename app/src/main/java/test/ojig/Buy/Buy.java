@@ -106,7 +106,6 @@ public class Buy extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Log.i("aaaaa",String.valueOf(v.getId()));
 
         switch (v.getId()) {
             case R.id.btn_write:

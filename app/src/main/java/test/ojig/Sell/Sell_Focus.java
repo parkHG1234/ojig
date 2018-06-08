@@ -377,6 +377,7 @@ public class Sell_Focus extends AppCompatActivity implements View.OnClickListene
                 Image_txt = data[position][1];
             }
             bundle.putString("Image", Image_txt);
+            bundle.putString("Pk",sell_pk);
             f.setArguments(bundle);
             return f;
         }
