@@ -1,22 +1,13 @@
 package test.ojig.Uitility;
 
-import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import test.ojig.Fragment.FullImage_ViewPager_Fragment;
 import test.ojig.R;
@@ -25,7 +16,8 @@ public class FullScreenImage extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private String sell_Pk="";
+    private String type = "";
+    private String pk="";
     private String Image="";
     private int PageCount=0;
     @Override
@@ -33,7 +25,8 @@ public class FullScreenImage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
-        sell_Pk = getIntent().getStringExtra("Pk");
+        type = getIntent().getStringExtra("Type");
+        pk = getIntent().getStringExtra("Pk");
         Image = getIntent().getStringExtra("Image");
         PageCount = Integer.parseInt(getIntent().getStringExtra("PageCount"));
 
@@ -88,8 +81,9 @@ public class FullScreenImage extends AppCompatActivity {
             Bundle bundle = new Bundle();
 
             //이미지 URL 동적 전송 ex) 1_1
-            String Image_txt = sell_Pk+"_"+position;
+            String Image_txt = pk+"_"+position;
             bundle.putString("Image", Image_txt);
+            bundle.putString("Type",type);
             f.setArguments(bundle);
             return f;
         }

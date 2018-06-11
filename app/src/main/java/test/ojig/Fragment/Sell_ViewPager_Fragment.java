@@ -35,6 +35,7 @@ public class Sell_ViewPager_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(rootView.getContext(), FullScreenImage.class);
+                intent.putExtra("Type","Sell");
                 intent.putExtra("Pk",sell_pk);
                 intent.putExtra("Image",Image);
                 intent.putExtra("PageCount",PageCount);

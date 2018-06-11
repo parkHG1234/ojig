@@ -61,6 +61,7 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
     private String company_txt = "";
     private String company_focus = "";
 
+    int pageCount = 0;
 
     private ProgressBar mProgressBar;
     @Override
@@ -105,7 +106,7 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
     public void setViewPager(String[][] data) {
         //프래그먼트 정의
 
-        final int pageCount = data.length;
+        pageCount = data.length;
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), data);
         final DotIndicator indicator = (DotIndicator) findViewById(R.id.indicator);
@@ -222,7 +223,6 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
             super.onPostExecute(result);
 
             machine_pk = machine_parseredData[0][0];
-            Log.i("machine_pk",machine_pk);
             user_pk = machine_parseredData[0][1];
             title = machine_parseredData[0][2];
             machine = machine_parseredData[0][3];
@@ -368,6 +368,8 @@ public class Machine_Focus extends AppCompatActivity implements View.OnClickList
                 Image_txt = data[position][1];
             }
             bundle.putString("Image", Image_txt);
+            bundle.putString("Pk",machine_pk);
+            bundle.putString("Count",Integer.toString(pageCount));
             f.setArguments(bundle);
             return f;
         }
