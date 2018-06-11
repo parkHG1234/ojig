@@ -42,12 +42,11 @@ public class FullScreenImage extends AppCompatActivity {
 
     public void setViewPager() {
         //프래그먼트 정의
-
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         final DotIndicator indicator = (DotIndicator) findViewById(R.id.indicator);
         // 도트 색 지정
-        indicator.setSelectedDotColor(getResources().getColor(R.color.point));
-        indicator.setUnselectedDotColor(Color.parseColor("#dadada"));
+        indicator.setSelectedDotColor(getResources().getColor(R.color.white));
+        indicator.setUnselectedDotColor(getResources().getColor(R.color.line_gray));
         indicator.bringToFront();
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.fullscreen_viewpager);

@@ -14,7 +14,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:background="@color/back">
+        android:background="@color/black">
 
         <com.matthewtamlin.sliding_intro_screen_library.indicators.DotIndicator
             android:id="@+id/indicator"

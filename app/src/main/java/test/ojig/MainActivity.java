@@ -29,6 +29,7 @@ import test.ojig.Delivery.Delivery_Address;
 import test.ojig.Local.Local;
 import test.ojig.Machine.Machine;
 import test.ojig.Others.Others;
+import test.ojig.Others.Others_txt;
 import test.ojig.Sell.Sell;
 import test.ojig.Store.Store;
 import test.ojig.Uitility.HttpClient;
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(MainActivity.this, Machine.class);
                 break;
             case R.id.layout_others:
-                intent = new Intent(MainActivity.this, Others.class);
+                intent = new Intent(MainActivity.this, Others_txt.class);
                 break;
             case R.id.layout_delivery:
                 intent = new Intent(MainActivity.this, Local.class);

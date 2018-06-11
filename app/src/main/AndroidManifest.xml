@@ -90,6 +90,10 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Others.Others"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Others.Others_txt"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Others.Others_Menu"
+            android:screenOrientation="portrait"/>
         <activity android:name=".User.Join"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".User.Find"
